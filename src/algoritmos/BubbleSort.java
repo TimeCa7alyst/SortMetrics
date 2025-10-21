@@ -1,7 +1,5 @@
-package entities;
+package algoritmos;
 
-
-import java.sql.SQLOutput;
 
 public class BubbleSort {
 

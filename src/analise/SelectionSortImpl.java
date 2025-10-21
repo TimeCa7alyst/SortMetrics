@@ -1,9 +1,13 @@
-package entities;
+package analise;
+
+import algoritmos.SelectionSort;
+import util.RandomGenerator;
 
 public class SelectionSortImpl {
 
-    public void piorCasoSelectionSort(int quant, long[] vet) {
+    public void piorCasoSelectionSort(int quant) {
 
+        long[] vet = new long[quant];
         vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
@@ -25,7 +29,9 @@ public class SelectionSortImpl {
         selectionSort.selectionSortPrint();
     }
 
-    public void melhorCasoSelectionSort(int quant, long[] vet) {
+    public void melhorCasoSelectionSort(int quant) {
+
+        long[] vet = new long[quant];
         vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
@@ -46,7 +52,8 @@ public class SelectionSortImpl {
         selectionSort.selectionSortPrint();
     }
 
-    public void medioCasoSelectionSort(int quant, long[] vet) {
+    public void medioCasoSelectionSort(int quant) {
+        long[] vet = new long[quant];
         vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {

@@ -1,4 +1,4 @@
-package entities;
+package algoritmos;
 
 public class SelectionSort {
 

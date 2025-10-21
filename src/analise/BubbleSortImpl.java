@@ -1,10 +1,14 @@
-package entities;
+package analise;
+
+import algoritmos.BubbleSort;
+import util.RandomGenerator;
 
 public class BubbleSortImpl {
 
 
-    public void piorCasoBubbleSort(int quant, long[] vet) {
+    public void piorCasoBubbleSort(int quant) {
 
+        long[] vet = new long[quant];
 
         vet = new long[quant];
 
@@ -28,7 +32,9 @@ public class BubbleSortImpl {
     }
 
 
-    public void melhorCasoBubbleSort(int quant, long[] vet) {
+    public void melhorCasoBubbleSort(int quant) {
+
+        long[] vet = new long[quant];
 
         vet = new long[quant];
 
@@ -50,7 +56,9 @@ public class BubbleSortImpl {
         bubbleSort.bSortPrint();
     }
 
-    public void medioCasoBubbleSort(int quant, long[] vet) {
+    public void medioCasoBubbleSort(int quant) {
+
+        long[] vet = new long[quant];
 
         vet = new long[quant];
 

@@ -1,7 +1,10 @@
 package application;
 
 
-import entities.*;
+import analise.BubbleSortImpl;
+import analise.InsertionSortImpl;
+import analise.SelectionSortImpl;
+import util.*;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -52,9 +55,9 @@ public class Main {
 
                     System.out.println("||||| Bubble Sort |||||\n");
 
-                    bubbleSort.melhorCasoBubbleSort(quant, vet);
-                    bubbleSort.medioCasoBubbleSort(quant, vet);
-                    bubbleSort.piorCasoBubbleSort(quant, vet);
+                    bubbleSort.melhorCasoBubbleSort(quant);
+                    bubbleSort.medioCasoBubbleSort(quant);
+                    bubbleSort.piorCasoBubbleSort(quant);
                     break;
 
                 case "insertion sort", "isort", "insertion", "i":
@@ -62,9 +65,9 @@ public class Main {
 
                     System.out.println("||||| Insertion Sort |||||\n");
 
-                    insertionSort.melhorCasoInsertionSort(quant, vet);
-                    insertionSort.medioInsertionSort(quant, vet);
-                    insertionSort.piorCasoInsertionSort(quant, vet);
+                    insertionSort.melhorCasoInsertionSort(quant);
+                    insertionSort.medioInsertionSort(quant);
+                    insertionSort.piorCasoInsertionSort(quant);
                     break;
 
                 case "selection sort", "ssort", "selection", "s":
@@ -72,9 +75,9 @@ public class Main {
 
                     System.out.println("||||| Selection Sort |||||\n");
 
-                    selectionSort.melhorCasoSelectionSort(quant, vet);
-                    selectionSort.medioCasoSelectionSort(quant, vet);
-                    selectionSort.piorCasoSelectionSort(quant, vet);
+                    selectionSort.melhorCasoSelectionSort(quant);
+                    selectionSort.medioCasoSelectionSort(quant);
+                    selectionSort.piorCasoSelectionSort(quant);
                     break;
 
                 default:
