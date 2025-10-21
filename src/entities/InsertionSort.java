@@ -2,53 +2,58 @@ package entities;
 
 public class InsertionSort {
 
-    private long[] vet;
+    public long[] vet;
     private long tempo1;
     private long tempo2;
-    private long total;
+    private long totalNano;
+    private long numTrocas = 0;
+    private long numComparacoes = 0;
 
-    public void insertionSort(int quant) {
+    public InsertionSort(int quant, long[] vet) {
+        this.vet = vet;
+    }
 
+    public void insertionSort() {
         long temp;
 
-        tempo1 = System.currentTimeMillis();
+        tempo1 = System.nanoTime();
 
-        vet = new long[quant];
-        for (int i = 0; i < vet.length; i++) {
-            vet[i] = RandomGenerator.randomGenerator(100, 200000);
-        }
+        for (int i = 1; i < vet.length; i++) {
 
-
-        for (int i = 0; i < vet.length; i++) {
             temp = vet[i];
             int j = (i - 1);
+            numComparacoes++;
             while (j >= 0 && vet[j] > temp) {
                 vet[j + 1] = vet[j];
+                numTrocas++;
                 j--;
             }
             vet[j + 1] = temp;
         }
-        tempo2 = System.currentTimeMillis();
-        total = (tempo2 - tempo1);
+        tempo2 = System.nanoTime();
+        totalNano = (tempo2 - tempo1);
     }
 
     public void insertionSortPrint() {
 
         System.out.print("VETOR ORDERNADO:\n");
-        for (int i = 0; i < vet.length; i++) {
-            System.out.printf("%d -> ", vet[i]);
+        for (long l : vet) {
+            System.out.printf("%d -> ", l);
         }
 
         System.out.println("\n");
 
-        System.out.print("TEMPO DE EXECUÇÃO:\n");
+        System.out.print("TEMPO DE EXECUÇÃO (Insertion Sort):\n");
 
-        System.out.printf("Tempo 1: %dms\n" +
-                "Tempo 2: %dms\n", tempo1, tempo2);
-        System.out.println("Total: " + total + "ms");
-    }
 
-    public long[] getVet() {
-        return vet;
+        double totalMs = this.totalNano / 1_000_000.0;
+
+        System.out.printf("Tempo 1: %dns\n" +
+                "Tempo 2: %dns\n", this.tempo1, this.tempo2);
+        System.out.println("Total: " + totalMs + "ms");
+        System.out.println();
+        System.out.println("Número de comparações: " + numComparacoes);
+        System.out.println("Número de trocas:" + numTrocas);
+        System.out.println("É estável: Sim");
     }
 }

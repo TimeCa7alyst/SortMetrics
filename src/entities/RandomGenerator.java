@@ -3,7 +3,7 @@ package entities;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomGenerator {
-    public static long randomGenerator(int min, int max) {
-        return ThreadLocalRandom.current().nextLong(min, max + 1);
+    public static long randomGenerator() {
+        return ThreadLocalRandom.current().nextLong() & Long.MAX_VALUE;
     }
 }
