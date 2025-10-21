@@ -44,7 +44,7 @@ public class BubbleSort {
 
         System.out.println("\n");
 
-        System.out.printf("TEMPO DE EXECUÇÃO:\n");
+        System.out.print("TEMPO DE EXECUÇÃO:\n");
 
         System.out.printf("Tempo 1: %dms\n" +
                 "Tempo 2: %dms\n", tempo1, tempo2);

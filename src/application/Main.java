@@ -2,10 +2,7 @@ package application;
 
 
 import entities.BubbleSort;
-import entities.RandomGenerator;
 
-import java.sql.SQLOutput;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
