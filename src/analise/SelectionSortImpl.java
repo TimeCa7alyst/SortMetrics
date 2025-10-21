@@ -8,7 +8,6 @@ public class SelectionSortImpl {
     public void piorCasoSelectionSort(int quant) {
 
         long[] vet = new long[quant];
-        vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = (quant - 1) - i;

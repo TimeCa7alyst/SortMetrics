@@ -10,7 +10,7 @@ public class BubbleSortImpl {
 
         long[] vet = new long[quant];
 
-        vet = new long[quant];
+        //vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = (quant - 1) - i;
@@ -36,8 +36,6 @@ public class BubbleSortImpl {
 
         long[] vet = new long[quant];
 
-        vet = new long[quant];
-
         for (int i = 0; i < quant; i++) {
             vet[i] = i;
         }
@@ -60,7 +58,7 @@ public class BubbleSortImpl {
 
         long[] vet = new long[quant];
 
-        vet = new long[quant];
+        //vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = RandomGenerator.randomGenerator();
