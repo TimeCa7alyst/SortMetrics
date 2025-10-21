@@ -48,21 +48,33 @@ public class Main {
 
             switch (algoritmo) {
                 case "bubble sort", "bsort", "bubble", "b", "buble sort":
-                    BubbleSort bSort = new BubbleSort(quant, vet);
-                    bSort.bubbleSort();
-                    bSort.bSortPrint();
+                    BubbleSortImpl bubbleSort = new BubbleSortImpl();
+
+                    System.out.println("||||| Bubble Sort |||||\n");
+
+                    bubbleSort.melhorCasoBubbleSort(quant, vet);
+                    bubbleSort.medioCasoBubbleSort(quant, vet);
+                    bubbleSort.piorCasoBubbleSort(quant, vet);
                     break;
 
                 case "insertion sort", "isort", "insertion", "i":
-                    InsertionSort iSort = new InsertionSort(quant, vet);
-                    iSort.insertionSort();
-                    iSort.insertionSortPrint();
+                    InsertionSortImpl insertionSort = new InsertionSortImpl();
+
+                    System.out.println("||||| Insertion Sort |||||\n");
+
+                    insertionSort.melhorCasoInsertionSort(quant, vet);
+                    insertionSort.medioInsertionSort(quant, vet);
+                    insertionSort.piorCasoInsertionSort(quant, vet);
                     break;
 
                 case "selection sort", "ssort", "selection", "s":
-                    SelectionSort sSort = new SelectionSort(quant, vet);
-                    sSort.selectionSort();
-                    sSort.selectionSortPrint();
+                    SelectionSortImpl selectionSort = new SelectionSortImpl();
+
+                    System.out.println("||||| Selection Sort |||||\n");
+
+                    selectionSort.melhorCasoSelectionSort(quant, vet);
+                    selectionSort.medioCasoSelectionSort(quant, vet);
+                    selectionSort.piorCasoSelectionSort(quant, vet);
                     break;
 
                 default:
