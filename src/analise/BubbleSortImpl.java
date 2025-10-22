@@ -5,12 +5,9 @@ import util.RandomGenerator;
 
 public class BubbleSortImpl {
 
-
     public void piorCasoBubbleSort(int quant) {
 
         long[] vet = new long[quant];
-
-        //vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = (quant - 1) - i;
@@ -28,9 +25,8 @@ public class BubbleSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        bubbleSort.bSortPrint();
+        bubbleSort.bSortReport();
     }
-
 
     public void melhorCasoBubbleSort(int quant) {
 
@@ -51,14 +47,12 @@ public class BubbleSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        bubbleSort.bSortPrint();
+        bubbleSort.bSortReport();
     }
 
     public void medioCasoBubbleSort(int quant) {
 
         long[] vet = new long[quant];
-
-        //vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = RandomGenerator.randomGenerator();
@@ -72,11 +66,10 @@ public class BubbleSortImpl {
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-
         System.out.println("Médio caso: ");
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        bubbleSort.bSortPrint();
+        bubbleSort.bSortReport();
     }
 }

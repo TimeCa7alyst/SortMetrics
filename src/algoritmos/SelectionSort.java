@@ -15,7 +15,6 @@ public class SelectionSort {
         int min;
         long temp;
 
-
         for (int i = 0; i < vet.length - 1; i++) {
             min = i;
             for (int j = (i + 1); j < vet.length; j++) {
@@ -33,12 +32,20 @@ public class SelectionSort {
         }
     }
 
-    public void selectionSortPrint() {
+    public void selectionSortReport() {
 
         System.out.println("Número de comparações: " + numComparacoes);
-        System.out.println("Número de trocas:" + numTrocas);
+        System.out.println("Número de trocas: " + numTrocas);
         System.out.println("É estável: Não");
         System.out.println("------------------------------------------");
+        System.out.println();
+    }
+
+    public void sSortManualPrint(long[] vet) {
+        System.out.println("VETOR ORDENADO");
+        for (int i = 0; i < vet.length; i++) {
+            System.out.printf("%d -> ", vet[i]);
+        }
         System.out.println();
     }
 }

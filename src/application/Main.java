@@ -1,6 +1,9 @@
 package application;
 
 
+import algoritmos.BubbleSort;
+import algoritmos.InsertionSort;
+import algoritmos.SelectionSort;
 import analise.BubbleSortImpl;
 import analise.InsertionSortImpl;
 import analise.SelectionSortImpl;
@@ -11,6 +14,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        int quant;
         Scanner sc = new Scanner(System.in);
 
         String algoritmo;
@@ -28,19 +32,36 @@ public class Main {
                 System.exit(0);
             }
 
+            while (true) {
+                System.out.println("Quantidade de números para serem ordenados:");
+                try {
+                    quant = Integer.parseInt(sc.nextLine());
+                    if (quant < 0) {
+                        System.out.println("||| Quantidade deve ser maior que zero! |||\n");
+                    } else {
+                        break;
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("||| Entrada inválida |||");
+                }
+            }
 
-            System.out.println("quantidade de números para serem ordenados:");
-            int quant = Integer.parseInt(sc.nextLine());
-
-
-            DefineTipo defTipo = new DefineTipo();
+            DefineTipoQuantidade defTipo = new DefineTipoQuantidade();
             defTipo.defineTipo(quant);
             long[] vet = new long[quant];
 
-            if (Objects.equals(String.valueOf(defTipo.getTipo()), "PEQUENA")) {
+            if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+
                 for (int i = 0; i < quant; i++) {
-                    System.out.printf("Digite o %d valor: ", (i + 1));
-                    vet[i] = Long.parseLong(sc.nextLine());
+                    while (true) {
+                        try {
+                            System.out.printf("Digite o %d valor: ", (i + 1));
+                            vet[i] = Long.parseLong(sc.nextLine());
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("||| Entrada Inválida |||");
+                        }
+                    }
                 }
             } else {
 
@@ -53,31 +74,49 @@ public class Main {
                 case "bubble sort", "bsort", "bubble", "b", "buble sort":
                     BubbleSortImpl bubbleSort = new BubbleSortImpl();
 
-                    System.out.println("||||| Bubble Sort |||||\n");
+                    System.out.println("\n||||| Bubble Sort |||||\n");
 
                     bubbleSort.melhorCasoBubbleSort(quant);
                     bubbleSort.medioCasoBubbleSort(quant);
                     bubbleSort.piorCasoBubbleSort(quant);
+
+                    if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                        BubbleSort bSortManual = new BubbleSort(quant, vet);
+                        bSortManual.bubbleSort();
+                        bSortManual.bSortManualPrint(vet);
+                    }
                     break;
 
                 case "insertion sort", "isort", "insertion", "i":
                     InsertionSortImpl insertionSort = new InsertionSortImpl();
 
-                    System.out.println("||||| Insertion Sort |||||\n");
+                    System.out.println("\n||||| Insertion Sort |||||\n");
 
                     insertionSort.melhorCasoInsertionSort(quant);
                     insertionSort.medioInsertionSort(quant);
                     insertionSort.piorCasoInsertionSort(quant);
+
+                    if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                        InsertionSort iSortManual = new InsertionSort(quant, vet);
+                        iSortManual.insertionSort();
+                        iSortManual.iSortManualPrint(vet);
+                    }
                     break;
 
                 case "selection sort", "ssort", "selection", "s":
                     SelectionSortImpl selectionSort = new SelectionSortImpl();
 
-                    System.out.println("||||| Selection Sort |||||\n");
+                    System.out.println("\n||||| Selection Sort |||||\n");
 
                     selectionSort.melhorCasoSelectionSort(quant);
                     selectionSort.medioCasoSelectionSort(quant);
                     selectionSort.piorCasoSelectionSort(quant);
+
+                    if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                        SelectionSort sSortManual = new SelectionSort(quant, vet);
+                        sSortManual.selectionSort();
+                        sSortManual.sSortManualPrint(vet);
+                    }
                     break;
 
                 default:
@@ -95,8 +134,9 @@ public class Main {
             } else {
                 System.out.println("-----------------------------------\n");
             }
+        }
 
-        } while (true);
+        while (true);
         System.out.println("Obrigado por utilizar nosso programa :)\n\n" +
                 "Denis Alves\n" +
                 "Ulisses Aguiar\n" +

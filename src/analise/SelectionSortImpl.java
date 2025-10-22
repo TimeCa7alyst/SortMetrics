@@ -25,7 +25,7 @@ public class SelectionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        selectionSort.selectionSortPrint();
+        selectionSort.selectionSortReport();
     }
 
     public void melhorCasoSelectionSort(int quant) {
@@ -48,7 +48,7 @@ public class SelectionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        selectionSort.selectionSortPrint();
+        selectionSort.selectionSortReport();
     }
 
     public void medioCasoSelectionSort(int quant) {
@@ -67,11 +67,10 @@ public class SelectionSortImpl {
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-
         System.out.println("Médio caso: ");
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        selectionSort.selectionSortPrint();
+        selectionSort.selectionSortReport();
     }
 }

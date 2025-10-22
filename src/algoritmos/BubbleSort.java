@@ -14,7 +14,6 @@ public class BubbleSort {
     public void bubbleSort() {
         long temp;
 
-
         for (int i = 0; i < vet.length; i++) {
             for (int j = 0; j < vet.length - (i + 1); j++) {
                 numComparacoes++;
@@ -28,12 +27,20 @@ public class BubbleSort {
         }
     }
 
-    public void bSortPrint() {
+    public void bSortReport() {
 
         System.out.println("Número de comparações: " + numComparacoes);
-        System.out.println("Número de trocas:" + numTrocas);
+        System.out.println("Número de trocas: " + numTrocas);
         System.out.println("É estável: Sim");
         System.out.println("------------------------------------------");
+        System.out.println();
+    }
+
+    public void bSortManualPrint(long[] vet) {
+        System.out.println("VETOR ORDENADO");
+        for (int i = 0; i < vet.length; i++) {
+            System.out.printf("%d -> ", vet[i]);
+        }
         System.out.println();
     }
 }

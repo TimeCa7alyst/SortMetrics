@@ -9,7 +9,6 @@ public class InsertionSortImpl {
 
         long[] vet = new long[quant];
 
-
         for (int i = 0; i < quant; i++) {
             vet[i] = (quant - 1) - i;
         }
@@ -26,7 +25,7 @@ public class InsertionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        insertionSort.insertionSortPrint();
+        insertionSort.insertionSortReport();
     }
 
     public void melhorCasoInsertionSort(int quant) {
@@ -50,7 +49,7 @@ public class InsertionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        insertionSort.insertionSortPrint();
+        insertionSort.insertionSortReport();
     }
 
     public void medioInsertionSort(int quant) {
@@ -70,11 +69,10 @@ public class InsertionSortImpl {
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-
         System.out.println("Médio caso: ");
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        insertionSort.insertionSortPrint();
+        insertionSort.insertionSortReport();
     }
 }
