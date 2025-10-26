@@ -15,6 +15,7 @@ import java.io.PrintStream;
 
 public class OrdenacaoController {
 
+    private JFrame mainFrame;
     private JPanel mainPanel;
     private CardLayout cardLayout;
     private SelectView selectView;
@@ -30,11 +31,10 @@ public class OrdenacaoController {
     private String selectedAlgo;
     private int quant;
     private long[] vet;
-
-
-    public OrdenacaoController(JPanel mainPanel, CardLayout cardLayout, SelectView selectView,
+    public OrdenacaoController(JFrame mainFrame,JPanel mainPanel, CardLayout cardLayout, SelectView selectView,
                                QuantityInputVIew quantityInputView, ManualView manualView,
                                AnalysisView analysisView, ExitView exitView) {
+        this.mainFrame = mainFrame;
         this.mainPanel = mainPanel;
         this.cardLayout = cardLayout;
         this.selectView = selectView;
@@ -75,12 +75,13 @@ public class OrdenacaoController {
     private void onSelectViewNext() {
         this.selectedAlgo = (String) selectView.getDropDown1().getSelectedItem();
         cardLayout.show(mainPanel, "Segunda tela");
+        repackWindow();
     }
 
     private void onSelectViewExit() {
         cardLayout.show(mainPanel, "Quarta Tela");
+        repackWindow();
     }
-
     private void onQuantityInputViewNext() {
         this.quant = Integer.parseInt(quantityInputView.getTextField1().getText());
 
@@ -93,16 +94,16 @@ public class OrdenacaoController {
         } else if (this.quant > 10) {
             this.vet = null;
             runAnalysis();
-            cardLayout.show(mainPanel, "Terceira tela");
+            cardLayout.show(mainPanel, "Terceira Tela");
         } else {
             JOptionPane.showMessageDialog(mainPanel, "Entrada inválida!");
         }
+        repackWindow();
     }
-
     private void onQuantityInputViewExit() {
         cardLayout.show(mainPanel, "Quarta Tela");
+        repackWindow();
     }
-
     private void onManualViewNext() {
         String input = manualView.getTextField1().getText();
         if (parseInputManual(input)) {
@@ -111,19 +112,22 @@ public class OrdenacaoController {
         } else {
             JOptionPane.showMessageDialog(mainPanel, "Entrada inválida");
         }
+        repackWindow();
     }
     private void onManualViewExit() {
         cardLayout.show(mainPanel, "Quarta Tela");
+        repackWindow();
     }
 
     private void onAnalysisViewNext() {
         cardLayout.show(mainPanel, "Primeira Tela");
+        repackWindow();
     }
 
     private void onAnalysisViewExit() {
         cardLayout.show(mainPanel, "Quarta Tela");
+        repackWindow();
     }
-
     private boolean parseInputManual(String input) {
         String[] vet = input.trim().split("[\\s,]+");
         if (vet.length != this.quant) {
@@ -134,6 +138,10 @@ public class OrdenacaoController {
             }
             return true;
         }
+    }
+    private void repackWindow() {
+        mainFrame.pack();
+        mainFrame.setLocationRelativeTo(null);
     }
 
     private void runAnalysis() {
@@ -166,7 +174,6 @@ public class OrdenacaoController {
         }
 
         if (this.vet != null) {
-            System.out.println("\n||||| Análise com Vetor Manual |||||\n");
 
             if (this.selectedAlgo.equals("Bubble Sort")) {
                 BubbleSort bSortManual = new BubbleSort(this.quant, this.vet);

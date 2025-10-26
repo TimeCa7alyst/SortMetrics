@@ -42,7 +42,7 @@ public class SelectionSort {
     }
 
     public void sSortManualPrint(long[] vet) {
-        System.out.println("VETOR ORDENADO");
+        System.out.println("VETOR ORDENADO: ");
         for (int i = 0; i < vet.length; i++) {
             System.out.printf("%d -> ", vet[i]);
         }

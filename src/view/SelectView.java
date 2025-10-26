@@ -11,8 +11,8 @@ public class SelectView {
 
     public SelectView() {
         dropDown1.addItem("Bubble Sort");
-        dropDown1.addItem("Insertion Sort");
         dropDown1.addItem("Selection Sort");
+        dropDown1.addItem("Insertion Sort");
     }
 
 

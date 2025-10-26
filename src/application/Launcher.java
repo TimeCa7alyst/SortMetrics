@@ -10,7 +10,7 @@ public class Launcher {
 
     public static void main(String[] args) {
 
-        JFrame metodosOrdenacaoFrame = new JFrame();
+        JFrame metodosOrdenacaoFrame = new JFrame("Algoritmos de Ordenação");
 
         CardLayout layout = new CardLayout();
 
@@ -33,12 +33,14 @@ public class Launcher {
         mainPanel.add(exitView.getMainPanel(), "Quarta Tela");
 
 
-        OrdenacaoController controller = new OrdenacaoController(mainPanel, layout,
+        OrdenacaoController controller = new OrdenacaoController(metodosOrdenacaoFrame, mainPanel, layout,
                 selectView,quantityInputView, manualView, analysisView, exitView);
 
         metodosOrdenacaoFrame.setContentPane(mainPanel);
         metodosOrdenacaoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        metodosOrdenacaoFrame.setResizable(false);
         metodosOrdenacaoFrame.pack();
+        metodosOrdenacaoFrame.setLocationRelativeTo(null);
         metodosOrdenacaoFrame.setVisible(true);
 
         layout.show(mainPanel, "Primeira Tela");
