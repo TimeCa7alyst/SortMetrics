@@ -1,0 +1,69 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {comp label1:::p::p, comp scrollPane1:::p::p, seq {space :194:194:p, comp label2:::p::p}, seq {space :86:86:p, comp continuarButton2:::p::p, space :172:172:p, comp sairButton4:::p::p}}"
+			"$verticalGroup": "par l {seq {comp label1:::p::p, space :0:0:p, comp scrollPane1:::p:332:p, space :0:0:p, comp label2:::p::p, par l {comp continuarButton2:::p::p, comp sairButton4:::p::p}}}"
+		} ) {
+			name: "this"
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "textArea1"
+					"columns": 0
+					"editable": false
+					"enabled": true
+					"focusable": true
+					"lineWrap": true
+					"$client.html.disable": true
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Análise do algoritmo"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "Deseja continuar?"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "continuarButton2"
+				"autoscrolls": false
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"borderPainted": true
+				"contentAreaFilled": true
+				"doubleBuffered": true
+				"name": ""
+				"selected": false
+				"text": "Sim"
+				"verticalAlignment": 0
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "sairButton4"
+				"autoscrolls": false
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"borderPainted": true
+				"contentAreaFilled": true
+				"doubleBuffered": true
+				"name": ""
+				"selected": false
+				"text": "Não"
+				"verticalAlignment": 0
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 500, 400 )
+		} )
+	}
+}

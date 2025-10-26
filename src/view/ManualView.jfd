@@ -1,0 +1,46 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :20:20:p, comp textField1:::p:493:p}, comp labelTitulo:::p:2:p, seq {space :103:103:p, comp analisarButton2:::p::p, space :166:166:p, comp sairButton3:::p::p}}"
+			"$verticalGroup": "par l {seq {space :25:25:p, comp textField1:::p::p, space :26:26:p, comp labelTitulo:::p:2:p, space :23:23:p, par l {comp analisarButton2:::p::p, comp sairButton3:::p::p}}}"
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelTitulo"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField1"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "analisarButton2"
+				"autoscrolls": false
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"borderPainted": true
+				"contentAreaFilled": true
+				"doubleBuffered": true
+				"name": ""
+				"selected": false
+				"text": "Analisar"
+				"verticalAlignment": 0
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "sairButton3"
+				"autoscrolls": false
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"borderPainted": true
+				"contentAreaFilled": true
+				"doubleBuffered": true
+				"name": ""
+				"selected": false
+				"text": "Sair"
+				"verticalAlignment": 0
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 514, 171 )
+		} )
+	}
+}

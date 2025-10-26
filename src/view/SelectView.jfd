@@ -1,0 +1,49 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :93:93:p, comp label1:::p::p, space :114:114:p, comp dropDown1:::p:279:p}, seq {space :167:167:p, comp continuarButton:::p::p, space :268:268:p, comp sairButton:::p::p}}"
+			"$verticalGroup": "par l {seq {space :41:41:p, par l {seq {space :8:8:p, comp label1:::p::p}, comp dropDown1:::p::p}, space :82:82:p, par l {comp continuarButton:::p::p, comp sairButton:::p::p}}}"
+		} ) {
+			name: "this"
+			"visible": true
+			"border": new javax.swing.border.TitledBorder( new javax.swing.border.EtchedBorder( 1, null, null ), "" )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "continuarButton"
+				"autoscrolls": false
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"borderPainted": true
+				"contentAreaFilled": true
+				"doubleBuffered": true
+				"name": ""
+				"selected": false
+				"text": "Continuar"
+				"verticalAlignment": 0
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "sairButton"
+				"autoscrolls": false
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"borderPainted": true
+				"contentAreaFilled": true
+				"doubleBuffered": true
+				"name": ""
+				"selected": false
+				"text": "Sair"
+				"verticalAlignment": 0
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Escolha um algoritmo de ordenação"
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "dropDown1"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 714, 236 )
+		} )
+	}
+}
