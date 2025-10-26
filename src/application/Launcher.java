@@ -16,21 +16,21 @@ public class Launcher {
 
         JPanel mainPanel = new JPanel(layout);
 
-        SelectView selectView = new SelectView();
+        SelectViewNetbeans selectView = new SelectViewNetbeans();
 
-        QuantityInputVIew quantityInputView = new QuantityInputVIew();
+        QuantityInputViewNetbeans quantityInputView = new QuantityInputViewNetbeans();
 
-        ManualView manualView = new ManualView();
+        ManualViewNetbeans manualView = new ManualViewNetbeans();
 
-        AnalysisView analysisView = new AnalysisView();
+        AnalysisViewNetbeans analysisView = new AnalysisViewNetbeans();
 
-        ExitView exitView = new ExitView();
+        ExitViewNetbeans exitView = new ExitViewNetbeans();
 
-        mainPanel.add(selectView.getMainPanel(), "Primeira Tela");
-        mainPanel.add(quantityInputView.getMainPanel(), "Segunda tela");
-        mainPanel.add(manualView.getMainPanel(), "Tela opcional");
-        mainPanel.add(analysisView.getMainPanel(), "Terceira Tela");
-        mainPanel.add(exitView.getMainPanel(), "Quarta Tela");
+        mainPanel.add(selectView, "Primeira Tela");
+        mainPanel.add(quantityInputView, "Segunda tela");
+        mainPanel.add(manualView, "Tela opcional");
+        mainPanel.add(analysisView, "Terceira Tela");
+        mainPanel.add(exitView, "Quarta Tela");
 
 
         OrdenacaoController controller = new OrdenacaoController(metodosOrdenacaoFrame, mainPanel, layout,
@@ -39,9 +39,7 @@ public class Launcher {
         metodosOrdenacaoFrame.setContentPane(mainPanel);
         metodosOrdenacaoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Dimension tamanhoTela = selectView.getMainPanel().getPreferredSize();
-
-        metodosOrdenacaoFrame.setSize(selectView.getWidth(), selectView.getHeight());
+        metodosOrdenacaoFrame.pack();
 
         metodosOrdenacaoFrame.setResizable(false);
         metodosOrdenacaoFrame.setLocationRelativeTo(null);

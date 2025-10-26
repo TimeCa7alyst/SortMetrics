@@ -18,11 +18,11 @@ public class OrdenacaoController {
     private JFrame mainFrame;
     private JPanel mainPanel;
     private CardLayout cardLayout;
-    private SelectView selectView;
-    private QuantityInputVIew quantityInputView;
-    private ManualView manualView;
-    private AnalysisView analysisView;
-    private ExitView exitView;
+    private SelectViewNetbeans selectView;
+    private QuantityInputViewNetbeans quantityInputView;
+    private ManualViewNetbeans manualView;
+    private AnalysisViewNetbeans analysisView;
+    private ExitViewNetbeans exitView;
 
     private BubbleSortImpl bubbleSort;
     private SelectionSortImpl selectionSort;
@@ -36,8 +36,8 @@ public class OrdenacaoController {
     private static final int JANELA_GRANDE_ALTURA_MARGEM = 50;
 
     public OrdenacaoController(JFrame mainFrame, JPanel mainPanel, CardLayout cardLayout,
-                               SelectView selectView, QuantityInputVIew quantityInputView,
-                               ManualView manualView, AnalysisView analysisView, ExitView exitView) {
+                               SelectViewNetbeans selectView, QuantityInputViewNetbeans quantityInputView,
+                               ManualViewNetbeans manualView, AnalysisViewNetbeans analysisView, ExitViewNetbeans exitView) {
         this.mainFrame = mainFrame;
         this.mainPanel = mainPanel;
         this.cardLayout = cardLayout;
@@ -52,73 +52,71 @@ public class OrdenacaoController {
         this.insertionSort = new InsertionSortImpl();
 
         this.selectView.getContinuarButton().addActionListener
-                (e -> onSelectViewNext());
+                (e -> onSelectViewNetbeansNext());
 
         this.selectView.getSairButton().addActionListener
-                (e -> onSelectViewExit());
+                (e -> onSelectViewNetbeansExit());
 
         this.quantityInputView.getAnalisarButton().addActionListener
-                (e -> onQuantityInputViewNext());
+                (e -> onQuantityInputViewNetbeansNext());
 
         this.quantityInputView.getSairButton2().addActionListener
-                (e -> onQuantityInputViewExit());
+                (e -> onQuantityInputViewNetbeansExit());
 
         this.manualView.getAnalisarButton2().addActionListener
-                (e -> onManualViewNext());
+                (e -> onManualViewNetbeansNext());
 
         this.manualView.getSairButton3().addActionListener
-                (e -> onManualViewExit());
+                (e -> onManualViewNetbeansExit());
 
         this.analysisView.getContinuarButton2().addActionListener
-                (e -> onAnalysisViewNext());
+                (e -> onAnalysisViewNetbeansNext());
 
         this.analysisView.getSairButton4().addActionListener
-                (e -> onAnalysisViewExit());
+                (e -> onAnalysisViewNetbeansExit());
     }
 
     private void showSmallScreen(String screenName, JPanel padraoPanel) {
-        mainFrame.setResizable(false);
-        cardLayout.show(mainPanel, screenName);
-        Dimension panelPrefSize = padraoPanel.getPreferredSize();
-        mainFrame.setSize(panelPrefSize.width + JANELA_PEQUENA_LARGURA_MARGEM,
-                panelPrefSize.height + JANELA_GRANDE_ALTURA_MARGEM);
-        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setResizable(true);
+    cardLayout.show(mainPanel, screenName);
+    mainFrame.pack();
+    mainFrame.setLocationRelativeTo(null);
     }
     private void showLargeScreen(String screenName) {
         mainFrame.setResizable(true);
-        cardLayout.show(mainPanel, screenName);
-        mainFrame.setSize(analysisView.getWidth(), analysisView.getHeight());
-        mainFrame.setLocationRelativeTo(null);
+    cardLayout.show(mainPanel, screenName);
+    mainFrame.pack();
+    mainFrame.setLocationRelativeTo(null);
     }
 
-    private void onSelectViewNext() {
+    private void onSelectViewNetbeansNext() {
         this.selectedAlgo = (String) selectView.getDropDown1().getSelectedItem();
-        showSmallScreen("Segunda tela", quantityInputView.getMainPanel());
+        showSmallScreen("Segunda tela", quantityInputView);
     }
 
-    private void onSelectViewExit() {
-        showSmallScreen("Quarta Tela", exitView.getMainPanel());
+    private void onSelectViewNetbeansExit() {
+        showSmallScreen("Quarta Tela", exitView);
         exitTimer();
     }
-    private void onQuantityInputViewExit() {
-        showSmallScreen("Quarta Tela", exitView.getMainPanel());
-        exitTimer();
-    }
-
-    private void onManualViewExit() {
-        showSmallScreen("Quarta Tela", exitView.getMainPanel());
+    private void onQuantityInputViewNetbeansExit() {
+        showSmallScreen("Quarta Tela", exitView);
         exitTimer();
     }
 
-    private void onAnalysisViewNext() {
-        showSmallScreen("Primeira Tela", selectView.getMainPanel());
-    }
-
-    private void onAnalysisViewExit() {
-        showSmallScreen("Quarta Tela", exitView.getMainPanel());
+    private void onManualViewNetbeansExit() {
+        showSmallScreen("Quarta Tela", exitView);
         exitTimer();
     }
-    private void onQuantityInputViewNext() {
+
+    private void onAnalysisViewNetbeansNext() {
+        showSmallScreen("Primeira Tela", selectView);
+    }
+
+    private void onAnalysisViewNetbeansExit() {
+        showSmallScreen("Quarta Tela", exitView);
+        exitTimer();
+    }
+    private void onQuantityInputViewNetbeansNext() {
         try {
             this.quant = Integer.parseInt(quantityInputView.getTextField1().getText());
 
@@ -127,7 +125,7 @@ public class OrdenacaoController {
                 manualView.getLabelTitulo().setText("Digite os " + this.quant
                         + " números separados por espaços ou vírgulas");
                 manualView.getTextField1().setText("");
-                showSmallScreen("Tela opcional", manualView.getMainPanel());
+                showSmallScreen("Tela opcional", manualView);
             } else if (this.quant > 10) {
                 this.vet = null;
                 rodarAnalysis();
@@ -142,7 +140,7 @@ public class OrdenacaoController {
         }
     }
 
-    private void onManualViewNext() {
+    private void onManualViewNetbeansNext() {
         String input = manualView.getTextField1().getText();
         if (parseInputManual(input)) {
             rodarAnalysis();
