@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -15,14 +10,16 @@ import javax.swing.JTextArea;
  */
 public class AnalysisViewNetbeans extends javax.swing.JPanel {
     
-   
-
     /**
      * Creates new form AnalysisViewNetbeans
      */
     public AnalysisViewNetbeans() {
         initComponents();
         textArea1.setEditable(false);
+        textArea1.setColumns(10);
+        textArea1.setLineWrap(true);
+        textArea1.setRows(5);
+        scrollPane1.setViewportView(textArea1);
     }
 
     /**
@@ -41,16 +38,25 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
         sairButton4 = new javax.swing.JButton();
         label1 = new javax.swing.JLabel();
 
+        setMaximumSize(null);
+        setMinimumSize(null);
+
         textArea1.setColumns(20);
-        textArea1.setRows(5);
+        textArea1.setLineWrap(true);
+        textArea1.setRows(20);
+        textArea1.setMargin(new java.awt.Insets(2, 20, 2, 6));
+        textArea1.setMaximumSize(null);
+        textArea1.setMinimumSize(null);
         scrollPane1.setViewportView(textArea1);
 
         label2.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         label2.setText("Deseja Continuar?");
 
         continuarButton2.setText("Sim");
+        continuarButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         sairButton4.setText("Não");
+        sairButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         label1.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         label1.setText("Análise do Algoritmo");
@@ -59,21 +65,23 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPane1)
+            .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(label2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(continuarButton2)
-                        .addGap(32, 32, 32)
-                        .addComponent(sairButton4))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(label1)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                        .addComponent(label1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(label2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(continuarButton2)
+                                .addGap(32, 32, 32)
+                                .addComponent(sairButton4)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,14 +89,14 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(label1)
                 .addGap(2, 2, 2)
-                .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
                 .addComponent(label2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(continuarButton2)
                     .addComponent(sairButton4))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 

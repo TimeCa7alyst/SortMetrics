@@ -32,9 +32,6 @@ public class OrdenacaoController {
     private int quant;
     private long[] vet;
 
-    private static final int JANELA_PEQUENA_LARGURA_MARGEM = 30;
-    private static final int JANELA_GRANDE_ALTURA_MARGEM = 50;
-
     public OrdenacaoController(JFrame mainFrame, JPanel mainPanel, CardLayout cardLayout,
                                SelectViewNetbeans selectView, QuantityInputViewNetbeans quantityInputView,
                                ManualViewNetbeans manualView, AnalysisViewNetbeans analysisView, ExitViewNetbeans exitView) {
@@ -77,13 +74,14 @@ public class OrdenacaoController {
     }
 
     private void showSmallScreen(String screenName, JPanel padraoPanel) {
-        mainFrame.setResizable(true);
+        mainFrame.setResizable(false);
     cardLayout.show(mainPanel, screenName);
-    mainFrame.pack();
+    Dimension tamanhoInicial = selectView.getPreferredSize();
+    mainFrame.setSize(tamanhoInicial.width + 20, tamanhoInicial.height + 40);
     mainFrame.setLocationRelativeTo(null);
     }
     private void showLargeScreen(String screenName) {
-        mainFrame.setResizable(true);
+        mainFrame.setResizable(false);
     cardLayout.show(mainPanel, screenName);
     mainFrame.pack();
     mainFrame.setLocationRelativeTo(null);

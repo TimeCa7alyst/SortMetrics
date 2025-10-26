@@ -39,7 +39,9 @@ public class Launcher {
         metodosOrdenacaoFrame.setContentPane(mainPanel);
         metodosOrdenacaoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        metodosOrdenacaoFrame.pack();
+        Dimension tamanhoInicial = selectView.getPreferredSize();
+        metodosOrdenacaoFrame.setSize(tamanhoInicial.width + 20, tamanhoInicial.height + 40);
+        metodosOrdenacaoFrame.setMaximumSize(metodosOrdenacaoFrame.getPreferredSize()); 
 
         metodosOrdenacaoFrame.setResizable(false);
         metodosOrdenacaoFrame.setLocationRelativeTo(null);
