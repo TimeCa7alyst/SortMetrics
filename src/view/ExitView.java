@@ -15,6 +15,7 @@ public class ExitView {
         String curso = "BSI | Segundo Semestre<br>" +
                 "2025";
         cursoLabel.setText("<html>" + curso + "</html>");
+
     }
 
     public JPanel getMainPanel() {

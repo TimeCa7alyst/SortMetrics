@@ -38,14 +38,10 @@ public class Launcher {
 
         metodosOrdenacaoFrame.setContentPane(mainPanel);
         metodosOrdenacaoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        metodosOrdenacaoFrame.setResizable(false);
         metodosOrdenacaoFrame.pack();
         metodosOrdenacaoFrame.setLocationRelativeTo(null);
         metodosOrdenacaoFrame.setVisible(true);
 
         layout.show(mainPanel, "Primeira Tela");
-
-
-
     }
 }

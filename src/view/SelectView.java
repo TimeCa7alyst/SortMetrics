@@ -14,8 +14,6 @@ public class SelectView {
         dropDown1.addItem("Selection Sort");
         dropDown1.addItem("Insertion Sort");
     }
-
-
     public JPanel getMainPanel() {
         return mainPanel;
     }

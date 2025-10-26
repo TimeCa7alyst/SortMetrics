@@ -10,11 +10,11 @@ public class AnalysisView {
     private JButton sairButton4;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = (int) (screenSize.width * 0.7);
-    int height = (int) (screenSize.height * 0.7);
+    int width = (int) (screenSize.width * 0.4);
+    int height = (int) (screenSize.height * 0.9);
 
     public AnalysisView() {
-        textArea1.setPreferredSize(new Dimension(screenSize.width, screenSize.height));
+        textArea1.setEditable(false);
     }
 
     public JPanel getMainPanel() {
@@ -31,5 +31,13 @@ public class AnalysisView {
 
     public JButton getSairButton4() {
         return sairButton4;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

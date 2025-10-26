@@ -31,7 +31,8 @@ public class OrdenacaoController {
     private String selectedAlgo;
     private int quant;
     private long[] vet;
-    public OrdenacaoController(JFrame mainFrame,JPanel mainPanel, CardLayout cardLayout, SelectView selectView,
+
+    public OrdenacaoController(JFrame mainFrame, JPanel mainPanel, CardLayout cardLayout, SelectView selectView,
                                QuantityInputVIew quantityInputView, ManualView manualView,
                                AnalysisView analysisView, ExitView exitView) {
         this.mainFrame = mainFrame;
@@ -47,98 +48,125 @@ public class OrdenacaoController {
         this.selectionSort = new SelectionSortImpl();
         this.insertionSort = new InsertionSortImpl();
 
-        //SelectView
         this.selectView.getContinuarButton().addActionListener
                 (e -> onSelectViewNext());
         this.selectView.getSairButton().addActionListener
                 (e -> onSelectViewExit());
-
-        //QuantityInputView
         this.quantityInputView.getAnalisarButton().addActionListener
                 (e -> onQuantityInputViewNext());
         this.quantityInputView.getSairButton2().addActionListener
                 (e -> onQuantityInputViewExit());
-
-        //ManualView
         this.manualView.getAnalisarButton2().addActionListener
                 (e -> onManualViewNext());
         this.manualView.getSairButton3().addActionListener
                 (e -> onManualViewExit());
-
-        //AnalysisView
         this.analysisView.getContinuarButton2().addActionListener
                 (e -> onAnalysisViewNext());
         this.analysisView.getSairButton4().addActionListener
                 (e -> onAnalysisViewExit());
     }
 
+    private void showSmallScreen(String screenName) {
+        mainFrame.setResizable(false);
+        cardLayout.show(mainPanel, screenName);
+        repackWindow();
+    }
+
     private void onSelectViewNext() {
         this.selectedAlgo = (String) selectView.getDropDown1().getSelectedItem();
-        cardLayout.show(mainPanel, "Segunda tela");
-        repackWindow();
+        showSmallScreen("Segunda tela");
     }
 
     private void onSelectViewExit() {
-        cardLayout.show(mainPanel, "Quarta Tela");
-        repackWindow();
-    }
-    private void onQuantityInputViewNext() {
-        this.quant = Integer.parseInt(quantityInputView.getTextField1().getText());
-
-        if (this.quant > 0 && this.quant <= 10) {
-            this.vet = new long[this.quant];
-            manualView.getLabelTitulo().setText("Digite os " + this.quant
-                    + " números separados por espaços");
-            manualView.getTextField1().setText("");
-            cardLayout.show(mainPanel, "Tela opcional");
-        } else if (this.quant > 10) {
-            this.vet = null;
-            runAnalysis();
-            cardLayout.show(mainPanel, "Terceira Tela");
-        } else {
-            JOptionPane.showMessageDialog(mainPanel, "Entrada inválida!");
-        }
-        repackWindow();
+        showSmallScreen("Quarta Tela");
+        exitTimer();
     }
     private void onQuantityInputViewExit() {
-        cardLayout.show(mainPanel, "Quarta Tela");
-        repackWindow();
+        showSmallScreen("Quarta Tela");
+        exitTimer();
     }
-    private void onManualViewNext() {
-        String input = manualView.getTextField1().getText();
-        if (parseInputManual(input)) {
-            runAnalysis();
-            cardLayout.show(mainPanel, "Terceira Tela");
-        } else {
-            JOptionPane.showMessageDialog(mainPanel, "Entrada inválida");
-        }
-        repackWindow();
-    }
+
     private void onManualViewExit() {
-        cardLayout.show(mainPanel, "Quarta Tela");
-        repackWindow();
+        showSmallScreen("Quarta Tela");
+        exitTimer();
     }
 
     private void onAnalysisViewNext() {
-        cardLayout.show(mainPanel, "Primeira Tela");
-        repackWindow();
+        showSmallScreen("Primeira Tela");
+        exitTimer();
     }
 
     private void onAnalysisViewExit() {
         cardLayout.show(mainPanel, "Quarta Tela");
+        exitTimer();
         repackWindow();
     }
-    private boolean parseInputManual(String input) {
-        String[] vet = input.trim().split("[\\s,]+");
-        if (vet.length != this.quant) {
-            return false;
-        } else {
-            for (int i = 0; i < vet.length; i++) {
-                this.vet[i] = Long.parseLong(vet[i]);
+
+    private void showLargeScreen(String screenName) {
+        mainFrame.setResizable(true);
+        cardLayout.show(mainPanel, screenName);
+        mainFrame.setSize(analysisView.getWidth(), analysisView.getHeight());
+        mainFrame.setLocationRelativeTo(null);
+    }
+
+    private void onQuantityInputViewNext() {
+        try {
+            this.quant = Integer.parseInt(quantityInputView.getTextField1().getText());
+
+            if (this.quant > 0 && this.quant <= 10) {
+                this.vet = new long[this.quant];
+                manualView.getLabelTitulo().setText("Digite os " + this.quant
+                        + " números separados por espaços");
+                manualView.getTextField1().setText("");
+                showSmallScreen("Tela opcional");
+            } else if (this.quant > 10) {
+                this.vet = null;
+                runAnalysis();
+                showLargeScreen("Terceira Tela");
+            } else {
+                JOptionPane.showMessageDialog(mainPanel, "Entrada inválida! A quantidade deve ser maior que 0.");
             }
-            return true;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(mainPanel, "Entrada inválida! Digite um número válido.",
+                    "Erro de Formato", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private void onManualViewNext() {
+        String input = manualView.getTextField1().getText();
+        if (parseInputManual(input)) {
+            runAnalysis();
+            showLargeScreen("Terceira Tela");
+        } else {
+            JOptionPane.showMessageDialog(mainPanel,
+                    "Entrada inválida. Digite " + this.quant + " números separados por espaço.",
+                    "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean parseInputManual(String input) {
+        String[] vetParts = input.trim().split("[\\s,]+");
+        if (vetParts.length != this.quant) {
+            return false;
+        } else {
+            try {
+                for (int i = 0; i < vetParts.length; i++) {
+                    this.vet[i] = Long.parseLong(vetParts[i]);
+                }
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+    }
+    private void exitTimer() {
+        Timer timer = new Timer(3000, e -> {
+            System.exit(0);
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
     private void repackWindow() {
         mainFrame.pack();
         mainFrame.setLocationRelativeTo(null);
@@ -174,21 +202,22 @@ public class OrdenacaoController {
         }
 
         if (this.vet != null) {
-
+            System.out.println("\n||||| Análise com Vetor Manual |||||\n");
+            long[] vetCopy = this.vet.clone();
             if (this.selectedAlgo.equals("Bubble Sort")) {
-                BubbleSort bSortManual = new BubbleSort(this.quant, this.vet);
+                BubbleSort bSortManual = new BubbleSort(this.quant, vetCopy);
                 bSortManual.bubbleSort();
-                bSortManual.bSortManualPrint(this.vet);
-
+                bSortManual.bSortManualPrint(vetCopy);
             } else if (this.selectedAlgo.equals("Insertion Sort")) {
-                InsertionSort iSortManual = new InsertionSort(this.quant, this.vet);
+                long[] vetCopy2 = this.vet.clone();
+                InsertionSort iSortManual = new InsertionSort(this.quant, vetCopy2);
                 iSortManual.insertionSort();
-                iSortManual.iSortManualPrint(this.vet);
-
+                iSortManual.iSortManualPrint(vetCopy2);
             } else if (this.selectedAlgo.equals("Selection Sort")) {
-                SelectionSort sSortManual = new SelectionSort(this.quant, this.vet);
+                long[] vetCopy3 = this.vet.clone();
+                SelectionSort sSortManual = new SelectionSort(this.quant, vetCopy3);
                 sSortManual.selectionSort();
-                sSortManual.sSortManualPrint(this.vet);
+                sSortManual.sSortManualPrint(vetCopy3);
             }
         }
         System.out.flush();
