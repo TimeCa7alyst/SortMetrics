@@ -1,11 +1,11 @@
-package analise;
+package model.analise;
 
-import algoritmos.BubbleSort;
-import util.RandomGenerator;
+import model.algoritmos.InsertionSort;
+import model.util.RandomGenerator;
 
-public class BubbleSortImpl {
+public class InsertionSortImpl {
 
-    public void piorCasoBubbleSort(int quant) {
+    public void piorCasoInsertionSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -13,10 +13,10 @@ public class BubbleSortImpl {
             vet[i] = (quant - 1) - i;
         }
 
-        BubbleSort bubbleSort = new BubbleSort(quant, vet);
+        InsertionSort insertionSort = new InsertionSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        bubbleSort.bubbleSort();
+        insertionSort.insertionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -25,20 +25,22 @@ public class BubbleSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        bubbleSort.bSortReport();
+        insertionSort.insertionSortReport();
     }
 
-    public void melhorCasoBubbleSort(int quant) {
+    public void melhorCasoInsertionSort(int quant) {
 
         long[] vet = new long[quant];
+
+        vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = i;
         }
 
-        BubbleSort bubbleSort = new BubbleSort(quant, vet);
+        InsertionSort insertionSort = new InsertionSort(quant, vet);
         long tempo1 = System.nanoTime();
-        bubbleSort.bubbleSort();
+        insertionSort.insertionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -47,21 +49,22 @@ public class BubbleSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        bubbleSort.bSortReport();
+        insertionSort.insertionSortReport();
     }
 
-    public void medioCasoBubbleSort(int quant) {
+    public void medioInsertionSort(int quant) {
 
         long[] vet = new long[quant];
+        vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = RandomGenerator.randomGenerator();
         }
 
-        BubbleSort bubbleSort = new BubbleSort(quant, vet);
+        InsertionSort insertionSort = new InsertionSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        bubbleSort.bubbleSort();
+        insertionSort.insertionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -70,6 +73,6 @@ public class BubbleSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        bubbleSort.bSortReport();
+        insertionSort.insertionSortReport();
     }
 }

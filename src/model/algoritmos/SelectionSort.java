@@ -1,4 +1,4 @@
-package algoritmos;
+package model.algoritmos;
 
 public class SelectionSort {
 

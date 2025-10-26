@@ -1,33 +1,33 @@
-package algoritmos;
+package model.algoritmos;
 
+public class InsertionSort {
 
-public class BubbleSort {
-
-    private long[] vet;
+    public long[] vet;
     private long numTrocas = 0;
     private long numComparacoes = 0;
 
-    public BubbleSort(int quant, long[] vet) {
+    public InsertionSort(int quant, long[] vet) {
         this.vet = vet;
     }
 
-    public void bubbleSort() {
+    public void insertionSort() {
         long temp;
 
-        for (int i = 0; i < vet.length; i++) {
-            for (int j = 0; j < vet.length - (i + 1); j++) {
-                numComparacoes++;
-                if (vet[j] > vet[j + 1]) {
-                    temp = vet[j];
-                    vet[j] = vet[j + 1];
-                    vet[j + 1] = temp;
-                    numTrocas++;
-                }
+        for (int i = 1; i < vet.length; i++) {
+
+            temp = vet[i];
+            int j = (i - 1);
+            numComparacoes++;
+            while (j >= 0 && vet[j] > temp) {
+                vet[j + 1] = vet[j];
+                numTrocas++;
+                j--;
             }
+            vet[j + 1] = temp;
         }
     }
 
-    public void bSortReport() {
+    public void insertionSortReport() {
 
         System.out.println("Número de comparações: " + numComparacoes);
         System.out.println("Número de trocas: " + numTrocas);
@@ -36,7 +36,7 @@ public class BubbleSort {
         System.out.println();
     }
 
-    public void bSortManualPrint(long[] vet) {
+    public void iSortManualPrint(long[] vet) {
         System.out.println("VETOR ORDENADO");
         for (int i = 0; i < vet.length; i++) {
             System.out.printf("%d -> ", vet[i]);

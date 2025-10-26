@@ -1,13 +1,13 @@
 package application;
 
 
-import algoritmos.BubbleSort;
-import algoritmos.InsertionSort;
-import algoritmos.SelectionSort;
-import analise.BubbleSortImpl;
-import analise.InsertionSortImpl;
-import analise.SelectionSortImpl;
-import util.*;
+import model.algoritmos.BubbleSort;
+import model.algoritmos.InsertionSort;
+import model.algoritmos.SelectionSort;
+import model.analise.BubbleSortImpl;
+import model.analise.InsertionSortImpl;
+import model.analise.SelectionSortImpl;
+import model.util.*;
 
 import java.util.Objects;
 import java.util.Scanner;

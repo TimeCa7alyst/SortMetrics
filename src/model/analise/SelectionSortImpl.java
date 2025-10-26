@@ -1,11 +1,11 @@
-package analise;
+package model.analise;
 
-import algoritmos.InsertionSort;
-import util.RandomGenerator;
+import model.algoritmos.SelectionSort;
+import model.util.RandomGenerator;
 
-public class InsertionSortImpl {
+public class SelectionSortImpl {
 
-    public void piorCasoInsertionSort(int quant) {
+    public void piorCasoSelectionSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -13,10 +13,10 @@ public class InsertionSortImpl {
             vet[i] = (quant - 1) - i;
         }
 
-        InsertionSort insertionSort = new InsertionSort(quant, vet);
+        SelectionSort selectionSort = new SelectionSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        insertionSort.insertionSort();
+        selectionSort.selectionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -25,22 +25,21 @@ public class InsertionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        insertionSort.insertionSortReport();
+        selectionSort.selectionSortReport();
     }
 
-    public void melhorCasoInsertionSort(int quant) {
+    public void melhorCasoSelectionSort(int quant) {
 
         long[] vet = new long[quant];
-
         vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = i;
         }
 
-        InsertionSort insertionSort = new InsertionSort(quant, vet);
+        SelectionSort selectionSort = new SelectionSort(quant, vet);
         long tempo1 = System.nanoTime();
-        insertionSort.insertionSort();
+        selectionSort.selectionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -49,11 +48,10 @@ public class InsertionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        insertionSort.insertionSortReport();
+        selectionSort.selectionSortReport();
     }
 
-    public void medioInsertionSort(int quant) {
-
+    public void medioCasoSelectionSort(int quant) {
         long[] vet = new long[quant];
         vet = new long[quant];
 
@@ -61,10 +59,10 @@ public class InsertionSortImpl {
             vet[i] = RandomGenerator.randomGenerator();
         }
 
-        InsertionSort insertionSort = new InsertionSort(quant, vet);
+        SelectionSort selectionSort = new SelectionSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        insertionSort.insertionSort();
+        selectionSort.selectionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -73,6 +71,6 @@ public class InsertionSortImpl {
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
-        insertionSort.insertionSortReport();
+        selectionSort.selectionSortReport();
     }
 }
