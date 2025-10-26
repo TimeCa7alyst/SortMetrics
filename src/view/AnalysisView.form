@@ -19,8 +19,14 @@
             <constraints/>
             <properties>
               <columns value="0"/>
+              <editable value="false"/>
+              <enabled value="true"/>
+              <focusable value="true"/>
               <lineWrap value="true"/>
             </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="true"/>
+            </clientProperties>
           </component>
         </children>
       </scrollpane>

@@ -31,7 +31,6 @@ public class SelectionSortImpl {
     public void melhorCasoSelectionSort(int quant) {
 
         long[] vet = new long[quant];
-        vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = i;
@@ -53,7 +52,6 @@ public class SelectionSortImpl {
 
     public void medioCasoSelectionSort(int quant) {
         long[] vet = new long[quant];
-        vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = RandomGenerator.randomGenerator();

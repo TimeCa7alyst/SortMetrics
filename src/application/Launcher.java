@@ -38,7 +38,12 @@ public class Launcher {
 
         metodosOrdenacaoFrame.setContentPane(mainPanel);
         metodosOrdenacaoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        metodosOrdenacaoFrame.pack();
+
+        Dimension tamanhoTela = selectView.getMainPanel().getPreferredSize();
+
+        metodosOrdenacaoFrame.setSize(selectView.getWidth(), selectView.getHeight());
+
+        metodosOrdenacaoFrame.setResizable(false);
         metodosOrdenacaoFrame.setLocationRelativeTo(null);
         metodosOrdenacaoFrame.setVisible(true);
 

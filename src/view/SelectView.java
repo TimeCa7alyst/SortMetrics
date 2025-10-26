@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class SelectView {
     private JPanel mainPanel;
@@ -8,6 +9,11 @@ public class SelectView {
     private JComboBox dropDown1;
     private JLabel label1;
     private JButton sairButton;
+
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = (int) (screenSize.width * 0.3);
+    int height = (int) (screenSize.height * 0.2);
 
     public SelectView() {
         dropDown1.addItem("Bubble Sort");
@@ -32,5 +38,13 @@ public class SelectView {
 
     public JButton getSairButton() {
         return sairButton;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

@@ -32,8 +32,6 @@ public class InsertionSortImpl {
 
         long[] vet = new long[quant];
 
-        vet = new long[quant];
-
         for (int i = 0; i < quant; i++) {
             vet[i] = i;
         }
@@ -55,7 +53,6 @@ public class InsertionSortImpl {
     public void medioInsertionSort(int quant) {
 
         long[] vet = new long[quant];
-        vet = new long[quant];
 
         for (int i = 0; i < quant; i++) {
             vet[i] = RandomGenerator.randomGenerator();
