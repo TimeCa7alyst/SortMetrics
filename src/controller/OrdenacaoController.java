@@ -13,6 +13,11 @@ import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 public class OrdenacaoController {
 
     private JFrame mainFrame;
@@ -48,6 +53,27 @@ public class OrdenacaoController {
         this.selectionSort = new SelectionSortImpl();
         this.insertionSort = new InsertionSortImpl();
 
+        {
+            JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            analysisView.remove(analysisView.getLabel1());
+            analysisView.remove(analysisView.getScrollPane1());
+            analysisView.remove(analysisView.getLabel2());
+            analysisView.remove(analysisView.getContinuarButton2());
+            analysisView.remove(analysisView.getSairButton4());
+
+            bottomPanel.add(analysisView.getLabel2());
+            bottomPanel.add(analysisView.getContinuarButton2());
+            bottomPanel.add(analysisView.getSairButton4());
+
+            analysisView.setLayout(new BorderLayout());
+
+            analysisView.getLabel1().setBorder(new EmptyBorder(5, 5, 0, 5));
+            analysisView.add(analysisView.getLabel1(), BorderLayout.NORTH);
+            analysisView.add(analysisView.getScrollPane1(), BorderLayout.CENTER);
+            analysisView.add(bottomPanel, BorderLayout.SOUTH);
+        }
+
         this.selectView.getContinuarButton().addActionListener
                 (e -> onSelectViewNetbeansNext());
 
@@ -75,16 +101,16 @@ public class OrdenacaoController {
 
     private void showSmallScreen(String screenName, JPanel padraoPanel) {
         mainFrame.setResizable(false);
-    cardLayout.show(mainPanel, screenName);
-    Dimension tamanhoInicial = selectView.getPreferredSize();
-    mainFrame.setSize(tamanhoInicial.width + 20, tamanhoInicial.height + 40);
-    mainFrame.setLocationRelativeTo(null);
+        cardLayout.show(mainPanel, screenName);
+        Dimension tamanhoInicial = selectView.getPreferredSize();
+        mainFrame.setSize(tamanhoInicial.width + 20, tamanhoInicial.height + 40);
+        mainFrame.setLocationRelativeTo(null);
     }
     private void showLargeScreen(String screenName) {
         mainFrame.setResizable(false);
-    cardLayout.show(mainPanel, screenName);
-    mainFrame.pack();
-    mainFrame.setLocationRelativeTo(null);
+        cardLayout.show(mainPanel, screenName);
+        mainFrame.pack();
+        mainFrame.setLocationRelativeTo(null);
     }
 
     private void onSelectViewNetbeansNext() {
@@ -150,10 +176,6 @@ public class OrdenacaoController {
         }
     }
 
-    /* utlizamos expressoes regulares (regex) para cortar a string de input do usuario em diversos valores
-    possibilitando analizar cada entrada separadamente */
-
-    //"corte a string em um novo pedaço sempre que houver um espaço em branco ou uma vírgula"
     private boolean parseInputManual(String input) {
         String[] vetDivisor = input.trim().split("[\\s,]+");
         if (vetDivisor.length != this.quant) {

@@ -12,7 +12,7 @@ import model.util.*;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Main {
+public class CLI {
     public static void main(String[] args) {
         int quant;
         Scanner sc = new Scanner(System.in);

@@ -6,7 +6,7 @@ import view.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Launcher {
+public class GUI {
 
     public static void main(String[] args) {
 

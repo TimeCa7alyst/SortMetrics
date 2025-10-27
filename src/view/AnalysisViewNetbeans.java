@@ -1,15 +1,18 @@
 package view;
 
-import java.awt.Dimension;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
+
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.border.EmptyBorder;
+
 
 /**
  *
  * @author denis
  */
 public class AnalysisViewNetbeans extends javax.swing.JPanel {
-    
+
     /**
      * Creates new form AnalysisViewNetbeans
      */
@@ -20,6 +23,7 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
         textArea1.setLineWrap(true);
         textArea1.setRows(5);
         scrollPane1.setViewportView(textArea1);
+        setPreferredSize(new java.awt.Dimension(500, 650));
     }
 
     /**
@@ -38,15 +42,11 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
         sairButton4 = new javax.swing.JButton();
         label1 = new javax.swing.JLabel();
 
-        setMaximumSize(null);
-        setMinimumSize(null);
-
         textArea1.setColumns(20);
         textArea1.setLineWrap(true);
         textArea1.setRows(20);
         textArea1.setMargin(new java.awt.Insets(2, 20, 2, 6));
         textArea1.setMaximumSize(null);
-        textArea1.setMinimumSize(null);
         scrollPane1.setViewportView(textArea1);
 
         label2.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
@@ -64,39 +64,39 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(label1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(label2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(continuarButton2)
-                                .addGap(32, 32, 32)
-                                .addComponent(sairButton4)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(label1))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(45, 45, 45)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(35, 35, 35)
+                                                                .addComponent(label2))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(continuarButton2)
+                                                                .addGap(32, 32, 32)
+                                                                .addComponent(sairButton4)))))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label1)
-                .addGap(2, 2, 2)
-                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-                .addGap(35, 35, 35)
-                .addComponent(label2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(continuarButton2)
-                    .addComponent(sairButton4))
-                .addGap(37, 37, 37))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(label1)
+                                .addGap(2, 2, 2)
+                                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addComponent(label2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(continuarButton2)
+                                        .addComponent(sairButton4))
+                                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,6 +112,19 @@ public class AnalysisViewNetbeans extends javax.swing.JPanel {
         return sairButton4;
     }
 
+    public JScrollPane getScrollPane1() {
+        return scrollPane1;
+    }
+
+    // --- METHODS ADDED ---
+    public JLabel getLabel1() {
+        return label1;
+    }
+
+    public JLabel getLabel2() {
+        return label2;
+    }
+    // ---------------------
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton continuarButton2;
