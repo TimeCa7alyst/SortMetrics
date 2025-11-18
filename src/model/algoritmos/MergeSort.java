@@ -6,6 +6,7 @@ public class MergeSort {
     private static long[] arr;
     private long[] arr2;
     private long[] helper;
+    private static long compNumber = 0;
 
     public MergeSort(int quant, long[] arr) {
         this.arr = arr;
@@ -26,6 +27,7 @@ public class MergeSort {
                 combined[index] = arr[i];
                 index++;
                 i++;
+                compNumber++;
             } else {
                 combined[index] = arr2[j];
                 index++;
@@ -56,6 +58,8 @@ public class MergeSort {
     }
 
     public void mergeSortReport() {
+        System.out.println("Número de comparações: " + compNumber);
+        System.out.println("Número de trocas: N");
         System.out.println("É estável: Sim");
         System.out.println("------------------------------------------");
         System.out.println();

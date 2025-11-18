@@ -1,14 +1,8 @@
 package application;
 
 
-import model.algoritmos.BubbleSort;
-import model.algoritmos.InsertionSort;
-import model.algoritmos.MergeSort;
-import model.algoritmos.SelectionSort;
-import model.analise.BubbleSortImpl;
-import model.analise.InsertionSortImpl;
-import model.analise.MergeSortImpl;
-import model.analise.SelectionSortImpl;
+import model.algoritmos.*;
+import model.analise.*;
 import model.util.*;
 
 import java.util.Objects;
@@ -26,7 +20,9 @@ public class Main {
                     "Bubble Sort\n" +
                     "Selection Sort\n" +
                     "Insertion Sort\n" +
-                    "Merge Sort\n\n" +
+                    "Merge Sort\n" +
+                    "Quick Sort\n" +
+                    "Heap Sort\n\n" +
                     "OU digite \"sair\" para fechar o programa");
             algoritmo = sc.nextLine().toLowerCase();
 
@@ -134,6 +130,36 @@ public class Main {
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         MergeSort mSortManual = new MergeSort(quant, vet);
                         mSortManual.mSortManualPrint(vet);
+                    }
+                    break;
+
+                case "quick sort", "qsort", "quick", "q":
+                    QuickSortImpl quickSort = new QuickSortImpl();
+
+                    System.out.println("\n||||| Quick Sort |||||\n");
+
+                    quickSort.melhorCasoQuickSort(quant);
+                    quickSort.medioCasoQuickSort(quant);
+                    quickSort.piorCasoMergeSort(quant);
+
+                    if  (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                        QuickSort qSortManual = new QuickSort(quant, vet);
+                        qSortManual.qSortManualPrint(vet);
+                    }
+                    break;
+
+                case "heap sort", "hsort", "heap", "h":
+                    HeapSortImpl heapSort = new HeapSortImpl();
+
+                    System.out.println("\n||||| Heap Sort |||||\n");
+
+                    heapSort.melhorCasoHeapSort(quant);
+                    heapSort.piorCasoHeapSort(quant);
+                    heapSort.medioCasoHeapSort(quant);
+
+                    if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                        HeapSort hSortManual = new HeapSort(quant, vet);
+                        hSortManual.hSortManualPrint(vet);
                     }
                     break;
 
