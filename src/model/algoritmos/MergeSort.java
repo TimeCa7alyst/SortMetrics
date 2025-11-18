@@ -6,7 +6,7 @@ public class MergeSort {
     private static long[] arr;
     private long[] arr2;
     private long[] helper;
-    private static long compNumber = 0;
+    private long compNumber = 0;
 
     public MergeSort(int quant, long[] arr) {
         this.arr = arr;
@@ -14,7 +14,7 @@ public class MergeSort {
         this.helper = new long[quant];
     }
 
-    public static long[] merge(long[] arr, long[] arr2) {
+    public long[] merge(long[] arr, long[] arr2) {
 
         long[] combined = new long[arr.length + arr2.length];
 
@@ -47,7 +47,7 @@ public class MergeSort {
         return combined;
     }
 
-    public static long[] mergeSort(long[] arr) {
+    public long[] mergeSort(long[] arr) {
         if (arr.length <= 1) return arr;
 
         long mid = arr.length / 2;

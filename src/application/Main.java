@@ -140,7 +140,7 @@ public class Main {
 
                     quickSort.melhorCasoQuickSort(quant);
                     quickSort.medioCasoQuickSort(quant);
-                    quickSort.piorCasoMergeSort(quant);
+                    quickSort.piorCasoQuickSort(quant);
 
                     if  (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         QuickSort qSortManual = new QuickSort(quant, vet);

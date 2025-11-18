@@ -5,7 +5,7 @@ import model.util.RandomGenerator;
 
 public class QuickSortImpl {
 
-    public void piorCasoMergeSort(int quant) {
+    public void piorCasoQuickSort(int quant) {
 
         long[] arr = new long[quant];
 
@@ -19,7 +19,7 @@ public class QuickSortImpl {
         quickSort.quickSort(arr, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
-        double totalMs = (tempo2 - tempo1) / 1_000_000_000;
+        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
         System.out.println("Pior caso: ");
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
@@ -40,7 +40,7 @@ public class QuickSortImpl {
         quickSort.quickSort(arr, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
-        double totalMs = (tempo2 - tempo1) / 1_000_000_000;
+        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
         System.out.println("Melhor caso: ");
         System.out.println();
@@ -63,7 +63,7 @@ public class QuickSortImpl {
         quickSort.quickSort(arr, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
-        double totalMs = (tempo2 - tempo1) / 1_000_000_000;
+        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
         System.out.println("Médio caso: ");
         System.out.println();

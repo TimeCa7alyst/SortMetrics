@@ -16,7 +16,7 @@ public class MergeSortImpl {
         MergeSort mergeSort = new MergeSort(quant, arr);
 
         long tempo1 = System.nanoTime();
-        MergeSort.mergeSort(arr);
+        mergeSort.mergeSort(arr);
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -37,7 +37,7 @@ public class MergeSortImpl {
 
         MergeSort mergeSort = new MergeSort(quant, arr);
         long tempo1 = System.nanoTime();
-        MergeSort.mergeSort(arr);
+        mergeSort.mergeSort(arr);
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
@@ -60,7 +60,7 @@ public class MergeSortImpl {
         MergeSort mergeSort = new MergeSort(quant, arr);
 
         long tempo1 = System.nanoTime();
-        MergeSort.mergeSort(arr);
+        mergeSort.mergeSort(arr);
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;

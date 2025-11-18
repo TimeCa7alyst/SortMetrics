@@ -43,6 +43,8 @@ public class HeapSort {
     }
 
     public static void heapSort(long[] arr) {
+        compNumber = 0;
+        swapNumber = 0;
         int n = arr.length;
 
         for (int i = n / 2 - 1; i >= 0; i--)

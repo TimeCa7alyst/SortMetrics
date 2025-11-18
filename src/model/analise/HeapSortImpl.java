@@ -19,9 +19,9 @@ public class HeapSortImpl {
         HeapSort.heapSort(arr);
         long tempo2  = System.nanoTime();
 
-        double totalMs = (tempo2 - tempo1) / 1_000_000_000;
+        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Médio caso: ");
+        System.out.println("Pior caso: ");
         System.out.println();
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
         System.out.println();
@@ -41,7 +41,7 @@ public class HeapSortImpl {
         HeapSort.heapSort(arr);
         long tempo2  = System.nanoTime();
 
-        double totalMs = (tempo2 - tempo1) / 1_000_000_000;
+        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
         System.out.println("Melhor caso: ");
         System.out.println();
@@ -64,7 +64,7 @@ public class HeapSortImpl {
         HeapSort.heapSort(arr);
         long tempo2  = System.nanoTime();
 
-        double totalMs = (tempo2 - tempo1) / 1_000_000_000;
+        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
         System.out.println("Médio caso: ");
         System.out.println();

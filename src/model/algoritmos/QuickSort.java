@@ -1,21 +1,23 @@
 package model.algoritmos;
 
 public class QuickSort {
-    private static long[] arr;
-    private static long compNumber = 0;
-    private static long swapNumber = 0;
+    private long[] arr;
+    private long compNumber = 0;
+    private long swapNumber = 0;
 
     public QuickSort(int quant, long[] arr) {
         this.arr = arr;
     }
 
-    static long partition(long[] arr, int low, int high) {
+    long partition(long[] arr, int low, int high) {
+
+        int mid = low + (high - low) / 2;
+        swap(arr, mid, high);
 
         long pivot = arr[high];
-
         int i = low - 1;
 
-        for (int j = low; j <= high; j++) {
+        for (int j = low; j < high; j++) {
             compNumber++;
 
             if (arr[j] < pivot) {
@@ -28,7 +30,7 @@ public class QuickSort {
         return i + 1;
     }
 
-    static void swap(long[] arr, int i, int j) {
+    void swap(long[] arr, int i, int j) {
         long temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
@@ -36,6 +38,7 @@ public class QuickSort {
     }
 
     public void quickSort(long[] arr, int low, int high) {
+
         if (low < high) {
 
             int partitionIndex = (int) partition(arr, low, high);
