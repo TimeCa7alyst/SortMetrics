@@ -1,74 +1,73 @@
 package model.algoritmos;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MergeSort {
-    private static long[] arr;
-    private long[] arr2;
-    private long[] helper;
+
     private long compNumber = 0;
 
     public MergeSort(int quant, long[] arr) {
-        this.arr = arr;
-        this.arr2 = arr;
-        this.helper = new long[quant];
     }
 
-    public long[] merge(long[] arr, long[] arr2) {
+    public Map<String, Long> executeMergeSort(long[] arr) {
+        this.compNumber = 0;
 
-        long[] combined = new long[arr.length + arr2.length];
+        long[] sorted = recursiveSort(arr);
 
-        int index = 0;
-        int i = 0;
-        int j = 0;
+        System.arraycopy(sorted, 0, arr, 0, arr.length);
 
-        while (i < arr.length && j < arr2.length) {
-            if (arr[i] < arr2[j]) {
-                combined[index] = arr[i];
-                index++;
-                i++;
-                compNumber++;
-            } else {
-                combined[index] = arr2[j];
-                index++;
-                j++;
-            }
-        }
-        while (i < arr.length) {
-            combined[index] = arr[i];
-            index++;
-            i++;
-        }
-        while (j < arr2.length) {
-            combined[index] = arr2[j];
-            index++;
-            j++;
-        }
-        return combined;
+        Map<String, Long> metrics = new HashMap<>();
+        metrics.put("compNumber", compNumber);
+        metrics.put("swapNumber", 0L);
+
+        return metrics;
     }
 
-    public long[] mergeSort(long[] arr) {
-        if (arr.length <= 1) return arr;
+    private long[] recursiveSort(long[] arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
 
-        long mid = arr.length / 2;
-        long[] left = mergeSort(Arrays.copyOfRange(arr, 0, (int) mid));
-        long[] right = mergeSort(Arrays.copyOfRange(arr, (int) mid, arr.length));
+        int mid = arr.length / 2;
+
+        long[] left = recursiveSort(Arrays.copyOfRange(arr, 0, mid));
+        long[] right = recursiveSort(Arrays.copyOfRange(arr, mid, arr.length));
 
         return merge(left, right);
     }
 
-    public void mergeSortReport() {
-        System.out.println("Número de comparações: " + compNumber);
-        System.out.println("Número de trocas: N");
-        System.out.println("É estável: Sim");
-        System.out.println("------------------------------------------");
-        System.out.println();
+    private long[] merge(long[] left, long[] right) {
+        long[] combined = new long[left.length + right.length];
+        int index = 0;
+        int i = 0;
+        int j = 0;
+
+        while (i < left.length && j < right.length) {
+            compNumber++;
+
+            if (left[i] < right[j]) {
+                combined[index++] = left[i++];
+            } else {
+                combined[index++] = right[j++];
+            }
+        }
+
+        while (i < left.length) {
+            combined[index++] = left[i++];
+        }
+        while (j < right.length) {
+            combined[index++] = right[j++];
+        }
+
+        return combined;
     }
 
     public void mSortManualPrint(long[] arr) {
         System.out.println("VETOR ORDENADO: ");
-        for (int i = 0; i < arr.length; i++) {
-            System.out.printf("%d -> ", arr[i]);
+        for (long l : arr) {
+            System.out.printf("%d -> ", l);
         }
         System.out.println();
     }

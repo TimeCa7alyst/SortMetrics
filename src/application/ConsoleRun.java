@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Main {
+public class ConsoleRun {
     public static void main(String[] args) {
         int quant;
         Scanner sc = new Scanner(System.in);
@@ -79,9 +79,14 @@ public class Main {
 
                     System.out.println("\n||||| Bubble Sort |||||\n");
 
-                    bubbleSort.melhorCasoBubbleSort(quant);
-                    bubbleSort.medioCasoBubbleSort(quant);
-                    bubbleSort.piorCasoBubbleSort(quant);
+                    SortMetrics melhor = bubbleSort.melhorCasoBubbleSort(quant);
+                    melhor.sortReport("Melhor caso");
+
+                    SortMetrics medio = bubbleSort.medioCasoBubbleSort(quant);
+                    medio.sortReport("Medio caso");
+
+                    SortMetrics pior = bubbleSort.piorCasoBubbleSort(quant);
+                    pior.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         BubbleSort bSortManual = new BubbleSort(quant, vet);
@@ -100,9 +105,14 @@ public class Main {
 
                     System.out.println("\n||||| Insertion Sort |||||\n");
 
-                    insertionSort.melhorCasoInsertionSort(quant);
-                    insertionSort.medioInsertionSort(quant);
-                    insertionSort.piorCasoInsertionSort(quant);
+                    SortMetrics melhorInsertion = insertionSort.melhorCasoInsertionSort(quant);
+                    melhorInsertion.sortReport("Melhor caso");
+
+                    SortMetrics medioInsertion = insertionSort.medioInsertionSort(quant);
+                    medioInsertion.sortReport("Medio caso");
+
+                    SortMetrics piorInsertion = insertionSort.piorCasoInsertionSort(quant);
+                    piorInsertion.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         InsertionSort iSortManual = new InsertionSort(quant, vet);
@@ -121,9 +131,14 @@ public class Main {
 
                     System.out.println("\n||||| Selection Sort |||||\n");
 
-                    selectionSort.melhorCasoSelectionSort(quant);
-                    selectionSort.medioCasoSelectionSort(quant);
-                    selectionSort.piorCasoSelectionSort(quant);
+                    SortMetrics melhorSelection = selectionSort.melhorCasoSelectionSort(quant);
+                    melhorSelection.sortReport("Melhor caso");
+
+                    SortMetrics medioSelection = selectionSort.medioCasoSelectionSort(quant);
+                    medioSelection.sortReport("Medio caso");
+
+                    SortMetrics piorSelection = selectionSort.piorCasoSelectionSort(quant);
+                    piorSelection.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         SelectionSort sSortManual = new SelectionSort(quant, vet);
@@ -142,12 +157,18 @@ public class Main {
 
                     System.out.println("\n||||| Merge Sort |||||\n");
 
-                    mergeSort.melhorCasoMergeSort(quant);
-                    mergeSort.medioCasoMergeSort(quant);
-                    mergeSort.piorCasoMergeSort(quant);
+                    SortMetrics melhorMerge = mergeSort.melhorCasoMergeSort(quant);
+                    melhorMerge.sortReportNoSwaps("Melhor caso");
+
+                    SortMetrics medioMerge = mergeSort.medioCasoMergeSort(quant);
+                    medioMerge.sortReportNoSwaps("Medio caso");
+
+                    SortMetrics piorMerge = mergeSort.piorCasoMergeSort(quant);
+                    piorMerge.sortReportNoSwaps("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         MergeSort mSortManual = new MergeSort(quant, vet);
+                        mSortManual.executeMergeSort(vet);
                         mSortManual.mSortManualPrint(vet);
                     }
                     break;
@@ -157,9 +178,14 @@ public class Main {
 
                     System.out.println("\n||||| Quick Sort |||||\n");
 
-                    quickSort.melhorCasoQuickSort(quant);
-                    quickSort.medioCasoQuickSort(quant);
-                    quickSort.piorCasoQuickSort(quant);
+                    SortMetrics melhorQuick = quickSort.melhorCasoQuickSort(quant);
+                    melhorQuick.sortReport("Melhor caso");
+
+                    SortMetrics medioQuick = quickSort.medioCasoQuickSort(quant);
+                    medioQuick.sortReport("Medio caso");
+
+                    SortMetrics piorQuick = quickSort.piorCasoQuickSort(quant);
+                    piorQuick.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         QuickSort qSortManual = new QuickSort(quant, vet);
@@ -172,9 +198,14 @@ public class Main {
 
                     System.out.println("\n||||| Heap Sort |||||\n");
 
-                    heapSort.melhorCasoHeapSort(quant);
-                    heapSort.piorCasoHeapSort(quant);
-                    heapSort.medioCasoHeapSort(quant);
+                    SortMetrics melhorHeap = heapSort.melhorCasoHeapSort(quant);
+                    melhorHeap.sortReport("Melhor caso");
+
+                    SortMetrics medioHeap = heapSort.medioCasoHeapSort(quant);
+                    medioHeap.sortReport("Medio caso");
+
+                    SortMetrics piorHeap = heapSort.piorCasoHeapSort(quant);
+                    piorHeap.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         HeapSort hSortManual = new HeapSort(quant, vet);

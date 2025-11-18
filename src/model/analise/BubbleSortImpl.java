@@ -2,11 +2,12 @@ package model.analise;
 
 import model.algoritmos.BubbleSort;
 import model.util.RandomGenerator;
+
 import java.util.Map;
 
 public class BubbleSortImpl {
 
-    public void piorCasoBubbleSort(int quant) {
+    public SortMetrics piorCasoBubbleSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -26,13 +27,11 @@ public class BubbleSortImpl {
         long swapNumber = metrics.get("swapNumber");
         boolean isStable = true;
 
-        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
-                compNumber,totalMs, isStable);
-
-        sortMetrics.sortReport("Pior caso");
+        return new SortMetrics(vet, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, true);
     }
 
-    public void melhorCasoBubbleSort(int quant) {
+    public SortMetrics melhorCasoBubbleSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -52,14 +51,12 @@ public class BubbleSortImpl {
         long swapNumber = metrics.get("swapNumber");
         boolean isStable = true;
 
-        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
-                compNumber,totalMs, isStable);
-
-        sortMetrics.sortReport("Melhor caso");
+        return new SortMetrics(vet, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, true);
 
     }
 
-    public void medioCasoBubbleSort(int quant) {
+    public SortMetrics medioCasoBubbleSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -79,9 +76,7 @@ public class BubbleSortImpl {
         long swapNumber = metrics.get("swapNumber");
         boolean isStable = true;
 
-        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
-                compNumber,totalMs, isStable);
-
-        sortMetrics.sortReport("Médio caso");
+        return new SortMetrics(vet, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, true);
     }
 }

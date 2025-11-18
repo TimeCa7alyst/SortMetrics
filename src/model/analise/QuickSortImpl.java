@@ -3,9 +3,11 @@ package model.analise;
 import model.algoritmos.QuickSort;
 import model.util.RandomGenerator;
 
+import java.util.Map;
+
 public class QuickSortImpl {
 
-    public void piorCasoQuickSort(int quant) {
+    public SortMetrics piorCasoQuickSort(int quant) {
 
         long[] arr = new long[quant];
 
@@ -16,18 +18,19 @@ public class QuickSortImpl {
         QuickSort quickSort = new QuickSort(quant, arr);
 
         long tempo1 = System.nanoTime();
-        quickSort.quickSort(arr, 0, (quant - 1));
+        Map<String, Long> metrics = quickSort.quickSort(arr, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
-        System.out.println("Pior caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        quickSort.quickSortReport();
+
+        long swapNumber = metrics.get("swapNumber");
+        long compoNumber = metrics.get("compNumber");
+
+        return new SortMetrics(arr, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, false);
     }
 
-    public void melhorCasoQuickSort(int quant) {
+    public SortMetrics melhorCasoQuickSort(int quant) {
 
         long[] arr = new long[quant];
 
@@ -37,19 +40,19 @@ public class QuickSortImpl {
 
         QuickSort quickSort = new QuickSort(quant, arr);
         long tempo1 = System.nanoTime();
-        quickSort.quickSort(arr, 0, (quant - 1));
+        Map<String, Long> metrics = quickSort.quickSort(arr, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Melhor caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        quickSort.quickSortReport();
+        long swapNumber = metrics.get("swapNumber");
+        long compoNumber = metrics.get("compNumber");
+
+        return new SortMetrics(arr, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, false);
     }
 
-    public void medioCasoQuickSort(int quant) {
+    public SortMetrics medioCasoQuickSort(int quant) {
 
         long[] arr = new long[quant];
 
@@ -60,15 +63,15 @@ public class QuickSortImpl {
         QuickSort quickSort = new QuickSort(quant, arr);
 
         long tempo1 = System.nanoTime();
-        quickSort.quickSort(arr, 0, (quant - 1));
+        Map<String, Long> metrics = quickSort.quickSort(arr, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Médio caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        quickSort.quickSortReport();
+        long swapNumber = metrics.get("swapNumber");
+        long compoNumber = metrics.get("compNumber");
+
+        return new SortMetrics(arr, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, false);
     }
 }

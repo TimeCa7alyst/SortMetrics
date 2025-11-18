@@ -1,5 +1,8 @@
 package model.algoritmos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HeapSort {
 
     public long[] arr;
@@ -42,7 +45,7 @@ public class HeapSort {
         }
     }
 
-    public static void heapSort(long[] arr) {
+    public Map<String, Long> heapSort(long[] arr) {
         compNumber = 0;
         swapNumber = 0;
         int n = arr.length;
@@ -59,6 +62,12 @@ public class HeapSort {
 
             heapify(arr, i, 0);
         }
+
+        Map<String, Long> metrics = new HashMap<>();
+        metrics.put("compNumber", compNumber);
+        metrics.put("swapNumber", swapNumber);
+
+        return metrics;
     }
 
     public void heapSortReport() {

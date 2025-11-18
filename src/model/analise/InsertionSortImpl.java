@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class InsertionSortImpl {
 
-    public void piorCasoInsertionSort(int quant) {
+    public SortMetrics piorCasoInsertionSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -27,13 +27,11 @@ public class InsertionSortImpl {
         long swapNumber = metrics.get("swapNumber");
         boolean isStable = true;
 
-        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
-                compNumber,totalMs, isStable);
-
-        sortMetrics.sortReport("Pior caso");
+        return new SortMetrics(vet, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, true);
     }
 
-    public void melhorCasoInsertionSort(int quant) {
+    public SortMetrics melhorCasoInsertionSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -53,13 +51,11 @@ public class InsertionSortImpl {
         long swapNumber = metrics.get("swapNumber");
         boolean isStable = true;
 
-        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
-                compNumber,totalMs, isStable);
-
-        sortMetrics.sortReport("Melhor caso");
+        return new SortMetrics(vet, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, true);
     }
 
-    public void medioInsertionSort(int quant) {
+    public SortMetrics medioInsertionSort(int quant) {
 
         long[] vet = new long[quant];
 
@@ -79,9 +75,7 @@ public class InsertionSortImpl {
         long swapNumber = metrics.get("swapNumber");
         boolean isStable = true;
 
-        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
-                compNumber,totalMs, isStable);
-
-        sortMetrics.sortReport("Medio caso");
+        return new SortMetrics(vet, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, true);
     }
 }

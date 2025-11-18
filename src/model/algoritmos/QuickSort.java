@@ -1,5 +1,8 @@
 package model.algoritmos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class QuickSort {
     private long[] arr;
     private long compNumber = 0;
@@ -37,7 +40,7 @@ public class QuickSort {
         swapNumber++;
     }
 
-    public void quickSort(long[] arr, int low, int high) {
+    public Map<String, Long> quickSort(long[] arr, int low, int high) {
 
         if (low < high) {
 
@@ -45,8 +48,12 @@ public class QuickSort {
 
             quickSort(arr, low, partitionIndex - 1);
             quickSort(arr, partitionIndex + 1, high);
-
         }
+        Map<String, Long> metrics = new HashMap<>();
+        metrics.put("compNumber", compNumber);
+        metrics.put("swapNumber", swapNumber);
+
+        return metrics;
     }
 
     public void quickSortReport() {

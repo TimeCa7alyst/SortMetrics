@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ConsoleRun" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="application.Main" />
+    <option name="MAIN_CLASS_NAME" value="application.ConsoleRun" />
     <module name="Comparacao" />
     <method v="2">
       <option name="Make" enabled="true" />
