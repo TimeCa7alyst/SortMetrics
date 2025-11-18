@@ -1,19 +1,22 @@
 package model.algoritmos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SelectionSort {
 
     private long[] arr;
-    private long swapNumber = 0;
-    private long compNumber = 0;
 
     public SelectionSort(int quant, long[] arr) {
         this.arr = arr;
     }
 
-    public void selectionSort() {
+    public Map<String, Long> selectionSort() {
 
         int min;
         long temp;
+        long swapNumber = 0;
+        long compNumber = 0;
 
         for (int i = 0; i < arr.length - 1; i++) {
             min = i;
@@ -30,22 +33,11 @@ public class SelectionSort {
                 swapNumber++;
             }
         }
-    }
 
-    public void selectionSortReport() {
+        Map<String, Long> metrics = new HashMap<>();
+        metrics.put("compNumber", compNumber);
+        metrics.put("swapNumber", swapNumber);
 
-        System.out.println("Número de comparações: " + compNumber);
-        System.out.println("Número de trocas: " + swapNumber);
-        System.out.println("É estável: Não");
-        System.out.println("------------------------------------------");
-        System.out.println();
-    }
-
-    public void sSortManualPrint(long[] vet) {
-        System.out.println("VETOR ORDENADO: ");
-        for (int i = 0; i < vet.length; i++) {
-            System.out.printf("%d -> ", vet[i]);
-        }
-        System.out.println();
+        return metrics;
     }
 }

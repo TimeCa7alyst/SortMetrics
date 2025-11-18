@@ -5,6 +5,7 @@ import model.algoritmos.*;
 import model.analise.*;
 import model.util.*;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -16,14 +17,17 @@ public class Main {
         String algoritmo;
 
         do {
-            System.out.println("Escolha um dos algoritmos:\n\n" +
-                    "Bubble Sort\n" +
-                    "Selection Sort\n" +
-                    "Insertion Sort\n" +
-                    "Merge Sort\n" +
-                    "Quick Sort\n" +
-                    "Heap Sort\n\n" +
-                    "OU digite \"sair\" para fechar o programa");
+            System.out.println("""
+                    Escolha um dos algoritmos:
+                    
+                    Bubble Sort
+                    Selection Sort
+                    Insertion Sort
+                    Merge Sort
+                    Quick Sort
+                    Heap Sort
+                    
+                    OU digite "sair" para fechar o programa""");
             algoritmo = sc.nextLine().toLowerCase();
 
             if (algoritmo.equals("sair")
@@ -81,8 +85,13 @@ public class Main {
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         BubbleSort bSortManual = new BubbleSort(quant, vet);
-                        bSortManual.bubbleSort();
-                        bSortManual.bSortManualPrint(vet);
+                        Map<String, Long> metrics = bSortManual.bubbleSort();
+
+                        long comp = metrics.get("compNumber");
+                        long swap = metrics.get("swapNumber");
+                        SortMetrics sortMetrics = new SortMetrics(vet, swap, comp, 0, true);
+
+                        sortMetrics.manualPrint();
                     }
                     break;
 
@@ -97,8 +106,13 @@ public class Main {
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         InsertionSort iSortManual = new InsertionSort(quant, vet);
-                        iSortManual.insertionSort();
-                        iSortManual.iSortManualPrint(vet);
+                        Map<String, Long> metrics = iSortManual.insertionSort();
+
+                        long comp = metrics.get("compNumber");
+                        long swap = metrics.get("swapNumber");
+                        SortMetrics sortMetrics = new SortMetrics(vet, swap, comp, 0, true);
+
+                        sortMetrics.manualPrint();
                     }
                     break;
 
@@ -113,8 +127,13 @@ public class Main {
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         SelectionSort sSortManual = new SelectionSort(quant, vet);
-                        sSortManual.selectionSort();
-                        sSortManual.sSortManualPrint(vet);
+                        Map<String, Long> metrics = sSortManual.selectionSort();
+
+                        long comp = metrics.get("compNumber");
+                        long swap = metrics.get("swapNumber");
+                        SortMetrics sortMetrics = new SortMetrics(vet, swap, comp, 0, true);
+
+                        sortMetrics.manualPrint();
                     }
                     break;
 
@@ -142,7 +161,7 @@ public class Main {
                     quickSort.medioCasoQuickSort(quant);
                     quickSort.piorCasoQuickSort(quant);
 
-                    if  (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                    if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
                         QuickSort qSortManual = new QuickSort(quant, vet);
                         qSortManual.qSortManualPrint(vet);
                     }

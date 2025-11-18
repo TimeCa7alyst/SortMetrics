@@ -1,18 +1,23 @@
 package model.algoritmos;
 
 
+import model.analise.SortMetrics;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class BubbleSort {
 
     private long[] arr;
-    private long swapNumber = 0;
-    private long compNumber = 0;
 
     public BubbleSort(int quant, long[] arr) {
         this.arr = arr;
     }
 
-    public void bubbleSort() {
+    public Map<String, Long> bubbleSort() {
         long temp;
+        long swapNumber = 0;
+        long compNumber = 0;
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length - (i + 1); j++) {
@@ -25,22 +30,11 @@ public class BubbleSort {
                 }
             }
         }
-    }
 
-    public void bSortReport() {
+        Map<String, Long> metrics = new HashMap<>();
+        metrics.put("compNumber", compNumber);
+        metrics.put("swapNumber", swapNumber);
 
-        System.out.println("Número de comparações: " + compNumber);
-        System.out.println("Número de trocas: " + swapNumber);
-        System.out.println("É estável: Sim");
-        System.out.println("------------------------------------------");
-        System.out.println();
-    }
-
-    public void bSortManualPrint(long[] vet) {
-        System.out.println("VETOR ORDENADO: ");
-        for (int i = 0; i < vet.length; i++) {
-            System.out.printf("%d -> ", vet[i]);
-        }
-        System.out.println();
+        return metrics;
     }
 }

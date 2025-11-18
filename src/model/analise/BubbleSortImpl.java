@@ -2,6 +2,7 @@ package model.analise;
 
 import model.algoritmos.BubbleSort;
 import model.util.RandomGenerator;
+import java.util.Map;
 
 public class BubbleSortImpl {
 
@@ -16,16 +17,19 @@ public class BubbleSortImpl {
         BubbleSort bubbleSort = new BubbleSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        bubbleSort.bubbleSort();
+        Map<String, Long> metrics = bubbleSort.bubbleSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Pior caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        bubbleSort.bSortReport();
+        long compNumber = metrics.get("compNumber");
+        long swapNumber = metrics.get("swapNumber");
+        boolean isStable = true;
+
+        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
+                compNumber,totalMs, isStable);
+
+        sortMetrics.sortReport("Pior caso");
     }
 
     public void melhorCasoBubbleSort(int quant) {
@@ -37,17 +41,22 @@ public class BubbleSortImpl {
         }
 
         BubbleSort bubbleSort = new BubbleSort(quant, vet);
+
         long tempo1 = System.nanoTime();
-        bubbleSort.bubbleSort();
+        Map<String, Long> metrics = bubbleSort.bubbleSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Melhor caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        bubbleSort.bSortReport();
+        long compNumber = metrics.get("compNumber");
+        long swapNumber = metrics.get("swapNumber");
+        boolean isStable = true;
+
+        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
+                compNumber,totalMs, isStable);
+
+        sortMetrics.sortReport("Melhor caso");
+
     }
 
     public void medioCasoBubbleSort(int quant) {
@@ -61,15 +70,18 @@ public class BubbleSortImpl {
         BubbleSort bubbleSort = new BubbleSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        bubbleSort.bubbleSort();
+        Map<String, Long> metrics = bubbleSort.bubbleSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Médio caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        bubbleSort.bSortReport();
+        long compNumber = metrics.get("compNumber");
+        long swapNumber = metrics.get("swapNumber");
+        boolean isStable = true;
+
+        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
+                compNumber,totalMs, isStable);
+
+        sortMetrics.sortReport("Médio caso");
     }
 }

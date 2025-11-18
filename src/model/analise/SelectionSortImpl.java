@@ -2,6 +2,7 @@ package model.analise;
 
 import model.algoritmos.SelectionSort;
 import model.util.RandomGenerator;
+import java.util.Map;
 
 public class SelectionSortImpl {
 
@@ -16,16 +17,19 @@ public class SelectionSortImpl {
         SelectionSort selectionSort = new SelectionSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        selectionSort.selectionSort();
+        Map<String, Long> metrics = selectionSort.selectionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Pior caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        selectionSort.selectionSortReport();
+        long compNumber = metrics.get("compNumber");
+        long swapNumber = metrics.get("swapNumber");
+        boolean isStable = true;
+
+        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
+                compNumber,totalMs, isStable);
+
+        sortMetrics.sortReport("Pior caso");
     }
 
     public void melhorCasoSelectionSort(int quant) {
@@ -37,17 +41,21 @@ public class SelectionSortImpl {
         }
 
         SelectionSort selectionSort = new SelectionSort(quant, vet);
+
         long tempo1 = System.nanoTime();
-        selectionSort.selectionSort();
+        Map<String, Long> metrics = selectionSort.selectionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Melhor caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        selectionSort.selectionSortReport();
+        long compNumber = metrics.get("compNumber");
+        long swapNumber = metrics.get("swapNumber");
+        boolean isStable = true;
+
+        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
+                compNumber,totalMs, isStable);
+
+        sortMetrics.sortReport("Melhor caso");
     }
 
     public void medioCasoSelectionSort(int quant) {
@@ -60,15 +68,18 @@ public class SelectionSortImpl {
         SelectionSort selectionSort = new SelectionSort(quant, vet);
 
         long tempo1 = System.nanoTime();
-        selectionSort.selectionSort();
+        Map<String, Long> metrics = selectionSort.selectionSort();
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        System.out.println("Médio caso: ");
-        System.out.println();
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.println();
-        selectionSort.selectionSortReport();
+        long compNumber = metrics.get("compNumber");
+        long swapNumber = metrics.get("swapNumber");
+        boolean isStable = true;
+
+        SortMetrics sortMetrics = new SortMetrics(vet, swapNumber,
+                compNumber,totalMs, isStable);
+
+        sortMetrics.sortReport("Médio caso");
     }
 }
