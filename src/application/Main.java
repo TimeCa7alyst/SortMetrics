@@ -3,9 +3,11 @@ package application;
 
 import model.algoritmos.BubbleSort;
 import model.algoritmos.InsertionSort;
+import model.algoritmos.MergeSort;
 import model.algoritmos.SelectionSort;
 import model.analise.BubbleSortImpl;
 import model.analise.InsertionSortImpl;
+import model.analise.MergeSortImpl;
 import model.analise.SelectionSortImpl;
 import model.util.*;
 
@@ -23,7 +25,8 @@ public class Main {
             System.out.println("Escolha um dos algoritmos:\n\n" +
                     "Bubble Sort\n" +
                     "Selection Sort\n" +
-                    "Insertion Sort\n\n" +
+                    "Insertion Sort\n" +
+                    "Merge Sort\n\n" +
                     "OU digite \"sair\" para fechar o programa");
             algoritmo = sc.nextLine().toLowerCase();
 
@@ -119,6 +122,21 @@ public class Main {
                     }
                     break;
 
+                case "merge sort", "msort", "merge", "m":
+                    MergeSortImpl mergeSort = new MergeSortImpl();
+
+                    System.out.println("\n||||| Merge Sort |||||\n");
+
+                    mergeSort.melhorCasoMergeSort(quant);
+                    mergeSort.medioCasoMergeSort(quant);
+                    mergeSort.piorCasoMergeSort(quant);
+
+                    if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                        MergeSort mSortManual = new MergeSort(quant, vet);
+                        mSortManual.mSortManualPrint(vet);
+                    }
+                    break;
+
                 default:
                     System.out.println("Algoritmo não existe");
                     break;
@@ -137,9 +155,5 @@ public class Main {
         }
 
         while (true);
-        System.out.println("Obrigado por utilizar nosso programa :)\n\n" +
-                "Denis Alves\n" +
-                "Ulisses Aguiar\n" +
-                "BSI | Período 2 | 2025");
     }
 }

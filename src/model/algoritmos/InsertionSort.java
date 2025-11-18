@@ -2,35 +2,35 @@ package model.algoritmos;
 
 public class InsertionSort {
 
-    public long[] vet;
-    private long numTrocas = 0;
-    private long numComparacoes = 0;
+    public long[] arr;
+    private long swapNumber = 0;
+    private long compNumber = 0;
 
-    public InsertionSort(int quant, long[] vet) {
-        this.vet = vet;
+    public InsertionSort(int quant, long[] arr) {
+        this.arr = arr;
     }
 
     public void insertionSort() {
         long temp;
 
-        for (int i = 1; i < vet.length; i++) {
+        for (int i = 1; i < arr.length; i++) {
 
-            temp = vet[i];
+            temp = arr[i];
             int j = (i - 1);
-            numComparacoes++;
-            while (j >= 0 && vet[j] > temp) {
-                vet[j + 1] = vet[j];
-                numTrocas++;
+            compNumber++;
+            while (j >= 0 && arr[j] > temp) {
+                arr[j + 1] = arr[j];
+                swapNumber++;
                 j--;
             }
-            vet[j + 1] = temp;
+            arr[j + 1] = temp;
         }
     }
 
     public void insertionSortReport() {
 
-        System.out.println("Número de comparações: " + numComparacoes);
-        System.out.println("Número de trocas: " + numTrocas);
+        System.out.println("Número de comparações: " + compNumber);
+        System.out.println("Número de trocas: " + swapNumber);
         System.out.println("É estável: Sim");
         System.out.println("------------------------------------------");
         System.out.println();

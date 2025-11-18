@@ -2,12 +2,12 @@ package model.algoritmos;
 
 public class SelectionSort {
 
-    private long[] vet;
-    private long numTrocas = 0;
-    private long numComparacoes = 0;
+    private long[] arr;
+    private long swapNumber = 0;
+    private long compNumber = 0;
 
-    public SelectionSort(int quant, long[] vet) {
-        this.vet = vet;
+    public SelectionSort(int quant, long[] arr) {
+        this.arr = arr;
     }
 
     public void selectionSort() {
@@ -15,27 +15,27 @@ public class SelectionSort {
         int min;
         long temp;
 
-        for (int i = 0; i < vet.length - 1; i++) {
+        for (int i = 0; i < arr.length - 1; i++) {
             min = i;
-            for (int j = (i + 1); j < vet.length; j++) {
-                numComparacoes++;
-                if (vet[j] < vet[min]) {
+            for (int j = (i + 1); j < arr.length; j++) {
+                compNumber++;
+                if (arr[j] < arr[min]) {
                     min = j;
                 }
             }
             if (i != min) {
-                temp = vet[i];
-                vet[i] = vet[min];
-                vet[min] = temp;
-                numTrocas++;
+                temp = arr[i];
+                arr[i] = arr[min];
+                arr[min] = temp;
+                swapNumber++;
             }
         }
     }
 
     public void selectionSortReport() {
 
-        System.out.println("Número de comparações: " + numComparacoes);
-        System.out.println("Número de trocas: " + numTrocas);
+        System.out.println("Número de comparações: " + compNumber);
+        System.out.println("Número de trocas: " + swapNumber);
         System.out.println("É estável: Não");
         System.out.println("------------------------------------------");
         System.out.println();
