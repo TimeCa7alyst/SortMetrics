@@ -1,77 +1,30 @@
 package model.analise;
 
 import model.algoritmos.QuickSort;
-import model.util.RandomGenerator;
+import model.util.SortStrategy;
 
 import java.util.Map;
 
-public class QuickSortImpl {
+public class QuickSortImpl implements SortStrategy<Integer, long[], String> {
 
-    public SortMetrics piorCasoQuickSort(int quant) {
+    String sortName = "QuickSort";
 
-        long[] arr = new long[quant];
+    @Override
+    public SortMetrics execute(Integer quant, long[] array, String algo) {
 
-        for (int i = 0; i < quant; i++) {
-            arr[i] = (quant - 1) - i;
-        }
-
-        QuickSort quickSort = new QuickSort(quant, arr);
+        QuickSort quickSort = new QuickSort(quant, array);
 
         long tempo1 = System.nanoTime();
-        Map<String, Long> metrics = quickSort.quickSort(arr, 0, (quant - 1));
+        Map<String, Long> metrics = quickSort.quickSort(array, 0, (quant - 1));
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        long swapNumber = metrics.get("swapNumber");
-        long compoNumber = metrics.get("compNumber");
-
-        return new SortMetrics(arr, metrics.get("swapNumber"),
+        return new SortMetrics(array, metrics.get("swapNumber"),
                 metrics.get("compNumber"), totalMs, false);
     }
 
-    public SortMetrics melhorCasoQuickSort(int quant) {
-
-        long[] arr = new long[quant];
-
-        for (int i = 0; i < quant; i++) {
-            arr[i] = i;
-        }
-
-        QuickSort quickSort = new QuickSort(quant, arr);
-        long tempo1 = System.nanoTime();
-        Map<String, Long> metrics = quickSort.quickSort(arr, 0, (quant - 1));
-        long tempo2 = System.nanoTime();
-
-        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
-
-        long swapNumber = metrics.get("swapNumber");
-        long compoNumber = metrics.get("compNumber");
-
-        return new SortMetrics(arr, metrics.get("swapNumber"),
-                metrics.get("compNumber"), totalMs, false);
-    }
-
-    public SortMetrics medioCasoQuickSort(int quant) {
-
-        long[] arr = new long[quant];
-
-        for (int i = 0; i < quant; i++) {
-            arr[i] = RandomGenerator.randomGenerator();
-        }
-
-        QuickSort quickSort = new QuickSort(quant, arr);
-
-        long tempo1 = System.nanoTime();
-        Map<String, Long> metrics = quickSort.quickSort(arr, 0, (quant - 1));
-        long tempo2 = System.nanoTime();
-
-        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
-
-        long swapNumber = metrics.get("swapNumber");
-        long compoNumber = metrics.get("compNumber");
-
-        return new SortMetrics(arr, metrics.get("swapNumber"),
-                metrics.get("compNumber"), totalMs, false);
+    public String getSortName() {
+        return sortName;
     }
 }

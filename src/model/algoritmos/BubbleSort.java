@@ -1,8 +1,5 @@
 package model.algoritmos;
 
-
-import model.analise.SortMetrics;
-
 import java.util.HashMap;
 import java.util.Map;
 

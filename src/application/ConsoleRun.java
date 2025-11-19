@@ -1,13 +1,9 @@
 package application;
 
-
-import model.algoritmos.*;
 import model.analise.*;
 import model.util.*;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleRun {
     public static void main(String[] args) {
@@ -26,6 +22,7 @@ public class ConsoleRun {
                     Merge Sort
                     Quick Sort
                     Heap Sort
+                    All
                     
                     OU digite "sair" para fechar o programa""");
             algoritmo = sc.nextLine().toLowerCase();
@@ -51,7 +48,19 @@ public class ConsoleRun {
 
             DefineTipoQuantidade defTipo = new DefineTipoQuantidade();
             defTipo.defineTipo(quant);
-            long[] vet = new long[quant];
+
+            List<SortStrategy<Integer, long[], String>> strategies = new ArrayList<>();
+            strategies.add(new BubbleSortImpl());
+            strategies.add(new InsertionSortImpl());
+            strategies.add(new SelectionSortImpl());
+            strategies.add(new HeapSortImpl());
+            strategies.add(new MergeSortImpl());
+            strategies.add(new QuickSortImpl());
+
+            long[] masterRnd = CaseGenerator.genAvgCase(quant);
+            long[] masterBest = CaseGenerator.genBestCase(quant);
+            long[] masterWorst = CaseGenerator.genWorstCase(quant);
+            long[] masterTiny = new long[quant];
 
             if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
 
@@ -59,7 +68,7 @@ public class ConsoleRun {
                     while (true) {
                         try {
                             System.out.printf("Digite o %d valor: ", (i + 1));
-                            vet[i] = Long.parseLong(sc.nextLine());
+                            masterTiny[i] = Long.parseLong(sc.nextLine());
                             break;
                         } catch (IllegalArgumentException e) {
                             System.out.println("||| Entrada Inválida |||");
@@ -68,108 +77,101 @@ public class ConsoleRun {
                 }
             } else {
 
-                for (int i = 0; i < vet.length; i++) {
-                    vet[i] = RandomGenerator.randomGenerator();
+                for (int i = 0; i < masterTiny.length; i++) {
+                    masterTiny[i] = RandomGenerator.randomGenerator();
                 }
             }
 
             switch (algoritmo) {
                 case "bubble sort", "bsort", "bubble", "b", "buble sort":
-                    BubbleSortImpl bubbleSort = new BubbleSortImpl();
 
                     System.out.println("\n||||| Bubble Sort |||||\n");
 
-                    SortMetrics melhor = bubbleSort.melhorCasoBubbleSort(quant);
+                    SortStrategy<Integer, long[], String> bubble = new BubbleSortImpl();
+
+                    SortMetrics melhor = bubble.execute(quant, masterBest.clone(), "Bubble Sort");
                     melhor.sortReport("Melhor caso");
 
-                    SortMetrics medio = bubbleSort.medioCasoBubbleSort(quant);
+                    SortMetrics medio = bubble.execute(quant, masterRnd.clone(), "Bubble Sort");
                     medio.sortReport("Medio caso");
 
-                    SortMetrics pior = bubbleSort.piorCasoBubbleSort(quant);
+                    SortMetrics pior = bubble.execute(quant, masterWorst.clone(), "Bubble Sort");
                     pior.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                        BubbleSort bSortManual = new BubbleSort(quant, vet);
-                        Map<String, Long> metrics = bSortManual.bubbleSort();
 
-                        long comp = metrics.get("compNumber");
-                        long swap = metrics.get("swapNumber");
-                        SortMetrics sortMetrics = new SortMetrics(vet, swap, comp, 0, true);
+                        SortMetrics manualMetrics = bubble.execute(quant, masterTiny.clone(), "Bubble Sort");
 
-                        sortMetrics.manualPrint();
+                        manualMetrics.manualPrint();
                     }
                     break;
 
                 case "insertion sort", "isort", "insertion", "i":
-                    InsertionSortImpl insertionSort = new InsertionSortImpl();
 
                     System.out.println("\n||||| Insertion Sort |||||\n");
 
-                    SortMetrics melhorInsertion = insertionSort.melhorCasoInsertionSort(quant);
+                    SortStrategy<Integer, long[], String> insertion = new InsertionSortImpl();
+
+                    SortMetrics melhorInsertion = insertion.execute(quant, masterBest.clone(), "Insertion Sort");
                     melhorInsertion.sortReport("Melhor caso");
 
-                    SortMetrics medioInsertion = insertionSort.medioInsertionSort(quant);
+                    SortMetrics medioInsertion = insertion.execute(quant, masterRnd.clone(), "Insertion Sort");
                     medioInsertion.sortReport("Medio caso");
 
-                    SortMetrics piorInsertion = insertionSort.piorCasoInsertionSort(quant);
+                    SortMetrics piorInsertion = insertion.execute(quant, masterWorst.clone(), "Insertion Sort");
                     piorInsertion.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                        InsertionSort iSortManual = new InsertionSort(quant, vet);
-                        Map<String, Long> metrics = iSortManual.insertionSort();
 
-                        long comp = metrics.get("compNumber");
-                        long swap = metrics.get("swapNumber");
-                        SortMetrics sortMetrics = new SortMetrics(vet, swap, comp, 0, true);
+                        SortMetrics manualMetrics = insertion.execute(quant, masterTiny.clone(), "Insertion Sort");
 
-                        sortMetrics.manualPrint();
+                        manualMetrics.manualPrint();
                     }
                     break;
 
                 case "selection sort", "ssort", "selection", "s":
-                    SelectionSortImpl selectionSort = new SelectionSortImpl();
 
                     System.out.println("\n||||| Selection Sort |||||\n");
 
-                    SortMetrics melhorSelection = selectionSort.melhorCasoSelectionSort(quant);
+                    SortStrategy<Integer, long[], String> selection = new SelectionSortImpl();
+
+                    SortMetrics melhorSelection = selection.execute(quant, masterBest.clone(), "Selection Sort");
                     melhorSelection.sortReport("Melhor caso");
 
-                    SortMetrics medioSelection = selectionSort.medioCasoSelectionSort(quant);
+                    SortMetrics medioSelection = selection.execute(quant, masterRnd.clone(), "Selection Sort");
                     medioSelection.sortReport("Medio caso");
 
-                    SortMetrics piorSelection = selectionSort.piorCasoSelectionSort(quant);
+                    SortMetrics piorSelection = selection.execute(quant, masterWorst.clone(), "Selection Sort");
                     piorSelection.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                        SelectionSort sSortManual = new SelectionSort(quant, vet);
-                        Map<String, Long> metrics = sSortManual.selectionSort();
 
-                        long comp = metrics.get("compNumber");
-                        long swap = metrics.get("swapNumber");
-                        SortMetrics sortMetrics = new SortMetrics(vet, swap, comp, 0, true);
+                        SortMetrics manualMetrics = selection.execute(quant, masterTiny.clone(), "Selection Sort");
 
-                        sortMetrics.manualPrint();
+                        manualMetrics.manualPrint();
                     }
                     break;
 
                 case "merge sort", "msort", "merge", "m":
-                    MergeSortImpl mergeSort = new MergeSortImpl();
 
                     System.out.println("\n||||| Merge Sort |||||\n");
 
-                    SortMetrics melhorMerge = mergeSort.melhorCasoMergeSort(quant);
-                    melhorMerge.sortReportNoSwaps("Melhor caso");
+                    SortStrategy<Integer, long[], String> merge = new MergeSortImpl();
 
-                    SortMetrics medioMerge = mergeSort.medioCasoMergeSort(quant);
-                    medioMerge.sortReportNoSwaps("Medio caso");
+                    SortMetrics melhorMerge = merge.execute(quant, masterBest.clone(), "Merge Sort");
+                    melhorMerge.sortReport("Melhor caso");
 
-                    SortMetrics piorMerge = mergeSort.piorCasoMergeSort(quant);
-                    piorMerge.sortReportNoSwaps("Pior caso");
+                    SortMetrics medioMerge = merge.execute(quant, masterRnd.clone(), "Merge Sort");
+                    medioMerge.sortReport("Medio caso");
+
+                    SortMetrics piorMerge = merge.execute(quant, masterWorst.clone(), "Merge Sort");
+                    piorMerge.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                        MergeSort mSortManual = new MergeSort(quant, vet);
-                        mSortManual.executeMergeSort(vet);
-                        mSortManual.mSortManualPrint(vet);
+
+                        SortMetrics manualMetrics = merge.execute(quant, masterTiny.clone(), "Merge Sort");
+
+                        manualMetrics.manualPrint();
                     }
                     break;
 
@@ -178,38 +180,61 @@ public class ConsoleRun {
 
                     System.out.println("\n||||| Quick Sort |||||\n");
 
-                    SortMetrics melhorQuick = quickSort.melhorCasoQuickSort(quant);
+                    SortStrategy<Integer, long[], String> quick = new QuickSortImpl();
+
+                    SortMetrics melhorQuick = quickSort.execute(quant, masterBest.clone(), "Quick Sort");
                     melhorQuick.sortReport("Melhor caso");
 
-                    SortMetrics medioQuick = quickSort.medioCasoQuickSort(quant);
+                    SortMetrics medioQuick = quickSort.execute(quant, masterRnd.clone(), "Quick Sort");
                     medioQuick.sortReport("Medio caso");
 
-                    SortMetrics piorQuick = quickSort.piorCasoQuickSort(quant);
+                    SortMetrics piorQuick = quickSort.execute(quant, masterWorst.clone(), "Quick Sort");
                     piorQuick.sortReport("Pior caso");
 
+
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                        QuickSort qSortManual = new QuickSort(quant, vet);
-                        qSortManual.qSortManualPrint(vet);
+
+                        SortMetrics manualMetrics = quickSort.execute(quant, masterBest.clone(), "Quick Sort");
+
+                        manualMetrics.manualPrint();
                     }
                     break;
 
                 case "heap sort", "hsort", "heap", "h":
-                    HeapSortImpl heapSort = new HeapSortImpl();
 
                     System.out.println("\n||||| Heap Sort |||||\n");
 
-                    SortMetrics melhorHeap = heapSort.melhorCasoHeapSort(quant);
+                    SortStrategy<Integer, long[], String> heap = new HeapSortImpl();
+
+                    SortMetrics melhorHeap = heap.execute(quant, masterBest.clone(), "Heap Sort");
                     melhorHeap.sortReport("Melhor caso");
 
-                    SortMetrics medioHeap = heapSort.medioCasoHeapSort(quant);
+                    SortMetrics medioHeap = heap.execute(quant, masterRnd.clone(), "Heap Sort");
                     medioHeap.sortReport("Medio caso");
 
-                    SortMetrics piorHeap = heapSort.piorCasoHeapSort(quant);
+                    SortMetrics piorHeap = heap.execute(quant, masterWorst.clone(), "Heap Sort");
                     piorHeap.sortReport("Pior caso");
 
                     if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                        HeapSort hSortManual = new HeapSort(quant, vet);
-                        hSortManual.hSortManualPrint(vet);
+
+                        SortMetrics manualMetrics = heap.execute(quant, masterTiny.clone(), "Heap Sort");
+
+                        manualMetrics.manualPrint();
+                    }
+                    break;
+
+                case "all", "a":
+                    for (SortStrategy<Integer, long[], String> strategy : strategies) {
+
+                        System.out.println("\n||||| " + strategy.getSortName() + " |||||\n" );
+
+                        strategy.execute(quant, masterBest.clone(), "All").sortReport("Melhor caso");
+                        strategy.execute(quant, masterRnd.clone(), "All").sortReport("Médio caso");
+                        strategy.execute(quant, masterWorst.clone(), "All").sortReport("Pior caso");
+
+                        if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
+                            SortMetrics custom = strategy.execute(quant, masterTiny.clone(), "All");
+                        }
                     }
                     break;
 

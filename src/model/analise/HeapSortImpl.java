@@ -1,75 +1,30 @@
 package model.analise;
 
 import model.algoritmos.HeapSort;
-import model.util.RandomGenerator;
+import model.util.SortStrategy;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class HeapSortImpl {
+public class HeapSortImpl implements SortStrategy<Integer, long[], String> {
 
-    public SortMetrics piorCasoHeapSort(int quant) {
+    String sortName = "HeapSort";
 
-        long[] arr = new long[quant];
+    @Override
+    public SortMetrics execute(Integer quant, long[] array, String algo) {
 
-        for (int i = 0; i < quant; i++) {
-            arr[i] = (quant - 1) - i;
-        }
-
-        HeapSort heapSort = new HeapSort(quant, arr);
+        HeapSort heapSort = new HeapSort(quant, array);
 
         long tempo1 = System.nanoTime();
-        Map<String, Long> metrics = heapSort.heapSort(arr);
+        Map<String, Long> metrics = heapSort.heapSort(array);
         long tempo2 = System.nanoTime();
 
         double totalMs = (tempo2 - tempo1) / 1_000_000.0;
 
-        long swapNumber = metrics.get("swapNumber");
-        long compoNumber = metrics.get("compNumber");
-
-        return new SortMetrics(arr, metrics.get("swapNumber"), metrics.get("compNumber"), totalMs, false);
+        return new SortMetrics(array, metrics.get("swapNumber"),
+                metrics.get("compNumber"), totalMs, false);
     }
 
-    public SortMetrics melhorCasoHeapSort(int quant) {
-
-        long[] arr = new long[quant];
-
-        for (int i = 0; i < quant; i++) {
-            arr[i] = i;
-        }
-
-        HeapSort heapSort = new HeapSort(quant, arr);
-        long tempo1 = System.nanoTime();
-        Map<String, Long> metrics = heapSort.heapSort(arr);
-        long tempo2 = System.nanoTime();
-
-        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
-
-        long swapNumber = metrics.get("swapNumber");
-        long compoNumber = metrics.get("compNumber");
-
-        return new SortMetrics(arr, metrics.get("swapNumber"), metrics.get("compNumber"), totalMs, false);
-    }
-
-    public SortMetrics medioCasoHeapSort(int quant) {
-
-        long[] arr = new long[quant];
-
-        for (int i = 0; i < quant; i++) {
-            arr[i] = RandomGenerator.randomGenerator();
-        }
-
-        HeapSort heapSort = new HeapSort(quant, arr);
-
-        long tempo1 = System.nanoTime();
-        Map<String, Long> metrics = heapSort.heapSort(arr);
-        long tempo2 = System.nanoTime();
-
-        double totalMs = (tempo2 - tempo1) / 1_000_000.0;
-
-        long swapNumber = metrics.get("swapNumber");
-        long compoNumber = metrics.get("compNumber");
-
-        return new SortMetrics(arr, metrics.get("swapNumber"), metrics.get("compNumber"), totalMs, false);
+    public String getSortName() {
+        return sortName;
     }
 }
