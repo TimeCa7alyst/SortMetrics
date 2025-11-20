@@ -27,6 +27,7 @@ public class SortMetrics {
     public void sortReport(String sortCase) {
         System.out.println(sortCase + ": \n");
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms\n");
+        System.out.println("Número de entradas: " + sortArr.length);
         System.out.println("Número de comparações: " + compNumber);
         System.out.println("Número de trocas: " + swapNumber);
         System.out.println("É estável: " + (isStable ? "Sim" : "Não"));
@@ -37,6 +38,7 @@ public class SortMetrics {
     public void sortReportNoSwaps(String sortCase) {
         System.out.println(sortCase + ": \n");
         System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms\n");
+        System.out.println("Número de entradas: " + sortArr.length);
         System.out.println("Número de comparações: " + compNumber);
         System.out.println("Número de trocas: N");
         System.out.println("É estável: " + (isStable ? "Sim" : "Não"));

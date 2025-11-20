@@ -63,12 +63,4 @@ public class MergeSort {
 
         return combined;
     }
-
-    public void mSortManualPrint(long[] arr) {
-        System.out.println("VETOR ORDENADO: ");
-        for (long l : arr) {
-            System.out.printf("%d -> ", l);
-        }
-        System.out.println();
-    }
 }

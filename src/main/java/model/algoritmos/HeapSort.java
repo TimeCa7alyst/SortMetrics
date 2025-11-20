@@ -69,20 +69,4 @@ public class HeapSort {
 
         return metrics;
     }
-
-    public void heapSortReport() {
-        System.out.println("Número de comparações: " + compNumber);
-        System.out.println("Número de trocas: " + swapNumber);
-        System.out.println("É estável: Não");
-        System.out.println("------------------------------------------");
-        System.out.println();
-    }
-
-    public void hSortManualPrint(long[] arr) {
-        System.out.println("VETOR ORDENADO: ");
-        for (int i = 0; i < arr.length; i++) {
-            System.out.printf("%d -> ", arr[i]);
-        }
-        System.out.println();
-    }
 }
