@@ -3,7 +3,7 @@
     <option name="ALTERNATIVE_JRE_PATH" value="21" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="application.ConsoleRun" />
-    <module name="apii-ado2-comparacao" />
+    <module name="APII-ADO2" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

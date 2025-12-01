@@ -4,9 +4,10 @@ import model.analise.*;
 import model.util.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class ConsoleRun {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         int quant;
         Scanner sc = new Scanner(System.in);
 
@@ -224,18 +225,48 @@ public class ConsoleRun {
                     break;
 
                 case "all", "a":
-                    for (SortStrategy<Integer, long[], String> strategy : strategies) {
 
-                        System.out.println("\n||||| " + strategy.getSortName() + " |||||\n" );
+                    int processorsNum = Runtime.getRuntime().availableProcessors();
+                    try (ExecutorService executor = Executors.newFixedThreadPool(processorsNum)) {
 
-                        strategy.execute(quant, masterBest.clone(), "All").sortReport("Melhor caso");
-                        strategy.execute(quant, masterRnd.clone(), "All").sortReport("Médio caso");
-                        strategy.execute(quant, masterWorst.clone(), "All").sortReport("Pior caso");
+                        List<Future<List<SortMetrics>>> futures = new ArrayList<>();
 
-                        if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-                            SortMetrics custom = strategy.execute(quant, masterTiny.clone(), "All");
+                        for (SortStrategy strategy : strategies) {
+                            int finalQuant = quant;
+                            Callable<List<SortMetrics>> task = () -> {
+
+                                List<SortMetrics> newStrategies = new ArrayList<>();
+
+                                SortMetrics best = strategy.execute(finalQuant, masterBest.clone(), strategy.getSortName());
+                                SortMetrics mid = strategy.execute(finalQuant, masterRnd.clone(), strategy.getSortName());
+                                SortMetrics worst = strategy.execute(finalQuant, masterWorst.clone(), strategy.getSortName());
+                                Collections.addAll(newStrategies, best, mid, worst);
+
+                                return newStrategies;
+                            };
+
+                            futures.add(executor.submit(task));
                         }
+
+                        for (int i = 0; i < futures.size(); i++) {
+                            System.out.println("|||| " + strategies.get(i).getSortName() + " ||||");
+
+                            try {
+                                List<SortMetrics> metrics = futures.get(i).get(300, TimeUnit.SECONDS);
+                                metrics.get(0).sortReport("Melhor caso");
+                                metrics.get(1).sortReport("Médio caso");
+                                metrics.get(2).sortReport("Pior caso");
+
+                            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                                System.out.println(strategies.get(i).getSortName() + " Timed Out");
+                                futures.get(i).cancel(true);
+                            }
+                        }
+                        executor.shutdown();
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("No processors available");
                     }
+
                     break;
 
                 default:
