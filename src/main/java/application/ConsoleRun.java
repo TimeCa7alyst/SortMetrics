@@ -76,11 +76,6 @@ public class ConsoleRun {
                         }
                     }
                 }
-            } else {
-
-                for (int i = 0; i < masterTiny.length; i++) {
-                    masterTiny[i] = RandomGenerator.randomGenerator();
-                }
             }
 
             switch (algoritmo) {
@@ -226,47 +221,50 @@ public class ConsoleRun {
 
                 case "all", "a":
 
-                    int processorsNum = Runtime.getRuntime().availableProcessors();
-                    try (ExecutorService executor = Executors.newFixedThreadPool(processorsNum)) {
+                    ExecutorService executor = ThreadPool.getExecutor();
 
-                        List<Future<List<SortMetrics>>> futures = new ArrayList<>();
-
-                        for (SortStrategy strategy : strategies) {
-                            int finalQuant = quant;
-                            Callable<List<SortMetrics>> task = () -> {
-
-                                List<SortMetrics> newStrategies = new ArrayList<>();
-
-                                SortMetrics best = strategy.execute(finalQuant, masterBest.clone(), strategy.getSortName());
-                                SortMetrics mid = strategy.execute(finalQuant, masterRnd.clone(), strategy.getSortName());
-                                SortMetrics worst = strategy.execute(finalQuant, masterWorst.clone(), strategy.getSortName());
-                                Collections.addAll(newStrategies, best, mid, worst);
-
-                                return newStrategies;
-                            };
-
-                            futures.add(executor.submit(task));
-                        }
-
-                        for (int i = 0; i < futures.size(); i++) {
-                            System.out.println("|||| " + strategies.get(i).getSortName() + " ||||");
-
-                            try {
-                                List<SortMetrics> metrics = futures.get(i).get(300, TimeUnit.SECONDS);
-                                metrics.get(0).sortReport("Melhor caso");
-                                metrics.get(1).sortReport("Médio caso");
-                                metrics.get(2).sortReport("Pior caso");
-
-                            } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                                System.out.println(strategies.get(i).getSortName() + " Timed Out");
-                                futures.get(i).cancel(true);
-                            }
-                        }
-                        executor.shutdown();
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("No processors available");
+                    if (executor == null) {
+                        throw new IllegalArgumentException("No processors available");
                     }
 
+                    List<Future<List<SortMetrics>>> futures = new ArrayList<>();
+
+                    for (int i = 0; i < strategies.size(); i++) {
+                        SortStrategy strategy = strategies.get(i);
+                        int finalQuant = quant;
+                        Callable<List<SortMetrics>> task = () -> {
+
+                            List<SortMetrics> newStrategies = new ArrayList<>();
+
+                            SortMetrics best = strategy.execute(finalQuant, masterBest.clone(), strategy.getSortName());
+                            SortMetrics mid = strategy.execute(finalQuant, masterRnd.clone(), strategy.getSortName());
+                            SortMetrics worst = strategy.execute(finalQuant, masterWorst.clone(), strategy.getSortName());
+
+                            Collections.addAll(newStrategies, best, mid, worst);
+                            return newStrategies;
+                        };
+                        futures.add(executor.submit(task));
+                    }
+
+                    for (int i = 0; i < futures.size(); i++) {
+
+                        if (!futures.get(i).isDone()) {
+                            System.out.println("Executing " + strategies.get(i).getSortName());
+                        }
+                        System.out.println("|||| " + strategies.get(i).getSortName() + " ||||");
+
+                        try {
+                            List<SortMetrics> metrics = futures.get(i).get(300, TimeUnit.SECONDS);
+                            metrics.get(0).sortReport("Melhor caso");
+                            metrics.get(1).sortReport("Médio caso");
+                            metrics.get(2).sortReport("Pior caso");
+
+                        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                            System.out.println(strategies.get(i).getSortName() + " Timed Out");
+                            futures.get(i).cancel(true);
+                        }
+                    }
+                    ThreadPool.monitor();
                     break;
 
                 default:
@@ -285,7 +283,7 @@ public class ConsoleRun {
                 System.out.println("-----------------------------------\n");
             }
         }
-
         while (true);
+        ThreadPool.shutdown();
     }
 }

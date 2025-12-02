@@ -6,41 +6,36 @@ public class SortMetrics {
     private long swapNumber;
     private long compNumber;
     private double totalMs;
+    private long memoryUsed;
     private boolean isStable;
 
     public SortMetrics(long[] sortArr, long swapNumber,
-                       long compNumber, double totalMs, boolean isStable) {
+                       long compNumber, double totalMs, long memoryUsed, boolean isStable) {
         this.sortArr = sortArr;
         this.swapNumber = swapNumber;
         this.compNumber = compNumber;
         this.totalMs = totalMs;
+        this.memoryUsed = memoryUsed;
         this.isStable = isStable;
     }
 
-    public SortMetrics(long[] sortArr, long compNumber, double totalMs, boolean isStable) {
+    public SortMetrics(long[] sortArr, long compNumber, double totalMs, long memoryUsed, boolean isStable) {
         this.sortArr = sortArr;
         this.compNumber = compNumber;
         this.totalMs = totalMs;
+        this.memoryUsed = memoryUsed;
         this.isStable = isStable;
     }
 
     public void sortReport(String sortCase) {
+        double memoryUsedDouble = (double) memoryUsed / (1024 * 1024);
+
         System.out.println(sortCase + ": \n");
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms\n");
+        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
+        System.out.printf("MEMÓRIA UTILIZADA: %.4f MB\n\n", memoryUsedDouble);
         System.out.println("Número de entradas: " + sortArr.length);
         System.out.println("Número de comparações: " + compNumber);
         System.out.println("Número de trocas: " + swapNumber);
-        System.out.println("É estável: " + (isStable ? "Sim" : "Não"));
-        System.out.println("------------------------------------------");
-        System.out.println();
-    }
-
-    public void sortReportNoSwaps(String sortCase) {
-        System.out.println(sortCase + ": \n");
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms\n");
-        System.out.println("Número de entradas: " + sortArr.length);
-        System.out.println("Número de comparações: " + compNumber);
-        System.out.println("Número de trocas: N");
         System.out.println("É estável: " + (isStable ? "Sim" : "Não"));
         System.out.println("------------------------------------------");
         System.out.println();
@@ -64,6 +59,10 @@ public class SortMetrics {
 
     public double getTotalMs() {
         return totalMs;
+    }
+
+    public long getMemoryUsed() {
+        return memoryUsed;
     }
 
     public boolean isStable() {
