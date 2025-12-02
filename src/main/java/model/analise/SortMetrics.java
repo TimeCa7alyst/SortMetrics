@@ -1,8 +1,12 @@
 package model.analise;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SortMetrics {
 
+    @JsonIgnore
     private long[] sortArr;
+
     private long swapNumber;
     private long compNumber;
     private double totalMs;

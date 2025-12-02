@@ -1,0 +1,116 @@
+{
+  "QuickSort" : [ {
+    "swapNumber" : 398052,
+    "compNumber" : 684481,
+    "totalMs" : 45.7564,
+    "memoryUsed" : 12333168,
+    "stable" : false
+  }, {
+    "swapNumber" : 573183,
+    "compNumber" : 946367,
+    "totalMs" : 31.1828,
+    "memoryUsed" : 2896136,
+    "stable" : false
+  }, {
+    "swapNumber" : 424520,
+    "compNumber" : 706118,
+    "totalMs" : 5.5442,
+    "memoryUsed" : 6434920,
+    "stable" : false
+  } ],
+  "BubbleSort" : [ {
+    "swapNumber" : 0,
+    "compNumber" : 1249975000,
+    "totalMs" : 388.1648,
+    "memoryUsed" : 12934216,
+    "stable" : true
+  }, {
+    "swapNumber" : 622963408,
+    "compNumber" : 1249975000,
+    "totalMs" : 3344.7679,
+    "memoryUsed" : 1765824,
+    "stable" : true
+  }, {
+    "swapNumber" : 1249975000,
+    "compNumber" : 1249975000,
+    "totalMs" : 1898.8535,
+    "memoryUsed" : 239456,
+    "stable" : true
+  } ],
+  "SelectionSort" : [ {
+    "swapNumber" : 0,
+    "compNumber" : 1249975000,
+    "totalMs" : 434.4517,
+    "memoryUsed" : 3222744,
+    "stable" : false
+  }, {
+    "swapNumber" : 49992,
+    "compNumber" : 1249975000,
+    "totalMs" : 851.1196,
+    "memoryUsed" : 542808,
+    "stable" : false
+  }, {
+    "swapNumber" : 25000,
+    "compNumber" : 1249975000,
+    "totalMs" : 609.287,
+    "memoryUsed" : 308728,
+    "stable" : false
+  } ],
+  "InsertionSort" : [ {
+    "swapNumber" : 0,
+    "compNumber" : 49999,
+    "totalMs" : 10.7635,
+    "memoryUsed" : 846896,
+    "stable" : true
+  }, {
+    "swapNumber" : 622963408,
+    "compNumber" : 49999,
+    "totalMs" : 554.92,
+    "memoryUsed" : 2824640,
+    "stable" : true
+  }, {
+    "swapNumber" : 1249975000,
+    "compNumber" : 49999,
+    "totalMs" : 994.071,
+    "memoryUsed" : 735672,
+    "stable" : true
+  } ],
+  "MergeSort" : [ {
+    "swapNumber" : 0,
+    "compNumber" : 382512,
+    "totalMs" : 20.2943,
+    "memoryUsed" : 5102048,
+    "stable" : true
+  }, {
+    "swapNumber" : 0,
+    "compNumber" : 717995,
+    "totalMs" : 40.4233,
+    "memoryUsed" : 18286240,
+    "stable" : true
+  }, {
+    "swapNumber" : 0,
+    "compNumber" : 401952,
+    "totalMs" : 16.4521,
+    "memoryUsed" : 10257008,
+    "stable" : true
+  } ],
+  "HeapSort" : [ {
+    "swapNumber" : 773304,
+    "compNumber" : 1455438,
+    "totalMs" : 25.3822,
+    "memoryUsed" : 3844024,
+    "stable" : false
+  }, {
+    "swapNumber" : 737644,
+    "compNumber" : 1409883,
+    "totalMs" : 14.7415,
+    "memoryUsed" : 6861376,
+    "stable" : false
+  }, {
+    "swapNumber" : 698892,
+    "compNumber" : 1366047,
+    "totalMs" : 3.0981,
+    "memoryUsed" : 9925936,
+    "stable" : false
+  } ]
+}

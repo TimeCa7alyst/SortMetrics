@@ -1,8 +1,13 @@
 package application;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SequenceWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import model.analise.*;
 import model.util.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -77,6 +82,9 @@ public class ConsoleRun {
                     }
                 }
             }
+
+            ObjectMapper om = new ObjectMapper();
+            om.enable(SerializationFeature.INDENT_OUTPUT);
 
             switch (algoritmo) {
                 case "bubble sort", "bsort", "bubble", "b", "buble sort":
@@ -246,6 +254,8 @@ public class ConsoleRun {
                         futures.add(executor.submit(task));
                     }
 
+                    Map<String, List<SortMetrics>> results = new HashMap<>();
+
                     for (int i = 0; i < futures.size(); i++) {
 
                         if (!futures.get(i).isDone()) {
@@ -258,12 +268,21 @@ public class ConsoleRun {
                             metrics.get(0).sortReport("Melhor caso");
                             metrics.get(1).sortReport("Médio caso");
                             metrics.get(2).sortReport("Pior caso");
+                            results.put(strategies.get(i).getSortName(), metrics);
 
                         } catch (InterruptedException | ExecutionException | TimeoutException e) {
                             System.out.println(strategies.get(i).getSortName() + " Timed Out");
                             futures.get(i).cancel(true);
                         }
                     }
+
+                    try {
+                        om.writeValue(new File("sort.json"), results);
+                    } catch (IOException e) {
+                        System.out.println("Error writing sort results");
+                        throw new RuntimeException(e);
+                    }
+
                     ThreadPool.monitor();
                     break;
 
