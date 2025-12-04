@@ -8,6 +8,9 @@ import model.util.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -276,8 +279,12 @@ public class ConsoleRun {
                         }
                     }
 
+                    DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH:mm:ss");
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    String time = localDateTime.format(dtFormat);
+
                     try {
-                        om.writeValue(new File("sort.json"), results);
+                        om.writeValue(new File("SortReport_" + time + "." + "json"), results);
                     } catch (IOException e) {
                         System.out.println("Error writing sort results");
                         throw new RuntimeException(e);

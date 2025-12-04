@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="openjfx-21.0">
+    <CLASSES />
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/lib/openjfx-21.0.9-javadoc" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
