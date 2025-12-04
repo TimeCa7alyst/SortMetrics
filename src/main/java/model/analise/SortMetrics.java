@@ -1,6 +1,7 @@
 package model.analise;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SortMetrics {
 
@@ -11,24 +12,19 @@ public class SortMetrics {
     private long compNumber;
     private double totalMs;
     private long memoryUsed;
-    private boolean isStable;
+    private boolean stable;
 
     public SortMetrics(long[] sortArr, long swapNumber,
-                       long compNumber, double totalMs, long memoryUsed, boolean isStable) {
+                       long compNumber, double totalMs, long memoryUsed, boolean stable) {
         this.sortArr = sortArr;
         this.swapNumber = swapNumber;
         this.compNumber = compNumber;
         this.totalMs = totalMs;
         this.memoryUsed = memoryUsed;
-        this.isStable = isStable;
+        this.stable = stable;
     }
 
-    public SortMetrics(long[] sortArr, long compNumber, double totalMs, long memoryUsed, boolean isStable) {
-        this.sortArr = sortArr;
-        this.compNumber = compNumber;
-        this.totalMs = totalMs;
-        this.memoryUsed = memoryUsed;
-        this.isStable = isStable;
+    public SortMetrics() {
     }
 
     public void sortReport(String sortCase) {
@@ -40,7 +36,7 @@ public class SortMetrics {
         System.out.println("Número de entradas: " + sortArr.length);
         System.out.println("Número de comparações: " + compNumber);
         System.out.println("Número de trocas: " + swapNumber);
-        System.out.println("É estável: " + (isStable ? "Sim" : "Não"));
+        System.out.println("É estável: " + (stable ? "Sim" : "Não"));
         System.out.println("------------------------------------------");
         System.out.println();
     }
@@ -70,6 +66,6 @@ public class SortMetrics {
     }
 
     public boolean isStable() {
-        return isStable;
+        return stable;
     }
 }
