@@ -1,5 +1,6 @@
 package view;
 
+import application.ConsoleRun;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
@@ -18,6 +19,8 @@ import java.util.Map;
 
 public class BarChart extends Application {
 
+    public static String toLoad;
+
     private static Map<String, Map<String, Number>> data = new HashMap<>();
 
     public static void addData(String algo, String sortCase, Number time) {
@@ -31,13 +34,19 @@ public class BarChart extends Application {
         final NumberAxis y = new NumberAxis();
         final javafx.scene.chart.BarChart<String, Number> barChart
                 = new javafx.scene.chart.BarChart<>(x, y);
-        barChart.setTitle("Sorting time");
+        String sortingTime = "Sorting time | " + ConsoleRun.quant + " Numbers";
+                barChart.setTitle(sortingTime);
         x.setLabel("Algorithm Name");
         y.setLabel("Time (ms)");
 
+        if (toLoad == null || toLoad.isEmpty()) {
+            System.out.println("No file path provided to load!");
+            return;
+        }
+
         ObjectMapper om = new ObjectMapper();
         HashMap<String, List<SortMetrics>> inputData = om.readValue(new File
-                        ("SortReport_04-12-2025_16-49-31.json"),
+                        (toLoad),
                 new TypeReference<HashMap<String, List<SortMetrics>>>() {});
 
         XYChart.Series series = new XYChart.Series();

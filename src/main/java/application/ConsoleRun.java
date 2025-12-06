@@ -5,17 +5,21 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import model.analise.*;
 import model.util.*;
+import view.BarChart;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class ConsoleRun {
+    public static int quant;
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        int quant;
+
+        String outDirectory = "src" + File.separator + "out";
         Scanner sc = new Scanner(System.in);
 
         String algoritmo;
@@ -282,12 +286,24 @@ public class ConsoleRun {
                     LocalDateTime localDateTime = LocalDateTime.now();
                     String time = localDateTime.format(dtFormat);
 
+                    File dir = new File(outDirectory);
+                    if (!dir.exists()) {
+                        dir.mkdir();
+                    }
+
+                    String jsonFileName = ("SortReport_" + time + "." + "json");
+                    File outFile = new File(dir, jsonFileName);
+
                     try {
-                        om.writeValue(new File("SortReport_" + time + "." + "json"), results);
+                        om.writeValue(outFile, results);
                     } catch (IOException e) {
                         System.out.println("Error writing sort results");
                         throw new RuntimeException(e);
                     }
+
+                    BarChart.toLoad = outFile.getAbsolutePath();
+                    BarChart.main(new String[]{});
+                    System.exit(0);
 
                     ThreadPool.monitor();
                     break;
@@ -308,6 +324,7 @@ public class ConsoleRun {
                 System.out.println("-----------------------------------\n");
             }
         }
+
         while (true);
         ThreadPool.shutdown();
     }
