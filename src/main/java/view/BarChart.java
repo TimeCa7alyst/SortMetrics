@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class BarChart extends Application {
 
@@ -34,7 +35,7 @@ public class BarChart extends Application {
         final NumberAxis y = new NumberAxis();
         final javafx.scene.chart.BarChart<String, Number> barChart
                 = new javafx.scene.chart.BarChart<>(x, y);
-        String sortingTime = "Sorting time | " + ConsoleRun.quant + " Numbers";
+        String sortingTime = "Sorting time " + "(" + ConsoleRun.quant + " Numbers" + ")";
                 barChart.setTitle(sortingTime);
         x.setLabel("Algorithm Name");
         y.setLabel("Time (ms)");
@@ -50,13 +51,13 @@ public class BarChart extends Application {
                 new TypeReference<HashMap<String, List<SortMetrics>>>() {});
 
         XYChart.Series series = new XYChart.Series();
-        series.setName("Best Case");
+        series.setName("Worst Case");
 
         XYChart.Series series2 = new XYChart.Series();
         series2.setName("Average Case");
 
         XYChart.Series series3 = new XYChart.Series();
-        series3.setName("Worst Case");
+        series3.setName("Best Case");
 
         for (Map.Entry<String, List<SortMetrics>> entry : inputData.entrySet()) {
             String algoName = entry.getKey();
@@ -68,6 +69,7 @@ public class BarChart extends Application {
         }
 
         Scene scene = new Scene(barChart, 800, 600);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/BarChart.css")).toExternalForm());
         barChart.getData().addAll(series, series2, series3);
         stage.setScene(scene);
         stage.show();
