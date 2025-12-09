@@ -31,8 +31,8 @@ public class SortMetrics {
         double memoryUsedDouble = (double) memoryUsed / (1024 * 1024);
 
         System.out.println(sortCase + ": \n");
-        System.out.println("TEMPO DE EXECUÇÃO: " + totalMs + "ms");
-        System.out.printf("MEMÓRIA UTILIZADA: %.4f MB\n\n", memoryUsedDouble);
+        System.out.printf("TEMPO DE EXECUÇÃO: %.2fms\n", totalMs);
+        System.out.printf("MEMÓRIA UTILIZADA: %.2fMB\n\n", memoryUsedDouble);
         System.out.println("Número de entradas: " + sortArr.length);
         System.out.println("Número de comparações: " + compNumber);
         System.out.println("Número de trocas: " + swapNumber);

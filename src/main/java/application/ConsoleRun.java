@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import model.analise.*;
 import model.util.*;
 import view.BarChart;
+import view.ScatterChart;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.concurrent.*;
 
 public class ConsoleRun {
     public static int quant;
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         String outDirectory = "src" + File.separator + "out";
@@ -300,9 +302,14 @@ public class ConsoleRun {
                         System.out.println("Error writing sort results");
                         throw new RuntimeException(e);
                     }
+//barchart
+//                    BarChart.toLoad = outFile.getAbsolutePath();
+//                    BarChart.main(new String[]{});
 
-                    BarChart.toLoad = outFile.getAbsolutePath();
-                    BarChart.main(new String[]{});
+                    //scatterchart
+                    ScatterChart.toLoad = outFile.getAbsolutePath();
+                    ScatterChart.main(new String[]{});
+
                     System.exit(0);
 
                     ThreadPool.monitor();
