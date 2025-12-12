@@ -6,14 +6,14 @@ import java.util.Map;
 public class HeapSort {
 
     public long[] arr;
-    public static long swapNumber = 0;
-    public static long compNumber = 0;
+    public long swapNumber = 0;
+    public long compNumber = 0;
 
     public HeapSort(int quant, long[] arr) {
         this.arr = arr;
     }
 
-    static void heapify(long[] arr, int n, int i) {
+    void heapify(long[] arr, int n, int i) {
 
         int largest = i;
 

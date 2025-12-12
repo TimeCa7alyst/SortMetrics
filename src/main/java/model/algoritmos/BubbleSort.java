@@ -15,6 +15,7 @@ public class BubbleSort {
         long temp;
         long swapNumber = 0;
         long compNumber = 0;
+        boolean swapped = false;
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length - (i + 1); j++) {
@@ -24,8 +25,10 @@ public class BubbleSort {
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
                     swapNumber++;
+                    swapped = true;
                 }
             }
+            if (!swapped) break;
         }
 
         Map<String, Long> metrics = new HashMap<>();

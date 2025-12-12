@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class InsertionSort {
 
-    public long[] arr;
+    private long[] arr;
 
     public InsertionSort(int quant, long[] arr) {
         this.arr = arr;
