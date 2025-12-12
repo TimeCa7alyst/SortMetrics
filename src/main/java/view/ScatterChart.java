@@ -88,7 +88,7 @@ public class ScatterChart extends Application {
             scatter.getData().add(series);
         }
 
-        Scene scene = new Scene(scatter, 500, 400);
+        Scene scene = new Scene(scatter, 1000, 800);
         stage.setScene(scene);
         stage.show();
     }

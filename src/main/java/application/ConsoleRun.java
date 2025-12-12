@@ -1,16 +1,13 @@
 package application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import model.analise.*;
 import model.util.*;
 import view.BarChart;
-import view.ScatterChart;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -303,12 +300,13 @@ public class ConsoleRun {
                         throw new RuntimeException(e);
                     }
 //barchart
-//                    BarChart.toLoad = outFile.getAbsolutePath();
-//                    BarChart.main(new String[]{});
+                    BarChart.toLoad = outFile.getAbsolutePath();
+                    BarChart.main(new String[]{});
 
                     //scatterchart
-                    ScatterChart.toLoad = outFile.getAbsolutePath();
-                    ScatterChart.main(new String[]{});
+//                    ScatterChart.toLoad = outFile.getAbsolutePath();
+//                    ScatterChart.main(new String[]{});
+
 
                     System.exit(0);
 

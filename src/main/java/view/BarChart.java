@@ -68,7 +68,7 @@ public class BarChart extends Application {
             series3.getData().add(new XYChart.Data<>(algoName, metrics.get(2).getTotalMs()));
         }
 
-        Scene scene = new Scene(barChart, 800, 600);
+        Scene scene = new Scene(barChart, 1000, 800);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/BarChart.css")).toExternalForm());
         barChart.getData().addAll(series, series2, series3);
         stage.setScene(scene);
