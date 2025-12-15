@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/.idea/queries/Query.sql" value="2dae83d9-8d96-4d2d-a2fb-73c019954491" />
+    <file url="file://$PROJECT_DIR$/src/main/java/DAO/AnalysisDAO.java" value="2dae83d9-8d96-4d2d-a2fb-73c019954491" />
+  </component>
+</project>
