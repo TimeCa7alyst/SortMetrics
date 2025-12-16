@@ -1,16 +1,21 @@
 package DAO;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.entities.Analysis;
 import org.postgresql.util.PGobject;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnalysisDAO {
 
     private final Connection connection;
+    private final ObjectMapper mapper;
 
     public AnalysisDAO(Connection connection, ObjectMapper mapper) {
         this.connection = connection;
@@ -50,8 +55,8 @@ public class AnalysisDAO {
                         newId,
                         obj.getAlgorithm(),
                         obj.getJsonFile(),
-                        obj.getDate(),
-                        "ADMIN",
+                        actualDate,
+                        obj.getUser(),
                         obj.getSize())
                         .build();
             }
@@ -59,8 +64,41 @@ public class AnalysisDAO {
         throw new SQLException("Failed to create Analysis");
     }
 
-    public List<Analysis> findAll(Integer id) {
+    public List<Analysis> findAll() throws SQLException {
+        List<Analysis> analyses = new ArrayList<Analysis>();
 
+        try {
+            String sql = "SELECT * FROM \"analysis\"";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String fileString = resultSet.getString("file");
+                JsonNode jsonNode = null;
+                if (fileString != null) {
+                    jsonNode = mapper.readTree(fileString);
+                }
+
+                Analysis obj = new Analysis.Builder(
+                        resultSet.getInt("id"),
+                        resultSet.getString("algorithm"),
+                        jsonNode,
+                        resultSet.getTimestamp("date").toLocalDateTime(),
+                        resultSet.getString("usr"),
+                        resultSet.getBigDecimal("size"))
+                        .build();
+
+                analyses.add(obj);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("No analysis found", e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return analyses;
     }
 
     public List<Analysis> findById(Integer id) {
