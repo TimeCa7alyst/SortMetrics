@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="ScheduledService.html" title="class in javafx.concurrent">ScheduledService</a></code>, <code><a href="Service.html" title="class in javafx.concurrent">Service</a></code>, <code><a href="Task.html" title="class in javafx.concurrent">Task</a></code></dd>
+<dd><code><a href="ScheduledService.html" title="class in javafx.concurrent">ScheduledService</a></code>, <code><a href="Service.html" title="class in javafx.concurrent">service</a></code>, <code><a href="Task.html" title="class in javafx.concurrent">Task</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Worker&lt;V&gt;</span></div>
@@ -102,18 +102,18 @@ loadScripts(document, 'script');</script>
      A Worker is an object which performs some work in one or more background
      threads, and whose state is observable and available to JavaFX applications
      and is usable from the main JavaFX Application thread. This interface is
-     primarily implemented by both <a href="Task.html" title="class in javafx.concurrent"><code>Task</code></a> and <a href="Service.html" title="class in javafx.concurrent"><code>Service</code></a>, providing
+     primarily implemented by both <a href="Task.html" title="class in javafx.concurrent"><code>Task</code></a> and <a href="Service.html" title="class in javafx.concurrent"><code>service</code></a>, providing
      a common API among both classes which makes it easier for libraries and
      frameworks to provide workers which work well when developing user interfaces.
  </p>
  <p>
      A Worker may or may not be reusable depending on the implementation. A
-     <a href="Task.html" title="class in javafx.concurrent"><code>Task</code></a>, for example, is not reusable while a <a href="Service.html" title="class in javafx.concurrent"><code>Service</code></a> is.
+     <a href="Task.html" title="class in javafx.concurrent"><code>Task</code></a>, for example, is not reusable while a <a href="Service.html" title="class in javafx.concurrent"><code>service</code></a> is.
  </p>
  <p>
      A Worker has a well defined life cycle. Every Worker begins in the
      <a href="Worker.State.html#READY"><code>Worker.State.READY</code></a> state. When the Worker has been scheduled for work
-     (for example, when a Service's <a href="Service.html#start()"><code>Service.start()</code></a>
+     (for example, when a service's <a href="Service.html#start()"><code>service.start()</code></a>
      method is called), it is transitioned to <a href="Worker.State.html#SCHEDULED"><code>Worker.State.SCHEDULED</code></a>. Even
      Workers which are not technically scheduled, but started immediately
      (such as with <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/FutureTask.html#run()" title="class or interface in java.util.concurrent" class="external-link"><code>FutureTask.run()</code></a>) will transition through

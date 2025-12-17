@@ -117,8 +117,8 @@ implements <a href="Worker.html" title="interface in javafx.concurrent">Worker</
  </p>
  <p>
      Tasks are flexible and extremely useful for the encapsulation of "work". Because
-     <a href="Service.html" title="class in javafx.concurrent"><code>Service</code></a> is designed to execute a Task, any Tasks defined by the application
-     or library code can easily be used with a Service. Likewise, since Task extends
+     <a href="Service.html" title="class in javafx.concurrent"><code>service</code></a> is designed to execute a Task, any Tasks defined by the application
+     or library code can easily be used with a service. Likewise, since Task extends
      from FutureTask, it is very easy and natural to use a Task with the java concurrency
      <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link"><code>Executor</code></a> API. Since a Task is Runnable, you
      can also call it directly (by invoking the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/FutureTask.html#run()" title="class or interface in java.util.concurrent" class="external-link"><code>FutureTask.run()</code></a> method)
@@ -145,7 +145,7 @@ implements <a href="Worker.html" title="interface in javafx.concurrent">Worker</
      method inherited from <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link"><code>Executor</code></a>.
  </p>
  <p>
-     As with FutureTask, a Task is a one-shot class and cannot be reused. See <a href="Service.html" title="class in javafx.concurrent"><code>Service</code></a>
+     As with FutureTask, a Task is a one-shot class and cannot be reused. See <a href="Service.html" title="class in javafx.concurrent"><code>service</code></a>
      for a reusable <a href="Worker.html" title="interface in javafx.concurrent"><code>Worker</code></a>.
  </p>
  <p>

@@ -107,11 +107,11 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">ScheduledService&lt;V&gt;</span>
-<span class="extends-implements">extends <a href="Service.html" title="class in javafx.concurrent">Service</a>&lt;V&gt;</span></div>
-<div class="block"><p>The ScheduledService is a <a href="Service.html" title="class in javafx.concurrent"><code>Service</code></a> that will automatically restart
+<span class="extends-implements">extends <a href="Service.html" title="class in javafx.concurrent">service</a>&lt;V&gt;</span></div>
+<div class="block"><p>The ScheduledService is a <a href="Service.html" title="class in javafx.concurrent"><code>service</code></a> that will automatically restart
  itself after a successful execution, and under some conditions will
  restart even in case of failure. A new ScheduledService begins in
- the READY state, just as a normal Service. After calling
+ the READY state, just as a normal service. After calling
  <code>start</code> or <code>restart</code>, the ScheduledService will
  enter the SCHEDULED state for the duration specified by <code>delay</code>.
  </p>
@@ -189,7 +189,7 @@ loadScripts(document, 'script');</script>
 
  <p>The ScheduledService in its default configuration has a default <code>period</code> of 0 and a
  default <code>delay</code> of 0. This will cause the ScheduledService to execute the task immediately
- upon <a href="Service.html#start()"><code>Service.start()</code></a>, and re-executing immediately upon successful completion.</p>
+ upon <a href="Service.html#start()"><code>service.start()</code></a>, and re-executing immediately upon successful completion.</p>
 
  <p>For this purposes of this class, any Duration that answers true to <a href="../../../javafx.base/javafx/util/Duration.html#isUnknown()"><code>Duration.isUnknown()</code></a>
  will treat that duration as if it were Duration.ZERO. Likewise, any Duration which answers true
@@ -198,14 +198,14 @@ loadScripts(document, 'script');</script>
  strategy callback must be prepared to handle these different potential values.</p>
 
  <p>The ScheduledService introduces a new property called <a href="#lastValueProperty()"><code>lastValue</code></a>. The
- <code>lastValue</code> is the value that was last successfully computed. Because a Service clears its <code>value</code>
+ <code>lastValue</code> is the value that was last successfully computed. Because a service clears its <code>value</code>
  property on each run, and because the ScheduledService will reschedule a run immediately after completion (unless it
  enters the cancelled or failed states), the value property is not overly useful on a ScheduledService. In most cases
  you will want to instead use the value returned by <code>lastValue</code>.</p></div>
 <dl class="notes">
 <dt>Implementation Note:</dt>
-<dd>The <a href="Service.html#ready()"><code>Service.ready()</code></a>, <a href="Service.html#scheduled()"><code>Service.scheduled()</code></a>, <a href="Service.html#running()"><code>Service.running()</code></a>, <a href="#succeeded()"><code>succeeded()</code></a>,
- <a href="Service.html#cancelled()"><code>Service.cancelled()</code></a>, and <a href="#failed()"><code>failed()</code></a> methods are implemented in this class. Subclasses which also
+<dd>The <a href="Service.html#ready()"><code>service.ready()</code></a>, <a href="Service.html#scheduled()"><code>service.scheduled()</code></a>, <a href="Service.html#running()"><code>service.running()</code></a>, <a href="#succeeded()"><code>succeeded()</code></a>,
+ <a href="Service.html#cancelled()"><code>service.cancelled()</code></a>, and <a href="#failed()"><code>failed()</code></a> methods are implemented in this class. Subclasses which also
  override these methods must take care to invoke the super implementation.</dd>
 <dt>Since:</dt>
 <dd>JavaFX 8.0</dd>
@@ -271,7 +271,7 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="properties-inherited-from-class-javafx.concurrent.Service">Properties declared in class&nbsp;javafx.concurrent.<a href="Service.html" title="class in javafx.concurrent">Service</a></h3>
+<h3 id="properties-inherited-from-class-javafx.concurrent.Service">Properties declared in class&nbsp;javafx.concurrent.<a href="Service.html" title="class in javafx.concurrent">service</a></h3>
 <code><a href="Service.html#exceptionProperty">exception</a>, <a href="Service.html#executorProperty">executor</a>, <a href="Service.html#messageProperty">message</a>, <a href="Service.html#onCancelledProperty">onCancelled</a>, <a href="Service.html#onFailedProperty">onFailed</a>, <a href="Service.html#onReadyProperty">onReady</a>, <a href="Service.html#onRunningProperty">onRunning</a>, <a href="Service.html#onScheduledProperty">onScheduled</a>, <a href="Service.html#onSucceededProperty">onSucceeded</a>, <a href="Service.html#progressProperty">progress</a>, <a href="Service.html#runningProperty">running</a>, <a href="Service.html#stateProperty">state</a>, <a href="Service.html#titleProperty">title</a>, <a href="Service.html#totalWorkProperty">totalWork</a>, <a href="Service.html#valueProperty">value</a>, <a href="Service.html#workDoneProperty">workDone</a></code></div>
 </section>
 </li>
@@ -374,7 +374,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#failed()" class="member-name-link">failed</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">A protected convenience method for subclasses, called whenever the
- state of the Service has transitioned to the FAILED state.</div>
+ state of the service has transitioned to the FAILED state.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../../../javafx.base/javafx/util/Callback.html" title="interface in javafx.util">Callback</a>&lt;<a href="ScheduledService.html" title="class in javafx.concurrent">ScheduledService</a>&lt;?&gt;,<wbr><a href="../../../javafx.base/javafx/util/Duration.html" title="class in javafx.util">Duration</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBackoffStrategy()" class="member-name-link">getBackoffStrategy</a>()</code></div>
@@ -445,7 +445,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Resets the Service.</div>
+<div class="block">Resets the service.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../../../javafx.base/javafx/beans/property/BooleanProperty.html" title="class in javafx.beans.property">BooleanProperty</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#restartOnFailureProperty()" class="member-name-link">restartOnFailureProperty</a>()</code></div>
@@ -486,13 +486,13 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#succeeded()" class="member-name-link">succeeded</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">A protected convenience method for subclasses, called whenever the
- state of the Service has transitioned to the SUCCEEDED state.</div>
+ state of the service has transitioned to the SUCCEEDED state.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-javafx.concurrent.Service">Methods declared in class&nbsp;javafx.concurrent.<a href="Service.html" title="class in javafx.concurrent">Service</a></h3>
+<h3 id="methods-inherited-from-class-javafx.concurrent.Service">Methods declared in class&nbsp;javafx.concurrent.<a href="Service.html" title="class in javafx.concurrent">service</a></h3>
 <code><a href="Service.html#addEventFilter(javafx.event.EventType,javafx.event.EventHandler)">addEventFilter</a>, <a href="Service.html#addEventHandler(javafx.event.EventType,javafx.event.EventHandler)">addEventHandler</a>, <a href="Service.html#buildEventDispatchChain(javafx.event.EventDispatchChain)">buildEventDispatchChain</a>, <a href="Service.html#cancelled()">cancelled</a>, <a href="Service.html#createTask()">createTask</a>, <a href="Service.html#exceptionProperty()">exceptionProperty</a>, <a href="Service.html#executeTask(javafx.concurrent.Task)">executeTask</a>, <a href="Service.html#executorProperty()">executorProperty</a>, <a href="Service.html#fireEvent(javafx.event.Event)">fireEvent</a>, <a href="Service.html#getException()">getException</a>, <a href="Service.html#getExecutor()">getExecutor</a>, <a href="Service.html#getMessage()">getMessage</a>, <a href="Service.html#getOnCancelled()">getOnCancelled</a>, <a href="Service.html#getOnFailed()">getOnFailed</a>, <a href="Service.html#getOnReady()">getOnReady</a>, <a href="Service.html#getOnRunning()">getOnRunning</a>, <a href="Service.html#getOnScheduled()">getOnScheduled</a>, <a href="Service.html#getOnSucceeded()">getOnSucceeded</a>, <a href="Service.html#getProgress()">getProgress</a>, <a href="Service.html#getState()">getState</a>, <a href="Service.html#getTitle()">getTitle</a>, <a href="Service.html#getTotalWork()">getTotalWork</a>, <a href="Service.html#getValue()">getValue</a>, <a href="Service.html#getWorkDone()">getWorkDone</a>, <a href="Service.html#isRunning()">isRunning</a>, <a href="Service.html#messageProperty()">messageProperty</a>, <a href="Service.html#onCancelledProperty()">onCancelledProperty</a>, <a href="Service.html#onFailedProperty()">onFailedProperty</a>, <a href="Service.html#onReadyProperty()">onReadyProperty</a>, <a href="Service.html#onRunningProperty()">onRunningProperty</a>, <a href="Service.html#onScheduledProperty()">onScheduledProperty</a>, <a href="Service.html#onSucceededProperty()">onSucceededProperty</a>, <a href="Service.html#progressProperty()">progressProperty</a>, <a href="Service.html#ready()">ready</a>, <a href="Service.html#removeEventFilter(javafx.event.EventType,javafx.event.EventHandler)">removeEventFilter</a>, <a href="Service.html#removeEventHandler(javafx.event.EventType,javafx.event.EventHandler)">removeEventHandler</a>, <a href="Service.html#restart()">restart</a>, <a href="Service.html#running()">running</a>, <a href="Service.html#runningProperty()">runningProperty</a>, <a href="Service.html#scheduled()">scheduled</a>, <a href="Service.html#setEventHandler(javafx.event.EventType,javafx.event.EventHandler)">setEventHandler</a>, <a href="Service.html#setExecutor(java.util.concurrent.Executor)">setExecutor</a>, <a href="Service.html#setOnCancelled(javafx.event.EventHandler)">setOnCancelled</a>, <a href="Service.html#setOnFailed(javafx.event.EventHandler)">setOnFailed</a>, <a href="Service.html#setOnReady(javafx.event.EventHandler)">setOnReady</a>, <a href="Service.html#setOnRunning(javafx.event.EventHandler)">setOnRunning</a>, <a href="Service.html#setOnScheduled(javafx.event.EventHandler)">setOnScheduled</a>, <a href="Service.html#setOnSucceeded(javafx.event.EventHandler)">setOnSucceeded</a>, <a href="Service.html#start()">start</a>, <a href="Service.html#stateProperty()">stateProperty</a>, <a href="Service.html#titleProperty()">titleProperty</a>, <a href="Service.html#totalWorkProperty()">totalWorkProperty</a>, <a href="Service.html#valueProperty()">valueProperty</a>, <a href="Service.html#workDoneProperty()">workDoneProperty</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods declared in class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
@@ -514,7 +514,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../../../javafx.base/javafx/beans/property/ObjectProperty.html" title="class in javafx.beans.property">ObjectProperty</a>&lt;<a href="../../../javafx.base/javafx/util/Duration.html" title="class in javafx.util">Duration</a>&gt;</span>&nbsp;<span class="element-name">delayProperty</span></div>
 <div class="block">The initial delay between when the ScheduledService is first started, and when it will begin
  operation. This is the amount of time the ScheduledService will remain in the SCHEDULED state,
- before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>Service.start()</code></a> or <a href="Service.html#restart()"><code>Service.restart()</code></a>.</div>
+ before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>service.start()</code></a> or <a href="Service.html#restart()"><code>service.restart()</code></a>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -662,10 +662,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="lastValueProperty">
 <h3>lastValue</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../../../javafx.base/javafx/beans/property/ReadOnlyObjectProperty.html" title="class in javafx.beans.property">ReadOnlyObjectProperty</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</span>&nbsp;<span class="element-name">lastValueProperty</span></div>
-<div class="block">The last successfully computed value. During each iteration, the "value" of the ScheduledService will be
- reset to null, as with any other Service. The "lastValue" however will be set to the most recently
- successfully computed value, even across iterations. It is reset however whenever you manually call
- reset or restart.</div>
+<div class="block">The last successfully computed value. During each iteration, the "value" of the ScheduledService will
+    be
+    reset to null, as with any other service. The "lastValue" however will be set to the most recently
+    successfully computed value, even across iterations. It is reset however whenever you manually call
+    reset or restart.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -759,7 +760,7 @@ loadScripts(document, 'script');</script>
 <dt>Property description:</dt>
 <dd>The initial delay between when the ScheduledService is first started, and when it will begin
  operation. This is the amount of time the ScheduledService will remain in the SCHEDULED state,
- before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>Service.start()</code></a> or <a href="Service.html#restart()"><code>Service.restart()</code></a>.</dd>
+ before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>service.start()</code></a> or <a href="Service.html#restart()"><code>service.restart()</code></a>.</dd>
 <dt>Returns:</dt>
 <dd>the value of the <code>delay</code> property</dd>
 <dt>See Also:</dt>
@@ -781,7 +782,7 @@ loadScripts(document, 'script');</script>
 <dt>Property description:</dt>
 <dd>The initial delay between when the ScheduledService is first started, and when it will begin
  operation. This is the amount of time the ScheduledService will remain in the SCHEDULED state,
- before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>Service.start()</code></a> or <a href="Service.html#restart()"><code>Service.restart()</code></a>.</dd>
+ before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>service.start()</code></a> or <a href="Service.html#restart()"><code>service.restart()</code></a>.</dd>
 <dt>Parameters:</dt>
 <dd><code>value</code> - the value for the <code>delay</code> property</dd>
 <dt>See Also:</dt>
@@ -800,7 +801,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../../../javafx.base/javafx/beans/property/ObjectProperty.html" title="class in javafx.beans.property">ObjectProperty</a>&lt;<a href="../../../javafx.base/javafx/util/Duration.html" title="class in javafx.util">Duration</a>&gt;</span>&nbsp;<span class="element-name">delayProperty</span>()</div>
 <div class="block">The initial delay between when the ScheduledService is first started, and when it will begin
  operation. This is the amount of time the ScheduledService will remain in the SCHEDULED state,
- before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>Service.start()</code></a> or <a href="Service.html#restart()"><code>Service.restart()</code></a>.</div>
+ before entering the RUNNING state, following a fresh invocation of <a href="Service.html#start()"><code>service.start()</code></a> or <a href="Service.html#restart()"><code>service.restart()</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the <code>delay</code> property</dd>
@@ -1221,9 +1222,9 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Property description:</dt>
 <dd>The last successfully computed value. During each iteration, the "value" of the ScheduledService will be
- reset to null, as with any other Service. The "lastValue" however will be set to the most recently
- successfully computed value, even across iterations. It is reset however whenever you manually call
- reset or restart.</dd>
+    reset to null, as with any other service. The "lastValue" however will be set to the most recently
+    successfully computed value, even across iterations. It is reset however whenever you manually call
+    reset or restart.</dd>
 <dt>Returns:</dt>
 <dd>the value of the <code>lastValue</code> property</dd>
 <dt>See Also:</dt>
@@ -1239,10 +1240,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="lastValueProperty()">
 <h3>lastValueProperty</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../../../javafx.base/javafx/beans/property/ReadOnlyObjectProperty.html" title="class in javafx.beans.property">ReadOnlyObjectProperty</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</span>&nbsp;<span class="element-name">lastValueProperty</span>()</div>
-<div class="block">The last successfully computed value. During each iteration, the "value" of the ScheduledService will be
- reset to null, as with any other Service. The "lastValue" however will be set to the most recently
- successfully computed value, even across iterations. It is reset however whenever you manually call
- reset or restart.</div>
+<div class="block">The last successfully computed value. During each iteration, the "value" of the ScheduledService will
+    be
+    reset to null, as with any other service. The "lastValue" however will be set to the most recently
+    successfully computed value, even across iterations. It is reset however whenever you manually call
+    reset or restart.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the <code>lastValue</code> property</dd>
@@ -1260,13 +1262,13 @@ loadScripts(document, 'script');</script>
 <h3>succeeded</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">succeeded</span>()</div>
 <div class="block">A protected convenience method for subclasses, called whenever the
- state of the Service has transitioned to the SUCCEEDED state.
- This method is invoked after the Service has been fully transitioned to the new state.
+ state of the service has transitioned to the SUCCEEDED state.
+ This method is invoked after the service has been fully transitioned to the new state.
 
  Implementation Note: Subclasses which override this method must call this super implementation.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Service.html#succeeded()">succeeded</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">Service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
+<dd><code><a href="Service.html#succeeded()">succeeded</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
@@ -1275,13 +1277,13 @@ loadScripts(document, 'script');</script>
 <h3>failed</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">failed</span>()</div>
 <div class="block">A protected convenience method for subclasses, called whenever the
- state of the Service has transitioned to the FAILED state.
- This method is invoked after the Service has been fully transitioned to the new state.
+ state of the service has transitioned to the FAILED state.
+ This method is invoked after the service has been fully transitioned to the new state.
 
  Implementation Note: Subclasses which override this method must call this super implementation.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Service.html#failed()">failed</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">Service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
+<dd><code><a href="Service.html#failed()">failed</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
@@ -1289,14 +1291,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="reset()">
 <h3>reset</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">reset</span>()</div>
-<div class="block">Resets the Service. May only be called while in one of the finish states,
- that is, SUCCEEDED, FAILED, or CANCELLED, or when READY. This method should
- only be called on the FX application thread.
+<div class="block">Resets the service. May only be called while in one of the finish states,
+    that is, SUCCEEDED, FAILED, or CANCELLED, or when READY. This method should
+    only be called on the FX application thread.
 
- Implementation Note: Subclasses which override this method must call this super implementation.</div>
+    Implementation Note: Subclasses which override this method must call this super implementation.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Service.html#reset()">reset</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">Service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
+<dd><code><a href="Service.html#reset()">reset</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
@@ -1310,7 +1312,7 @@ loadScripts(document, 'script');</script>
 <dt>Specified by:</dt>
 <dd><code><a href="Worker.html#cancel()">cancel</a></code>&nbsp;in interface&nbsp;<code><a href="Worker.html" title="interface in javafx.concurrent">Worker</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="Service.html#cancel()">cancel</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">Service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
+<dd><code><a href="Service.html#cancel()">cancel</a></code>&nbsp;in class&nbsp;<code><a href="Service.html" title="class in javafx.concurrent">service</a>&lt;<a href="ScheduledService.html" title="type parameter in ScheduledService">V</a>&gt;</code></dd>
 <dt>Returns:</dt>
 <dd>whether any running task was cancelled, false if no task was cancelled.
          In any case, the ScheduledService will stop iterating.</dd>
