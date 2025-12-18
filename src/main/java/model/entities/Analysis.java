@@ -9,6 +9,7 @@ public class Analysis {
 
     private final Integer id;
     private final String algorithm;
+    private final String algoCase;
     private final JsonNode jsonFile;
     private final LocalDateTime date;
     private final String user;
@@ -17,6 +18,7 @@ public class Analysis {
     private Analysis(Builder builder) {
         id = builder.id;
         algorithm = builder.algorithm;
+        algoCase = builder.algoCase;
         jsonFile = builder.jsonFile;
         date = builder.date;
         user = builder.user;
@@ -29,6 +31,10 @@ public class Analysis {
 
     public String getAlgorithm() {
         return algorithm;
+    }
+
+    public String getAlgoCase() {
+        return algoCase;
     }
 
     public JsonNode getJsonFile() {
@@ -50,15 +56,17 @@ public class Analysis {
     public static final class Builder {
         private final Integer id;
         private final String algorithm;
+        private final String algoCase;
         private final JsonNode jsonFile;
         private final LocalDateTime date;
         private final String user;
         private final BigDecimal size;
 
-        public Builder(Integer id, String algorithm, JsonNode jsonFile,
+        public Builder(Integer id, String algorithm, String algoCase, JsonNode jsonFile,
                        LocalDateTime date, String user, BigDecimal size) {
             this.id = id;
             this.algorithm = algorithm;
+            this.algoCase = algoCase;
             this.jsonFile = jsonFile;
             this.date = date;
             this.user = user;

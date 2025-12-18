@@ -23,8 +23,8 @@ public class AnalysisDAO {
 
     public Analysis create(Analysis obj) throws SQLException {
 
-        String sql = "INSERT INTO \"analysis\" (\"algorithm\", \"file\", \"date\", \"usr\", \"size\") " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO \"analysis\" (\"algorithm\", \"algocase\", \"file\", \"date\", \"usr\", \"size\") " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = null;
 
@@ -40,10 +40,11 @@ public class AnalysisDAO {
             LocalDateTime actualDate = (obj.getDate() != null) ? obj.getDate() : LocalDateTime.now();
 
             statement.setString(1, obj.getAlgorithm());
-            statement.setObject(2, pGobject);
-            statement.setTimestamp(3, Timestamp.valueOf(actualDate));
-            statement.setString(4, "ADMIN");
-            statement.setBigDecimal(5, obj.getSize());
+            statement.setString(2, obj.getAlgoCase());
+            statement.setObject(3, pGobject);
+            statement.setTimestamp(4, Timestamp.valueOf(actualDate));
+            statement.setString(5, "ADMIN");
+            statement.setBigDecimal(6, obj.getSize());
 
             int rowsAffected = statement.executeUpdate();
 
@@ -58,6 +59,7 @@ public class AnalysisDAO {
                 return new Analysis.Builder(
                         newId,
                         obj.getAlgorithm(),
+                        obj.getAlgoCase(),
                         obj.getJsonFile(),
                         actualDate,
                         obj.getUser(),
@@ -89,6 +91,7 @@ public class AnalysisDAO {
                 Analysis obj = new Analysis.Builder(
                         resultSet.getInt("id"),
                         resultSet.getString("algorithm"),
+                        resultSet.getString("algorithm case"),
                         jsonNode,
                         resultSet.getTimestamp("date").toLocalDateTime(),
                         resultSet.getString("usr"),
@@ -131,6 +134,7 @@ public class AnalysisDAO {
             return new Analysis.Builder(
                     resultSet.getInt("id"),
                     resultSet.getString("algorithm"),
+                    resultSet.getString("algorithm case"),
                     jsonNode,
                     resultSet.getTimestamp("date").toLocalDateTime(),
                     resultSet.getString("usr"),

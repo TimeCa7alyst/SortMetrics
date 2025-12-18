@@ -1,14 +1,21 @@
 package application;
 
+import DAO.AnalysisDAO;
+import DB.DbManager;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import model.analise.*;
+import model.entities.Analysis;
 import model.util.*;
+import service.AnalysisService;
 import view.BarChart;
 import view.ScatterChart;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -16,6 +23,22 @@ import java.util.concurrent.*;
 
 public class ConsoleRun {
     public static int quant;
+
+    static ObjectMapper mapper = new ObjectMapper();
+    static AnalysisDAO analysisDAO;
+
+    static {
+        try {
+            analysisDAO = new AnalysisDAO(DbManager.getConnection(), mapper);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static AnalysisService analysisService = new AnalysisService(analysisDAO);
+
+    public ConsoleRun() throws SQLException {
+    }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
@@ -212,6 +235,19 @@ public class ConsoleRun {
                         metrics.get(2).sortReport("Pior caso");
                         results.put(strategies.get(i).getSortName(), metrics);
 
+                        if (analysisService != null) {
+                            try {
+                                String algoName = strategies.get(i).getSortName();
+                                analysisService.create(mapToEntity(metrics.get(0), algoName, "Best Case", quant));
+                                analysisService.create(mapToEntity(metrics.get(1), algoName, "Average Case", quant));
+                                analysisService.create(mapToEntity(metrics.get(2), algoName, "Worst Case", quant));
+                            } catch (Exception e) {
+                                System.err.println("  > Failed to save to DB: " + e.getMessage());
+                            }
+                        }
+
+                        results.put(strategies.get(i).getSortName(), metrics);
+
                     } catch (InterruptedException | ExecutionException | TimeoutException e) {
                         System.out.println(strategies.get(i).getSortName() + " Timed Out");
                         futures.get(i).cancel(true);
@@ -275,21 +311,58 @@ public class ConsoleRun {
             long[] masterWorst) {
 
         List<SortMetrics> metricsList = new ArrayList<>();
+        String algoName = strategy.getSortName();
 
-        System.out.println("\n||||| " + strategy.getSortName() + " |||||\n");
+        System.out.println("\n||||| " + algoName + " |||||\n");
 
         SortMetrics best = strategy.execute(quant, masterBest.clone(), strategy.getSortName());
         best.sortReport("Melhor caso");
         metricsList.add(best);
 
+        try {
+            analysisService.create(mapToEntity(best, algoName, "Best Case", quant));
+        } catch (Exception e) {
+            System.out.println("Error saving best case");
+            throw new RuntimeException(e.getMessage());
+        }
+
         SortMetrics avg = strategy.execute(quant, masterAvg.clone(), strategy.getSortName());
         avg.sortReport("Médio caso");
         metricsList.add(avg);
+
+        try {
+            analysisService.create(mapToEntity(avg, algoName, "Average Case", quant));
+        } catch (Exception e) {
+            System.out.println("Error saving average case");
+            throw new RuntimeException(e.getMessage());
+        }
 
         SortMetrics worst = strategy.execute(quant, masterWorst.clone(), strategy.getSortName());
         worst.sortReport("Pior caso");
         metricsList.add(worst);
 
+        try {
+            analysisService.create(mapToEntity(worst, algoName, "Worst Case", quant));
+        } catch (Exception e) {
+            System.out.println("Error saving worst case");
+            throw new RuntimeException(e);
+        }
+
         return metricsList;
+    }
+
+    private static Analysis mapToEntity(SortMetrics metrics, String algorithmName, String caseType, int inputSize) {
+
+        JsonNode jsonMetrics = mapper.valueToTree(metrics);
+
+        return new Analysis.Builder(
+                null,
+                algorithmName,
+                caseType,
+                jsonMetrics,
+                LocalDateTime.now(),
+                "ADMIN",
+                new BigDecimal(inputSize)
+        ).build();
     }
 }
