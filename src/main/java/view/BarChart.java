@@ -4,6 +4,7 @@ import application.ConsoleRun;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -13,7 +14,6 @@ import model.analise.SortMetrics;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -21,56 +21,83 @@ import java.util.Objects;
 public class BarChart extends Application {
 
     public static String toLoad;
+    private static boolean isFxRunning = false;
 
-    private static Map<String, Map<String, Number>> data = new HashMap<>();
+    public static void showGraph(String filePath) {
+        toLoad = filePath;
 
-    public static void addData(String algo, String sortCase, Number time) {
-        data.computeIfAbsent(algo, k -> new HashMap<>()).put(sortCase, time);
+        if (!isFxRunning) {
+            isFxRunning = true;
+            Platform.setImplicitExit(false);
+            new Thread(() -> Application.launch(BarChart.class)).start();
+        } else {
+
+            Platform.runLater(() -> {
+                try {
+                    new BarChart().start(new Stage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setTitle("Sorts");
+        stage.setTitle("Sorts Analysis");
         final CategoryAxis x = new CategoryAxis();
         final NumberAxis y = new NumberAxis();
         final javafx.scene.chart.BarChart<String, Number> barChart
                 = new javafx.scene.chart.BarChart<>(x, y);
-        String sortingTime = "Sorting time " + "(" + ConsoleRun.quant + " Numbers" + ")";
-                barChart.setTitle(sortingTime);
-        x.setLabel("Algorithm Name");
+
+        String q = (ConsoleRun.quant > 0) ? String.valueOf(ConsoleRun.quant) : "Stored";
+        barChart.setTitle("Sorting Time (" + q + " Numbers)");
+
+        x.setLabel("Algorithm");
         y.setLabel("Time (ms)");
 
         if (toLoad == null || toLoad.isEmpty()) {
-            System.out.println("No file path provided to load!");
+            System.err.println("No file path provided!");
             return;
         }
 
         ObjectMapper om = new ObjectMapper();
-        HashMap<String, List<SortMetrics>> inputData = om.readValue(new File
-                        (toLoad),
-                new TypeReference<HashMap<String, List<SortMetrics>>>() {});
+        Map<String, List<SortMetrics>> inputData = om.readValue(new File(toLoad),
+                new TypeReference<Map<String, List<SortMetrics>>>() {});
 
-        XYChart.Series series = new XYChart.Series();
-        series.setName("Worst Case");
+        XYChart.Series seriesBest = new XYChart.Series();
+        seriesBest.setName("Best Case");
 
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Average Case");
+        XYChart.Series seriesAvg = new XYChart.Series();
+        seriesAvg.setName("Average Case");
 
-        XYChart.Series series3 = new XYChart.Series();
-        series3.setName("Best Case");
+        XYChart.Series seriesWorst = new XYChart.Series();
+        seriesWorst.setName("Worst Case");
 
         for (Map.Entry<String, List<SortMetrics>> entry : inputData.entrySet()) {
             String algoName = entry.getKey();
             List<SortMetrics> metrics = entry.getValue();
 
-            series.getData().add(new XYChart.Data<>(algoName, metrics.get(0).getTotalMs()));
-            series2.getData().add(new XYChart.Data<>(algoName, metrics.get(1).getTotalMs()));
-            series3.getData().add(new XYChart.Data<>(algoName, metrics.get(2).getTotalMs()));
+            if (metrics.size() > 0) {
+                seriesBest.getData().add(new XYChart.Data<>(algoName, metrics.get(0).getTotalMs()));
+            }
+            if (metrics.size() > 1) {
+                seriesAvg.getData().add(new XYChart.Data<>(algoName, metrics.get(1).getTotalMs()));
+            }
+            if (metrics.size() > 2) {
+                seriesWorst.getData().add(new XYChart.Data<>(algoName, metrics.get(2).getTotalMs()));
+            }
         }
 
         Scene scene = new Scene(barChart, 1000, 800);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/BarChart.css")).toExternalForm());
-        barChart.getData().addAll(series, series2, series3);
+
+        try {
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/BarChart.css")).toExternalForm());
+        } catch (Exception e) {
+            System.out.println("Warning: BarChart.css not found, using default style.");
+        }
+
+        barChart.getData().addAll(seriesBest, seriesAvg, seriesWorst);
         stage.setScene(scene);
         stage.show();
     }

@@ -1,5 +1,6 @@
 package DAO;
 
+import DB.DbManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,7 +92,7 @@ public class AnalysisDAO {
                 Analysis obj = new Analysis.Builder(
                         resultSet.getInt("id"),
                         resultSet.getString("algorithm"),
-                        resultSet.getString("algorithm case"),
+                        resultSet.getString("algoCase"),
                         jsonNode,
                         resultSet.getTimestamp("date").toLocalDateTime(),
                         resultSet.getString("usr"),
@@ -134,7 +135,7 @@ public class AnalysisDAO {
             return new Analysis.Builder(
                     resultSet.getInt("id"),
                     resultSet.getString("algorithm"),
-                    resultSet.getString("algorithm case"),
+                    resultSet.getString("algoCase"),
                     jsonNode,
                     resultSet.getTimestamp("date").toLocalDateTime(),
                     resultSet.getString("usr"),
@@ -150,6 +151,22 @@ public class AnalysisDAO {
                     throw new RuntimeException(e);
                 }
             }
+        }
+    }
+
+    public void update(Analysis obj) throws SQLException, JsonProcessingException {
+        String sql = "UPDATE analysis SET file = ?::jsonb WHERE id = ?";
+
+        try (Connection conn = DbManager.getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonStr = mapper.writeValueAsString(obj);
+
+            st.setObject(1, jsonStr);
+            st.setInt(2, obj.getId());
+
+            st.executeUpdate();
         }
     }
 

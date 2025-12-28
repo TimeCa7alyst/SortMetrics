@@ -5,6 +5,7 @@ import DB.DbManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import model.analise.*;
 import model.entities.Analysis;
 import model.util.*;
@@ -20,288 +21,266 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class ConsoleRun {
     public static int quant;
-
     static ObjectMapper mapper = new ObjectMapper();
     static AnalysisDAO analysisDAO;
+    static AnalysisService analysisService;
+
+    static Map<String, SortStrategy<Integer, long[], String>> strategyRegistry = new LinkedHashMap<>();
 
     static {
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         try {
             analysisDAO = new AnalysisDAO(DbManager.getConnection(), mapper);
+            analysisService = new AnalysisService(analysisDAO);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        registerStrategy(new BubbleSortImpl(), "bubble sort", "bsort", "bubble", "b");
+        registerStrategy(new InsertionSortImpl(), "insertion sort", "isort", "insertion", "i");
+        registerStrategy(new SelectionSortImpl(), "selection sort", "ssort", "selection", "s");
+        registerStrategy(new MergeSortImpl(), "merge sort", "msort", "merge", "m");
+        registerStrategy(new QuickSortImpl(), "quick sort", "qsort", "quick", "q");
+        registerStrategy(new HeapSortImpl(), "heap sort", "hsort", "heap", "h");
     }
 
-    static AnalysisService analysisService = new AnalysisService(analysisDAO);
-
-    public ConsoleRun() throws SQLException {
-    }
-
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-
-        String outDirectory = "src" + File.separator + "out";
-        Scanner sc = new Scanner(System.in);
-
-        String algoritmo;
-
-        System.out.println("""
-                Escolha um dos algoritmos:
-                
-                Bubble Sort
-                Selection Sort
-                Insertion Sort
-                Merge Sort
-                Quick Sort
-                Heap Sort
-                All
-                
-                OU digite "sair" para fechar o programa""");
-        algoritmo = sc.nextLine().toLowerCase();
-
-        if (algoritmo.equals("sair")
-                || (algoritmo.equals("fechar") || (algoritmo.equals("fechar programa")))) {
-            System.exit(0);
+    private static void registerStrategy(SortStrategy<Integer, long[], String> strategy, String... aliases) {
+        for (String alias : aliases) {
+            strategyRegistry.put(alias, strategy);
         }
+    }
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException, IOException {
+        Scanner sc = new Scanner(System.in);
+        String outDirectory = "src" + File.separator + "out";
+
+        new File(outDirectory).mkdirs();
 
         while (true) {
-            System.out.println("Quantidade de números para serem ordenados:");
+            System.out.println("""
+                    \n================================
+                    Choose operation:
+                    1 - New Analysis (Run Algorithms)
+                    2 - List All Analysis (Graph / Delete)
+                    3 - Exit
+                    ================================""");
+
+            String choice = sc.nextLine().toLowerCase().trim();
+
+            switch (choice) {
+                case "1", "new" -> runNewAnalysis(sc, outDirectory);
+                case "2", "list" -> handleListAndCrud(sc, outDirectory);
+                case "3", "exit" -> {
+                    System.out.println("Exiting...");
+                    ThreadPool.shutdown();
+                    System.exit(0);
+                }
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void handleListAndCrud(Scanner sc, String outDirectory) {
+        List<Analysis> list = analysisService.findAll();
+
+        if (list.isEmpty()) {
+            System.out.println("No history found.");
+            return;
+        }
+
+        System.out.println("\n--- Analysis History ---");
+        System.out.printf("%-5s | %-15s | %-15s | %-20s%n", "ID", "Algorithm", "Case", "Date");
+        System.out.println("----------------------------------------------------------------");
+        for (Analysis a : list) {
+            System.out.printf("%-5d | %-15s | %-15s | %s%n",
+                    a.getId(),
+                    a.getAlgorithm(),
+                    a.getAlgoCase(),
+                    a.getDate() != null ? a.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) : "N/A"
+            );
+        }
+
+        System.out.println("""
+                \nOptions:
+                [G]raph specific IDs (Range)
+                [D]elete an ID
+                [B]ack to Main Menu
+                """);
+        String action = sc.nextLine().toLowerCase();
+
+        switch (action) {
+            case "g", "graph", "range" -> {
+                try {
+                    System.out.println("Enter start of range ID:");
+                    int start = Integer.parseInt(sc.nextLine());
+
+                    System.out.println("Enter end of range ID:");
+                    int end = Integer.parseInt(sc.nextLine());
+
+                    List<Analysis> selected = list.stream()
+                            .filter(a -> a.getId() >= start && a.getId() <= end)
+                            .collect(Collectors.toList());
+
+                    if (!selected.isEmpty()) {
+                        generateGraphFromHistory(selected, sc, outDirectory);
+                    } else {
+                        System.out.println("No valid IDs found in that range.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid number format.");
+                }
+            }
+            case "d", "delete" -> {
+                System.out.println("Enter ID to delete:");
+                try {
+                    int idToDelete = Integer.parseInt(sc.nextLine());
+                    analysisService.delete(idToDelete);
+                    System.out.println("Analysis deleted successfully.");
+                } catch (Exception e) {
+                    System.out.println("Error deleting: " + e.getMessage());
+                }
+            }
+            case "b", "back" -> {}
+            default -> System.out.println("Invalid action.");
+        }
+    }
+
+    private static void runNewAnalysis(Scanner sc, String outDirectory) throws ExecutionException, InterruptedException {
+        System.out.println("""
+                Choose an algorithm:
+                (Bubble, Selection, Insertion, Merge, Quick, Heap)
+                OR type 'All' to run benchmark
+                OR type 'exit' to return""");
+
+        String input = sc.nextLine().toLowerCase().trim();
+
+        if (input.equals("exit") || input.equals("back")) return;
+
+        while (true) {
+            System.out.println("Quantity of numbers to sort:");
             try {
                 quant = Integer.parseInt(sc.nextLine());
-                if (quant < 0) {
-                    System.out.println("||| Quantidade deve ser maior que zero! |||\n");
-                } else {
-                    break;
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println("||| Entrada inválida |||");
+                if (quant > 0) break;
+                System.out.println("||| Quantity must be > 0 |||");
+            } catch (NumberFormatException e) {
+                System.out.println("||| Invalid Input |||");
             }
         }
 
         DefineTipoQuantidade defTipo = new DefineTipoQuantidade();
         defTipo.defineTipo(quant);
-
-        List<SortStrategy<Integer, long[], String>> strategies = new ArrayList<>();
-        strategies.add(new BubbleSortImpl());
-        strategies.add(new InsertionSortImpl());
-        strategies.add(new SelectionSortImpl());
-        strategies.add(new HeapSortImpl());
-        strategies.add(new MergeSortImpl());
-        strategies.add(new QuickSortImpl());
+        boolean isSmall = Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA");
 
         long[] masterRnd = CaseGenerator.genAvgCase(quant);
         long[] masterBest = CaseGenerator.genBestCase(quant);
         long[] masterWorst = CaseGenerator.genWorstCase(quant);
         long[] masterTiny = new long[quant];
 
-        if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
+        if (isSmall) {
             for (int i = 0; i < quant; i++) {
                 while (true) {
                     try {
-                        System.out.printf("Digite o %d valor: ", (i + 1));
+                        System.out.printf("Type value %d: ", (i + 1));
                         masterTiny[i] = Long.parseLong(sc.nextLine());
                         break;
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("||| Entrada Inválida |||");
+                    } catch (NumberFormatException e) {
+                        System.out.println("||| Invalid Number |||");
                     }
                 }
             }
         }
 
-        ObjectMapper om = new ObjectMapper();
-        om.enable(SerializationFeature.INDENT_OUTPUT);
         Map<String, List<SortMetrics>> results = new HashMap<>();
 
-        switch (algoritmo) {
-            case "bubble sort", "bsort", "bubble", "b", "buble sort":
+        if (input.equals("all") || input.equals("a")) {
+            runAllAlgorithms(masterBest, masterRnd, masterWorst, results);
+        } else {
+            SortStrategy<Integer, long[], String> strategy = strategyRegistry.get(input);
 
-                System.out.println("\n||||| Bubble Sort |||||\n");
+            if (strategy != null) {
+                System.out.println("\n||||| " + strategy.getSortName() + " |||||\n");
 
-                results.put("Bubble Sort", runAndCollectMetrics(new BubbleSortImpl(), masterBest, masterRnd, masterWorst));
+                results.put(strategy.getSortName(),
+                        runAndCollectMetrics(strategy, masterBest, masterRnd, masterWorst));
 
-                if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
-                    SortMetrics manualMetrics = new BubbleSortImpl().execute(quant, masterTiny.clone(), "Bubble Sort");
-
+                if (isSmall) {
+                    SortMetrics manualMetrics = strategy.execute(quant, masterTiny.clone(), strategy.getSortName());
                     manualMetrics.manualPrint();
                 }
-                break;
-
-            case "insertion sort", "isort", "insertion", "i":
-
-                System.out.println("\n||||| Insertion Sort |||||\n");
-
-                results.put("Insertion Sort", runAndCollectMetrics(new InsertionSortImpl(), masterBest, masterRnd, masterWorst));
-
-                if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
-                    SortMetrics manualMetrics = new InsertionSortImpl().execute(quant, masterTiny.clone(), "Insertion Sort");
-
-                    manualMetrics.manualPrint();
-                }
-                break;
-
-            case "selection sort", "ssort", "selection", "s":
-
-                System.out.println("\n||||| Selection Sort |||||\n");
-
-                results.put("Selection Sort", runAndCollectMetrics(new SelectionSortImpl(), masterBest, masterRnd, masterWorst));
-
-                if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
-                    SortMetrics manualMetrics = new SelectionSortImpl().execute(quant, masterTiny.clone(), "Selection Sort");
-
-                    manualMetrics.manualPrint();
-                }
-                break;
-
-            case "merge sort", "msort", "merge", "m":
-
-                results.put("Merge Sort", runAndCollectMetrics(new MergeSortImpl(), masterBest, masterRnd, masterWorst));
-
-                if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
-                    SortMetrics manualMetrics = new MergeSortImpl().execute(quant, masterTiny.clone(), "Merge Sort");
-
-                    manualMetrics.manualPrint();
-                }
-                break;
-
-            case "quick sort", "qsort", "quick", "q":
-
-                results.put("Quick Sort", runAndCollectMetrics(new QuickSortImpl(), masterBest, masterRnd, masterWorst));
-
-                if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
-                    SortMetrics manualMetrics = new QuickSortImpl().execute(quant, masterTiny.clone(), "Quick Sort");
-
-                    manualMetrics.manualPrint();
-                }
-                break;
-
-            case "heap sort", "hsort", "heap", "h":
-
-                results.put("Heap Sort", runAndCollectMetrics(new HeapSortImpl(), masterBest, masterRnd, masterWorst));
-
-                if (Objects.equals(String.valueOf(defTipo.getTipoQuantidade()), "PEQUENA")) {
-
-                    SortMetrics manualMetrics = new HeapSortImpl().execute(quant, masterTiny.clone(), "Heap Sort");
-
-                    manualMetrics.manualPrint();
-                }
-                break;
-
-            case "all", "a":
-
-                ExecutorService executor = ThreadPool.getExecutor();
-
-                if (executor == null) {
-                    throw new IllegalArgumentException("No processors available");
-                }
-
-                List<Future<List<SortMetrics>>> futures = new ArrayList<>();
-
-                for (int i = 0; i < strategies.size(); i++) {
-                    SortStrategy strategy = strategies.get(i);
-                    int finalQuant = quant;
-                    Callable<List<SortMetrics>> task = () -> {
-
-                        List<SortMetrics> newStrategies = new ArrayList<>();
-
-                        SortMetrics best = strategy.execute(finalQuant, masterBest.clone(), strategy.getSortName());
-                        SortMetrics mid = strategy.execute(finalQuant, masterRnd.clone(), strategy.getSortName());
-                        SortMetrics worst = strategy.execute(finalQuant, masterWorst.clone(), strategy.getSortName());
-
-                        Collections.addAll(newStrategies, best, mid, worst);
-                        return newStrategies;
-                    };
-                    futures.add(executor.submit(task));
-                }
-
-                for (int i = 0; i < futures.size(); i++) {
-
-                    if (!futures.get(i).isDone()) {
-                        System.out.println("Executing " + strategies.get(i).getSortName());
-                    }
-                    System.out.println("|||| " + strategies.get(i).getSortName() + " ||||");
-
-                    try {
-                        List<SortMetrics> metrics = futures.get(i).get(300, TimeUnit.SECONDS);
-                        metrics.get(0).sortReport("Melhor caso");
-                        metrics.get(1).sortReport("Médio caso");
-                        metrics.get(2).sortReport("Pior caso");
-                        results.put(strategies.get(i).getSortName(), metrics);
-
-                        if (analysisService != null) {
-                            try {
-                                String algoName = strategies.get(i).getSortName();
-                                analysisService.create(mapToEntity(metrics.get(0), algoName, "Best Case", quant));
-                                analysisService.create(mapToEntity(metrics.get(1), algoName, "Average Case", quant));
-                                analysisService.create(mapToEntity(metrics.get(2), algoName, "Worst Case", quant));
-                            } catch (Exception e) {
-                                System.err.println("  > Failed to save to DB: " + e.getMessage());
-                            }
-                        }
-
-                        results.put(strategies.get(i).getSortName(), metrics);
-
-                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                        System.out.println(strategies.get(i).getSortName() + " Timed Out");
-                        futures.get(i).cancel(true);
-                    }
-                }
-
-                ThreadPool.monitor();
-                break;
-
-            default:
-                System.out.println("Algoritmo não existe");
-                break;
+            } else {
+                System.out.println("Algorithm not found.");
+                return;
+            }
         }
 
         if (!results.isEmpty()) {
+            saveAndLaunchGraph(results, sc, outDirectory);
+        }
+    }
 
-            DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
-            LocalDateTime localDateTime = LocalDateTime.now();
-            String time = localDateTime.format(dtFormat);
+    private static void runAllAlgorithms(long[] masterBest, long[] masterRnd, long[] masterWorst, Map<String, List<SortMetrics>> results) throws InterruptedException, ExecutionException {
+        ExecutorService executor = ThreadPool.getExecutor();
 
-            File dir = new File(outDirectory);
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
+        Map<String, Future<List<SortMetrics>>> futuresMap = new LinkedHashMap<>();
 
-            String jsonFileName = ("SortReport_" + time + "." + "json");
-            File outFile = new File(dir, jsonFileName);
+        Set<SortStrategy<Integer, long[], String>> uniqueStrategies = new HashSet<>(strategyRegistry.values());
 
-            try {
-                om.writeValue(outFile, results);
-            } catch (IOException e) {
-                System.out.println("Error writing sort results");
-                throw new RuntimeException(e);
-            }
+        for (SortStrategy<Integer, long[], String> strategy : uniqueStrategies) {
+            int finalQuant = quant;
+            String algoName = strategy.getSortName();
 
-            System.out.println("Escolha o tipo de gráfico");
-            String grafico = sc.nextLine();
+            Callable<List<SortMetrics>> task = () -> {
+                List<SortMetrics> sMetrics = new ArrayList<>();
+                sMetrics.add(strategy.execute(finalQuant, masterBest.clone(), algoName));
+                sMetrics.add(strategy.execute(finalQuant, masterRnd.clone(), algoName));
+                sMetrics.add(strategy.execute(finalQuant, masterWorst.clone(), algoName));
+                return sMetrics;
+            };
 
-            switch (grafico) {
-                case "Bar Chart", "barchart", "bar":
-                    //barchart
-                    BarChart.toLoad = outFile.getAbsolutePath();
-                    BarChart.main(new String[]{});
-                    break;
-
-                case "Scatter Chart", "scatter", "scater", "sca":
-//scatterchart
-                    ScatterChart.toLoad = outFile.getAbsolutePath();
-                    ScatterChart.main(new String[]{});
-                    break;
-            }
+            futuresMap.put(algoName, executor.submit(task));
         }
 
-        ThreadPool.shutdown();
+        for (Map.Entry<String, Future<List<SortMetrics>>> entry : futuresMap.entrySet()) {
+            String name = entry.getKey();
+            Future<List<SortMetrics>> f = entry.getValue();
+
+            try {
+                List<SortMetrics> m = f.get(300, TimeUnit.SECONDS);
+
+                System.out.println("|||| " + name + " Finished ||||");
+
+                if (m.size() >= 3) {
+                    m.get(0).sortReport("Best Case");
+                    m.get(1).sortReport("Avg Case");
+                    m.get(2).sortReport("Worst Case");
+                }
+
+                results.put(name, m);
+
+                saveMetricsListToDB(m, name);
+
+            } catch (TimeoutException e) {
+                System.out.println("Task for " + name + " timed out.");
+                f.cancel(true);
+            }
+        }
+    }
+
+    private static void saveMetricsListToDB(List<SortMetrics> metrics, String algoName) {
+        if (analysisService == null) return;
+        try {
+            analysisService.create(mapToEntity(metrics.get(0), algoName, "Best Case", quant));
+            analysisService.create(mapToEntity(metrics.get(1), algoName, "Average Case", quant));
+            analysisService.create(mapToEntity(metrics.get(2), algoName, "Worst Case", quant));
+        } catch (Exception e) {
+            System.err.println("Failed to save DB: " + e.getMessage());
+        }
     }
 
     private static List<SortMetrics> runAndCollectMetrics(
@@ -313,56 +292,80 @@ public class ConsoleRun {
         List<SortMetrics> metricsList = new ArrayList<>();
         String algoName = strategy.getSortName();
 
-        System.out.println("\n||||| " + algoName + " |||||\n");
-
-        SortMetrics best = strategy.execute(quant, masterBest.clone(), strategy.getSortName());
+        SortMetrics best = strategy.execute(quant, masterBest.clone(), algoName);
         best.sortReport("Melhor caso");
         metricsList.add(best);
 
-        try {
-            analysisService.create(mapToEntity(best, algoName, "Best Case", quant));
-        } catch (Exception e) {
-            System.out.println("Error saving best case");
-            throw new RuntimeException(e.getMessage());
-        }
-
-        SortMetrics avg = strategy.execute(quant, masterAvg.clone(), strategy.getSortName());
+        SortMetrics avg = strategy.execute(quant, masterAvg.clone(), algoName);
         avg.sortReport("Médio caso");
         metricsList.add(avg);
 
-        try {
-            analysisService.create(mapToEntity(avg, algoName, "Average Case", quant));
-        } catch (Exception e) {
-            System.out.println("Error saving average case");
-            throw new RuntimeException(e.getMessage());
-        }
-
-        SortMetrics worst = strategy.execute(quant, masterWorst.clone(), strategy.getSortName());
+        SortMetrics worst = strategy.execute(quant, masterWorst.clone(), algoName);
         worst.sortReport("Pior caso");
         metricsList.add(worst);
 
-        try {
-            analysisService.create(mapToEntity(worst, algoName, "Worst Case", quant));
-        } catch (Exception e) {
-            System.out.println("Error saving worst case");
-            throw new RuntimeException(e);
-        }
+        saveMetricsListToDB(metricsList, algoName);
 
         return metricsList;
     }
 
+    private static void saveAndLaunchGraph(Map<String, List<SortMetrics>> results, Scanner sc, String outDirectory) {
+        DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String jsonFileName = "SortReport_" + LocalDateTime.now().format(dtFormat) + ".json";
+        File outFile = new File(outDirectory, jsonFileName);
+
+        try {
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.writeValue(outFile, results);
+            launchGraphSelection(sc, outFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Error writing results: " + e.getMessage());
+        }
+    }
+
+    private static void generateGraphFromHistory(List<Analysis> analysisList, Scanner sc, String outDirectory) {
+        try {
+            Map<String, List<SortMetrics>> results = new HashMap<>();
+            for (Analysis a : analysisList) {
+                SortMetrics metrics = mapper.treeToValue(a.getJsonFile(), SortMetrics.class);
+                results.computeIfAbsent(a.getAlgorithm(), k -> new ArrayList<>()).add(metrics);
+            }
+
+            String jsonFileName = "History_Graph_" + System.currentTimeMillis() + ".json";
+            File outFile = new File(outDirectory, jsonFileName);
+
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.writeValue(outFile, results);
+
+            launchGraphSelection(sc, outFile.getAbsolutePath());
+
+        } catch (Exception e) {
+            System.out.println("Error processing history: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static void launchGraphSelection(Scanner sc, String filePath) {
+        System.out.println("Select Graph Type (Bar Chart / Scatter Chart):");
+        String type = sc.nextLine().toLowerCase();
+
+        switch (type) {
+            case "bar chart", "barchart", "bar", "b" -> {
+                BarChart.showGraph(filePath);
+            }
+            case "scatter chart", "scatter", "scater", "sca", "s" -> {
+                ScatterChart.toLoad = filePath;
+                ScatterChart.main(new String[]{});
+            }
+            default -> System.out.println("Invalid graph type.");
+        }
+    }
+
     private static Analysis mapToEntity(SortMetrics metrics, String algorithmName, String caseType, int inputSize) {
-
         JsonNode jsonMetrics = mapper.valueToTree(metrics);
-
         return new Analysis.Builder(
-                null,
-                algorithmName,
-                caseType,
-                jsonMetrics,
-                LocalDateTime.now(),
-                "ADMIN",
-                new BigDecimal(inputSize)
+                null, algorithmName, caseType, jsonMetrics,
+                LocalDateTime.now(), "ADMIN", new BigDecimal(inputSize)
         ).build();
     }
 }

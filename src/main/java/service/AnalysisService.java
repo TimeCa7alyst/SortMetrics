@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import model.entities.Analysis;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnalysisService {
@@ -39,6 +40,32 @@ public class AnalysisService {
             return analysisDAO.findById(id);
         } catch (SQLException | JsonProcessingException e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public List<Analysis> getMultipleById(List<Integer> id) {
+        List<Analysis> list = new ArrayList<>();
+        try {
+            for (Integer analysisId : id) {
+                Analysis obj = analysisDAO.findById(analysisId);
+                if (list != null) {
+                    list.add(obj);
+                }
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update(Analysis obj) {
+        if (obj == null || obj.getId() == null) throw new RuntimeException("Invalid object for update");
+        try {
+            analysisDAO.update(obj);
+        } catch (SQLException | JsonProcessingException e) {
+            throw new RuntimeException("Error updating analysis: " + e.getMessage());
         }
     }
 
