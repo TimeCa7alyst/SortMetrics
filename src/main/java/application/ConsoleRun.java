@@ -253,7 +253,7 @@ public class ConsoleRun {
             try {
                 List<SortMetrics> m = f.get(300, TimeUnit.SECONDS);
 
-                System.out.println("|||| " + name + " Finished ||||");
+                System.out.println("|||| " + name + " ||||");
 
                 if (m.size() >= 3) {
                     m.get(0).sortReport("Best Case");
@@ -293,15 +293,15 @@ public class ConsoleRun {
         String algoName = strategy.getSortName();
 
         SortMetrics best = strategy.execute(quant, masterBest.clone(), algoName);
-        best.sortReport("Melhor caso");
+        best.sortReport("Best Case");
         metricsList.add(best);
 
         SortMetrics avg = strategy.execute(quant, masterAvg.clone(), algoName);
-        avg.sortReport("Médio caso");
+        avg.sortReport("Average Case");
         metricsList.add(avg);
 
         SortMetrics worst = strategy.execute(quant, masterWorst.clone(), algoName);
-        worst.sortReport("Pior caso");
+        worst.sortReport("Worst Case");
         metricsList.add(worst);
 
         saveMetricsListToDB(metricsList, algoName);

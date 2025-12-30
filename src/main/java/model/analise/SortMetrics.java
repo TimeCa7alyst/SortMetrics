@@ -31,18 +31,18 @@ public class SortMetrics {
         double memoryUsedDouble = (double) memoryUsed / (1024 * 1024);
 
         System.out.println(sortCase + ": \n");
-        System.out.printf("TEMPO DE EXECUÇÃO: %.2fms\n", totalMs);
-        System.out.printf("MEMÓRIA UTILIZADA: %.2fMB\n\n", memoryUsedDouble);
-        System.out.println("Número de entradas: " + sortArr.length);
-        System.out.println("Número de comparações: " + compNumber);
-        System.out.println("Número de trocas: " + swapNumber);
-        System.out.println("É estável: " + (stable ? "Sim" : "Não"));
+        System.out.printf("EXECUTION TIME: %.2fms\n", totalMs);
+        System.out.printf("MEMORY USED: %.2fMB\n\n", memoryUsedDouble);
+        System.out.println("Number of entries: " + sortArr.length);
+        System.out.println("Number of comparisions: " + compNumber);
+        System.out.println("Number of swaps: " + swapNumber);
+        System.out.println("Is stable?: " + (stable ? "Yes" : "No"));
         System.out.println("------------------------------------------");
         System.out.println();
     }
 
     public void manualPrint() {
-        System.out.println("VETOR ORDENADO: ");
+        System.out.println("SORTED ARRAY: ");
         for (int i = 0; i < sortArr.length; i++) {
             System.out.printf("%d -> ", sortArr[i]);
         }

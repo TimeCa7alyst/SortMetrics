@@ -8,9 +8,18 @@
     -fx-bar-gap: 4;
 }
 
-.default-color0.chart-bar { -fx-background-color: "#06d6a0"; }
-.default-color1.chart-bar { -fx-background-color: "#ffd166"; }
-.default-color2.chart-bar { -fx-background-color: "#ef476f"; }
+.default-color0.chart-bar {
+    -fx-background-color: "#06d6a0";
+}
+
+.default-color1.chart-bar {
+    -fx-background-color: "#ffd166";
+}
+
+.default-color2.chart-bar {
+    -fx-background-color: "#ef476f";
+}
+
 
 
 
