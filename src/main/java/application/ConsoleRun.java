@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import javafx.application.Platform;
 import model.analise.*;
 import model.entities.Analysis;
 import model.util.*;
@@ -57,6 +58,12 @@ public class ConsoleRun {
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, IOException {
+        try {
+            Platform.startup(() -> {});
+            Platform.setImplicitExit(false);
+        } catch (IllegalStateException e) {
+        }
+
         Scanner sc = new Scanner(System.in);
         String outDirectory = "src" + File.separator + "out";
 
@@ -108,14 +115,14 @@ public class ConsoleRun {
 
         System.out.println("""
                 \nOptions:
-                [G]raph specific IDs (Range)
+                [C]reate chart from specific IDs (Range)
                 [D]elete an ID
                 [B]ack to Main Menu
                 """);
         String action = sc.nextLine().toLowerCase();
 
         switch (action) {
-            case "g", "graph", "range" -> {
+            case "c", "create", "chart", "graph", "range" -> {
                 try {
                     System.out.println("Enter start of range ID:");
                     int start = Integer.parseInt(sc.nextLine());
@@ -355,7 +362,7 @@ public class ConsoleRun {
             }
             case "scatter chart", "scatter", "scater", "sca", "s" -> {
                 ScatterChart.toLoad = filePath;
-                ScatterChart.main(new String[]{});
+                ScatterChart.showGraph();
             }
             default -> System.out.println("Invalid graph type.");
         }

@@ -102,6 +102,16 @@ public class BarChart extends Application {
         stage.show();
     }
 
+    public static void showGraph() {
+        Platform.runLater(() -> {
+            try {
+                new BarChart().start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

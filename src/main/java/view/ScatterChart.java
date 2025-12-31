@@ -1,8 +1,10 @@
 package view;
 
+import application.ConsoleRun;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -25,14 +27,16 @@ public class ScatterChart extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Scatter chart");
+        stage.setTitle("Sorts Analysis");
         final NumberAxis x = new NumberAxis();
         final NumberAxis y = new NumberAxis();
         final javafx.scene.chart.ScatterChart<Number, Number> scatter =
                 new javafx.scene.chart.ScatterChart<Number, Number>(x, y);
         x.setLabel("Time (ms)");
         y.setLabel("Memory Used (MB)");
-        scatter.setTitle("Sorting Algos");
+
+        String q = (ConsoleRun.quant > 0) ? String.valueOf(ConsoleRun.quant) : "Stored";
+        scatter.setTitle("Sorting Time (" + q + " Numbers)");
 
         if (toLoad == null || toLoad.isEmpty()) {
             System.out.println("\"No file path provided to load!");
@@ -91,6 +95,16 @@ public class ScatterChart extends Application {
         Scene scene = new Scene(scatter, 1000, 800);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void showGraph() {
+        Platform.runLater(() -> {
+            try {
+                new ScatterChart().start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
