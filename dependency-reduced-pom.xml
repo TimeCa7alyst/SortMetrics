@@ -25,6 +25,7 @@
         <version>0.0.8</version>
         <configuration>
           <mainClass>view.AppLauncher</mainClass>
+          <commandlineArgs>analysis.json</commandlineArgs>
         </configuration>
       </plugin>
       <plugin>

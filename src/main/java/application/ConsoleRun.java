@@ -58,6 +58,14 @@ public class ConsoleRun {
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, IOException {
+        String filePath = "analysis.json";
+
+        if (args.length > 0) {
+            filePath = args[0];
+        } else {
+            System.out.println("No file path provided. Using default: " + filePath);
+        }
+
         try {
             Platform.startup(() -> {});
             Platform.setImplicitExit(false);
